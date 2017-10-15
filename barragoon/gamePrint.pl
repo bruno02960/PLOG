@@ -1,4 +1,4 @@
-printBoard(Board, Type) :-
+gamePrint(Board, Type) :-
 	printBlackLine(Type),
 	printRowByRow(Board,Type).
 

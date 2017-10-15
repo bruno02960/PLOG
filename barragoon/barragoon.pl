@@ -1,18 +1,18 @@
 :-include('gamePrint.pl').
 
-initialBoardState([
+currentBoard([
 	['     ','  4  ','  3  ','     ','  3  ','  4  ','     '],
 	['     ','     ','  2  ','  3  ','  2  ','     ','     '],
 	['     ','     ','     ','     ','     ','     ','     '],
-	['     ',  '  N  '  ,'     ','     ','     ','  N  ','     '],
+	['     ','  N  ','     ','     ','     ','  N  ','     '],
 	['  N  ','     ','  N  ','     ','  N  ','     ','  N  '],
 	['     ','  N  ','     ','     ','     ','  N  ','     '],
 	['     ','     ','     ','     ','     ','     ','     '],
 	['     ','     ','  2  ','  3  ','  2  ','     ','     '],
 	['     ','  4  ','  3  ','     ','  3  ','  4  ','     ']]).
 
-initialAsideState([
+currentAside([
 	['  N  ','  N  ','  N  ','   N  ','  N  ','  N  ','  N  ', '  N  ','  N  ','  N  ','  N  ','  N  '],
 	['  N  ','  N  ','  N  ','   N  ','  N  ','  N  ','  N  ', '  N  ','  N  ','  N  ','  N  ','  N  ']]).
 
-barragoon :- initialBoardState(Board), printBoard(Board, board), nl, initialAsideState(Aside), printBoard(Aside, aside).
+barragoon :- currentBoard(Board), gamePrint(Board, board), nl, currentAside(Aside), gamePrint(Aside, aside).
