@@ -1,28 +1,29 @@
-gamePrint(Board, Type) :-
-	printBlackLine(Type),
-	printRowByRow(Board,Type).
+gamePrint(Board) :-
+	printBlackLine,
+	printRowByRow(Board).
 
-printBlackLine(board) :-
-	write('-------------------------------------------'),
+printBlackLine :-
+	write('------------------------------------'),
 	nl.
 
-printBlackLine(aside) :-
-	write('--------------------------------------------------------------------------'),
-	nl.
-
-printRowByRow([], Type).
-printRowByRow([Line|Rest],Type) :-
+printRowByRow([]).
+printRowByRow([Line|Rest]) :-
 	write('|'),
-	printSingleRow(Line, Type),
-	printRowByRow(Rest, Type).
+	printSingleRow(Line),
+	printRowByRow(Rest).
 
-printSingleRow([Cell],Type):-
+printSingleRow([Cell]):-
 	write(Cell),
 	write('|'),
 	nl,
-	printBlackLine(Type).
+	printBlackLine.
 
-printSingleRow([Cell|More], Type):-
+printSingleRow([Cell|More]):-
 	write(Cell),
 	write('|'),
-	printSingleRow(More, Type).
+	printSingleRow(More).
+
+printAside(Aside) :-
+	write('Aside='),
+	write(Aside),
+	nl.

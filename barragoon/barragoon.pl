@@ -1,18 +1,15 @@
 :-include('gamePrint.pl').
 
-currentBoard([
-	['     ','  4  ','  3  ','     ','  3  ','  4  ','     '],
-	['     ','     ','  2  ','  3  ','  2  ','     ','     '],
-	['     ','     ','     ','     ','     ','     ','     '],
-	['     ','  N  ','     ','     ','     ','  N  ','     '],
-	['  N  ','     ','  N  ','     ','  N  ','     ','  N  '],
-	['     ','  N  ','     ','     ','     ','  N  ','     '],
-	['     ','     ','     ','     ','     ','     ','     '],
-	['     ','     ','  2  ','  3  ','  2  ','     ','     '],
-	['     ','  4  ','  3  ','     ','  3  ','  4  ','     ']]).
+currentBoard([['    ', ' 4W ' , ' 3W ' , '    ', ' 3W ' , ' 4W ' , '    '],
+ ['    ', '    ', ' 2W ' , ' 3W ' , ' 2W ' , '    ', '    '],
+ ['    ', '    ', '    ', '    ', '    ', '    ', '    '],
+ ['    ', ' No ' , '    ', '    ', '    ', ' No ' , '    '],
+ [' No ' , '    ', ' No ' , '    ', ' No ' , '    ', ' No ' ],
+ ['    ', ' No ' , '    ', '    ', '    ', ' No ' , '    '],
+ ['    ', '    ', '    ', '    ', '    ', '    ', '    '],
+ ['    ', '    ', ' 2B ' , ' 3B ' , ' 2B ' , '    ', '    '],
+ ['    ', ' 4B ' , ' 3B ' , '    ', ' 3B ' , ' 4B ' , '    ']]).
 
-currentAside([
-	['  N  ','  N  ','  N  ','   N  ','  N  ','  N  ','  N  ', '  N  ','  N  ','  N  ','  N  ','  N  '],
-	['  N  ','  N  ','  N  ','   N  ','  N  ','  N  ','  N  ', '  N  ','  N  ','  N  ','  N  ','  N  ']]).
+currentAside('24').
 
-barragoon :- currentBoard(Board), gamePrint(Board, board), nl, currentAside(Aside), gamePrint(Aside, aside).
+barragoon :- currentBoard(Board), gamePrint(Board), nl, currentAside(Aside), printAside(Aside).
