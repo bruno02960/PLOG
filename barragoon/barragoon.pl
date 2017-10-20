@@ -1,4 +1,5 @@
-:-include('gamePrint.pl').
+:-include('gamePrinting.pl').
+:-include('pieceHandling.pl').
 
 currentBoard([	['  ','4W','3W','  ','3W','4W','  '],
 								['  ','  ','2W','3W','2W','  ','  '],
@@ -10,19 +11,30 @@ currentBoard([	['  ','4W','3W','  ','3W','4W','  '],
 								['  ','  ','2B','3B','2B','  ','  '],
 								['  ','4B','3B','  ','3B','4B','  ']]).
 
-currentAside('24').
+currentAside(24).
 
-getPiece(Board, Nline, Ncolumn, Piece) :-
-	getElePos(Nline, Board, Line),
-	getElePos(Ncolumn, Line, Piece).
+/* Subtrai duas unidades ao Aside - AINDA NÃO GUARDA*/
+subAside(InAside, OutAside):-
+	OutAside is InAside-2.
+/* ------------------------------------------------*/
 
-/* nLinha e nCol são decrementados a cada chamada. */
-
-getElePos(1, [Element|_], Element).
-
-getElePos(Pos, [_|Rest], Element) :-
-	Pos > 1,
-	Next is Pos-1,
-	getElePos(Next, Rest, Element).
+/* Coloca o barragoon com o símbolo desejado na posição desejada, caso esta esteja livre */
+putBarragoon(InBoard, OutBoard):-
+	repeat
+		write('Barragoon: '),
+		read(Barragoon),
+		nl,
+		/* Handles possible bad input */
+		write('Line: '),
+		read(Nline),
+		nl,
+		/* Handles possible bad input */
+		write('Column: '),
+		read(Ncolumn),
+		nl,
+		/* Handles possible bad input */
+		getPiece(InBoard, Nline, Ncolumn, '  '),
+		setPiece(InBoard, Nline, Ncolumn, Barragoon, OutBoard).
+/* ---------------------------------------------------*/
 
 barragoon:-currentBoard(Board),gamePrint(Board),nl,currentAside(Aside),printAside(Aside).
