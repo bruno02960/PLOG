@@ -18,11 +18,29 @@ subAside(InAside, OutAside):-
 	OutAside is InAside-2.
 /* ------------------------------------------------*/
 
+barragoon(no).
+barragoon(or).
+barragoon(ol).
+barragoon(ot).
+barragoon(ob).
+barragoon(th).
+barragoon(tv).
+barragoon(rr).
+barragoon(rl).
+barragoon(rt).
+barragoon(rb).
+barragoon(lr).
+barragoon(ll).
+barragoon(lt).
+barragoon(lb).
+barragoon(at).
+
 /* Coloca o barragoon com o símbolo desejado na posição desejada, caso esta esteja livre */
 putBarragoon(InBoard, OutBoard):-
-	repeat
+	repeat,
 		write('Barragoon: '),
 		read(Barragoon),
+		barragoon(Barragoon),
 		nl,
 		/* Handles possible bad input */
 		write('Line: '),
@@ -38,3 +56,5 @@ putBarragoon(InBoard, OutBoard):-
 /* ---------------------------------------------------*/
 
 barragoon:-currentBoard(Board),gamePrint(Board),nl,currentAside(Aside),printAside(Aside).
+
+/* ----------------------- */
