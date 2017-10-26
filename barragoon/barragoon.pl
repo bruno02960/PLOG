@@ -1,5 +1,6 @@
 :-include('gamePrinting.pl').
 :-include('pieceHandling.pl').
+:- use_module(library(lists)).
 
 currentBoard([	['  ','4W','3W','  ','3W','4W','  '],
 								['  ','  ','2W','3W','2W','  ','  '],
@@ -42,15 +43,12 @@ putBarragoon(InBoard, OutBoard):-
 		read(Barragoon),
 		barragoon(Barragoon),
 		nl,
-		/* Handles possible bad input */
 		write('Line: '),
 		read(Nline),
 		nl,
-		/* Handles possible bad input */
 		write('Column: '),
 		read(Ncolumn),
 		nl,
-		/* Handles possible bad input */
 		getPiece(InBoard, Nline, Ncolumn, '  '),
 		setPiece(InBoard, Nline, Ncolumn, Barragoon, OutBoard).
 /* ---------------------------------------------------*/
@@ -58,6 +56,18 @@ putBarragoon(InBoard, OutBoard):-
 barragoon:-currentBoard(Board),gamePrint(Board),nl,currentAside(Aside),printAside(Aside).
 
 /* ----------------------- */
+
+matrix(Matrix, I, J, Letter) :-
+    nth0(I, Matrix, Row),
+    nth0(J, Row, Value),
+		name(Value, [_|[Le|_]]),
+		Le=Letter.
+
+
+showResult(Player):-
+	write(Player),
+	write(' won! Congrats!'),
+	nl.
 
 /* By using name(?Atomic, ?CodeList) we can retrieve ascii code list and,
 therefore, piece's player and value */
