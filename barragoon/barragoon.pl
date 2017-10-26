@@ -61,3 +61,20 @@ barragoon:-currentBoard(Board),gamePrint(Board),nl,currentAside(Aside),printAsid
 
 /* By using name(?Atomic, ?CodeList) we can retrieve ascii code list and,
 therefore, piece's player and value */
+
+/*gameOver(Board, Nline, Ncolumn):-
+	repeat,
+
+	checkRowByRow([]).
+	checkRowByRow([Line|Rest]) :-
+		checkSingleRow(Line),
+		checkRowByRow(Rest).
+
+	checkSingleRow([Cell]):-
+		name(Cell,[No|[Le|_]])...
+
+	checkSingleRow([Cell|More]):-
+		write(Cell),
+		checkSingleRow(More).
+
+	Checks if all pieces in game have or only W or only B */
