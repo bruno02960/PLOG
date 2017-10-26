@@ -58,3 +58,6 @@ putBarragoon(InBoard, OutBoard):-
 barragoon:-currentBoard(Board),gamePrint(Board),nl,currentAside(Aside),printAside(Aside).
 
 /* ----------------------- */
+
+/* By using name(?Atomic, ?CodeList) we can retrieve ascii code list and,
+therefore, piece's player and value */
