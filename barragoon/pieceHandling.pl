@@ -13,20 +13,20 @@ getElePos(Pos, [_|Rest], Element) :-
 
 /* Coloca uma peça no tabuleiro de jogo */
 setPiece(InBoard, Nline, Ncolumn, Piece, OutBoard) :-
-	setNaLine(Nline, InBoard, Ncolumn, Piece, OutBoard).
+	setInLine(Nline, InBoard, Ncolumn, Piece, OutBoard).
 
-setNaLine(1, [Line|Rest], Ncolumn, Piece, [NewLine|Rest]):-
-	setNaColuna(Ncolumn, Line, Piece, NewLine).
+setInLine(1, [Line|Rest], Ncolumn, Piece, [NewLine|Rest]):-
+	setInColumn(Ncolumn, Line, Piece, NewLine).
 
-setNaLine(Pos, [Line|Rest], Ncolumn, Piece, [Line|NewLine]):-
+setInLine(Pos, [Line|Rest], Ncolumn, Piece, [Line|NewLine]):-
 	Pos > 1,
 	Next is Pos-1,
-	setNaLine(Next, Rest, Ncolumn, Piece, NewLine).
+	setInLine(Next, Rest, Ncolumn, Piece, NewLine).
 
-setNaColuna(1, [_|Rest], Piece, [Piece|Rest]).
+setInColumn(1, [_|Rest], Piece, [Piece|Rest]).
 
-setNaColuna(Pos, [X|Rest], Piece, [X|NewRest]):-
+setInColumn(Pos, [X|Rest], Piece, [X|NewRest]):-
 	Pos > 1,
 	Next is Pos-1,
-	setNaColuna(Next, Rest, Piece, NewRest).
+	setInColumn(Next, Rest, Piece, NewRest).
 /* ------------------------------------------*/

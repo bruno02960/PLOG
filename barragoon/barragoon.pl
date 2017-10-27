@@ -18,6 +18,7 @@ board([	['  ','4W','3W','  ','3W','4W','  '],
 aside(24).
 
 player('W').
+
 changePlayer('W', 'B').
 changePlayer('B', 'W').
 
@@ -105,12 +106,40 @@ gameOver(Board, Loser):-
 
 /*Checks if all pieces in game have or only W or only B */
 
+askPlay(CurrPlayer, BoardIn, BoardOut):-
+	write(CurrPlayer),
+	write(' turn'),
+	nl,
+		repeat,
+			write('Select piece:'),
+			nl,
+			write('Line:'),
+			read(Nline),
+			nl,
+			write('Column:'),
+			read(Ncolumn),
+			nl,
+			getPiece(BoardIn, Nline, Ncolumn, Piece),
+			name(Piece,[_|[Color|_]]),
+			name(CurrPlayer, [Ascii|_]),
+			Ascii=Color.															/* Fail condition */
+
+
+/*
+makesPlay(Player, BoardIn, BoardOut):-
+	askPlay(Player, BoardIn, BoardOut),*/
+
 play:-
       board(BoardIn),
+			player(PlayerIn),
       assert(board(BoardIn)),             /* stores in the internal Prolog DB */
-      repeat,
+			assert(player(PlayerIn)),
+			repeat,
         retract(board(BoardCurr)),     		/* retrieves from the DB */
-        /*once(fazJogada(BoardCurr, BoardOut)),*/
+				retract(player(PlayerCurr)),
+				once(askPlay(PlayerCurr,BoardCurr, BoardOut)),
         assert(board(BoardOut)),
+				changePlayer(PlayerCurr, NewPlayer),
+				assert(player(NewPlayer)).
         gameOver(BoardIn, Loser),
       	showResult(Loser).
