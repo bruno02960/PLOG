@@ -91,7 +91,7 @@ joga:-
       repeat,
         retract(tabuleiro(TabActual)),      //vai buscar a base de dados
         once(fazJogada(TabActual, NovoTab)),
-        assert(tabuleiro, NovoTab),
+        assert(tabuleiro(NovoTab)),
         gameOver,
       mostraResultado.
 

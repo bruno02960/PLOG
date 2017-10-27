@@ -1,6 +1,7 @@
 :-include('gamePrinting.pl').
 :-include('pieceHandling.pl').
 :- use_module(library(lists)).
+:- dynamic currentAside/1.
 
 currentBoard([	['  ','4W','3W','  ','3W','4W','  '],
 								['  ','  ','2W','3W','2W','  ','  '],
@@ -14,9 +15,12 @@ currentBoard([	['  ','4W','3W','  ','3W','4W','  '],
 
 currentAside(24).
 
-/* Subtrai duas unidades ao Aside - AINDA NÃO GUARDA*/
-subAside(InAside, OutAside):-
-	OutAside is InAside-2.
+/* Subtrai duas unidades ao Aside*/
+subAside:-
+	retract(currentAside(InAside)),
+	OutAside is InAside-2,
+	assert(currentAside(OutAside)).
+
 /* ------------------------------------------------*/
 
 barragoon(no).
@@ -57,11 +61,20 @@ barragoon:-currentBoard(Board),gamePrint(Board),nl,currentAside(Aside),printAsid
 
 /* ----------------------- */
 
-matrix(Matrix, I, J, Letter) :-		/* B - 66 / W - 87 */
-    nth0(I, Matrix, Row),
-    nth0(J, Row, Value),
-		name(Value, [_|[Le|_]]),
-		Le=Letter.
+round:-
+	assert(currentAside(X)),
+	retract(currentAside(X)),
+	subAside(X,Y),
+	assert(currentAside(Y)).
+
+/* ----------------------- */
+
+showResult(Player):-
+	write(Player),
+	write(' won! Congrats!'),
+	nl.
+
+/* ----------------------- */
 
 noPiece(Board, Color) :-
 		member(Line, Board),
@@ -70,11 +83,6 @@ noPiece(Board, Color) :-
 		!, fail.
 
 noPiece(_,_).
-
-showResult(Player):-
-	write(Player),
-	write(' won! Congrats!'),
-	nl.
 
 /* By using name(?Atomic, ?CodeList) we can retrieve ascii code list and,
 therefore, piece's player and value */
