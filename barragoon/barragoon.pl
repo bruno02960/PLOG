@@ -57,12 +57,19 @@ barragoon:-currentBoard(Board),gamePrint(Board),nl,currentAside(Aside),printAsid
 
 /* ----------------------- */
 
-matrix(Matrix, I, J, Letter) :-
+matrix(Matrix, I, J, Letter) :-		/* B - 66 / W - 87 */
     nth0(I, Matrix, Row),
     nth0(J, Row, Value),
 		name(Value, [_|[Le|_]]),
 		Le=Letter.
 
+noPiece(Board, Color) :-
+		member(Line, Board),
+		member(Piece, Line),
+		name(Piece,[_|[Color|_]]),
+		!, fail.
+
+noPiece(_,_).
 
 showResult(Player):-
 	write(Player),
@@ -72,19 +79,11 @@ showResult(Player):-
 /* By using name(?Atomic, ?CodeList) we can retrieve ascii code list and,
 therefore, piece's player and value */
 
-/*gameOver(Board, Nline, Ncolumn):-
-	repeat,
+gameOver(Board, Loser):-
+	(
+	noPiece(Board, 66), Loser=66
+	;
+	noPiece(Board, 87), Loser=87
+	).
 
-	checkRowByRow([]).
-	checkRowByRow([Line|Rest]) :-
-		checkSingleRow(Line),
-		checkRowByRow(Rest).
-
-	checkSingleRow([Cell]):-
-		name(Cell,[No|[Le|_]])...
-
-	checkSingleRow([Cell|More]):-
-		write(Cell),
-		checkSingleRow(More).
-
-	Checks if all pieces in game have or only W or only B */
+/*Checks if all pieces in game have or only W or only B */
