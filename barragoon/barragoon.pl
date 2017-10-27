@@ -1,25 +1,31 @@
 :-include('gamePrinting.pl').
 :-include('pieceHandling.pl').
 :- use_module(library(lists)).
-:- dynamic currentAside/1.
+:- dynamic aside/1.
+:- dynamic board/1.
+:- dynamic player/1.
 
-currentBoard([	['  ','4W','3W','  ','3W','4W','  '],
+board([	['  ','4W','3W','  ','3W','4W','  '],
 								['  ','  ','2W','3W','2W','  ','  '],
 								['  ','  ','  ','  ','  ','  ','  '],
-								['  ',no,'  ','  ','  ',no,'  '],
-								[no,'  ',no,'  ',no,'  ',no],
-								['  ',no,'  ','  ','  ',no,'  '],
+								['  ','no','  ','  ','  ','no','  '],
+								['no','  ','no','  ','no','  ','no'],
+								['  ','no','  ','  ','  ','no','  '],
 								['  ','  ','  ','  ','  ','  ','  '],
-								['  ','  ','2B','3B','2B','  ','  '],
-								['  ','4B','3B','  ','3B','4B','  ']]).
+								['  ','  ','2A','3A','2A','  ','  '],
+								['  ','4A','3A','  ','3A','4A','  ']]).
 
-currentAside(24).
+aside(24).
+
+player('W').
+changePlayer('W', 'B').
+changePlayer('B', 'W').
 
 /* Subtrai duas unidades ao Aside*/
 subAside:-
-	retract(currentAside(InAside)),
+	retract(aside(InAside)),
 	OutAside is InAside-2,
-	assert(currentAside(OutAside)).
+	assert(aside(OutAside)).
 
 /* ------------------------------------------------*/
 
@@ -57,22 +63,25 @@ putBarragoon(InBoard, OutBoard):-
 		setPiece(InBoard, Nline, Ncolumn, Barragoon, OutBoard).
 /* ---------------------------------------------------*/
 
-barragoon:-currentBoard(Board),gamePrint(Board),nl,currentAside(Aside),printAside(Aside).
+barragoon:-board(Board),gamePrint(Board),nl,aside(Aside),printAside(Aside).
 
 /* ----------------------- */
 
-round:-
-	assert(currentAside(X)),
-	retract(currentAside(X)),
-	subAside(X,Y),
-	assert(currentAside(Y)).
-
-/* ----------------------- */
-
-showResult(Player):-
-	write(Player),
+showResult(Loser):-
+	(
+	Loser=66, name(X,[87]), write(X)
+	;
+	Loser=87, name(X,[66]), write(X)
+	),
 	write(' won! Congrats!'),
 	nl.
+
+/* ----------------------- */
+
+getNumber(Board, Nline, Ncolumn, Number):-
+	getPiece(Board, Nline, Ncolumn, Piece),
+	name(Piece,[Head|_]),
+	name(Number,[Head]).
 
 /* ----------------------- */
 
@@ -95,3 +104,13 @@ gameOver(Board, Loser):-
 	).
 
 /*Checks if all pieces in game have or only W or only B */
+
+play:-
+      board(BoardIn),
+      assert(board(BoardIn)),             /* stores in the internal Prolog DB */
+      repeat,
+        retract(board(BoardCurr)),     		/* retrieves from the DB */
+        /*once(fazJogada(BoardCurr, BoardOut)),*/
+        assert(board(BoardOut)),
+        gameOver(BoardIn, Loser),
+      	showResult(Loser).
