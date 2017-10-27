@@ -6,14 +6,14 @@
 :- dynamic player/1.
 
 board([	['  ','4W','3W','  ','3W','4W','  '],
-								['  ','  ','2W','3W','2W','  ','  '],
-								['  ','  ','  ','  ','  ','  ','  '],
-								['  ','no','  ','  ','  ','no','  '],
-								['no','  ','no','  ','no','  ','no'],
-								['  ','no','  ','  ','  ','no','  '],
-								['  ','  ','  ','  ','  ','  ','  '],
-								['  ','  ','2A','3A','2A','  ','  '],
-								['  ','4A','3A','  ','3A','4A','  ']]).
+				['  ','  ','2W','3W','2W','  ','  '],
+				['  ','  ','  ','  ','  ','  ','  '],
+				['  ','no','  ','  ','  ','no','  '],
+				['no','  ','no','  ','no','  ','no'],
+				['  ','no','  ','  ','  ','no','  '],
+				['  ','  ','  ','  ','  ','  ','  '],
+				['  ','  ','2A','3A','2A','  ','  '],
+				['  ','4A','3A','  ','3A','4A','  ']]).
 
 aside(24).
 
@@ -79,8 +79,7 @@ showResult(Loser):-
 
 /* ----------------------- */
 
-getNumber(Board, Nline, Ncolumn, Number):-
-	getPiece(Board, Nline, Ncolumn, Piece),
+getNumber(Piece, Number):-
 	name(Piece,[Head|_]),
 	name(Number,[Head]).
 
@@ -106,6 +105,9 @@ gameOver(Board, Loser):-
 
 /*Checks if all pieces in game have or only W or only B */
 
+makeMove(Piece, Number):-
+
+
 askPlay(CurrPlayer, BoardIn, BoardOut):-
 	write(CurrPlayer),
 	write(' turn'),
@@ -122,8 +124,9 @@ askPlay(CurrPlayer, BoardIn, BoardOut):-
 			getPiece(BoardIn, Nline, Ncolumn, Piece),
 			name(Piece,[_|[Color|_]]),
 			name(CurrPlayer, [Ascii|_]),
-			Ascii=Color.															/* Fail condition */
-
+			Ascii=Color,															/* Fail condition */
+			getNumber(Piece, Number),
+			write(Number).
 
 /*
 makesPlay(Player, BoardIn, BoardOut):-
