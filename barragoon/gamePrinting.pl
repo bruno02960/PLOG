@@ -27,3 +27,14 @@ printAside(Aside) :-
 	write('Aside='),
 	write(Aside),
 	nl.
+
+/* ----------------------- */
+
+showResult(Loser):-
+	(
+	Loser=66, name(X,[87]), write(X)
+	;
+	Loser=87, name(X,[66]), write(X)
+	),
+	write(' won! Congrats!'),
+	nl.

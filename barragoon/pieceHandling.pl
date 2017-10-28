@@ -1,7 +1,7 @@
 /* Vai buscar a peça que ocupa uma posição do tabuleiro de jogo */
-getPiece(Board, Nline, Ncolumnumn, Piece) :-
+getPiece(Board, Nline, Ncolumn, Piece) :-
 	getElePos(Nline, Board, Line),
-	getElePos(Ncolumnumn, Line, Piece).
+	getElePos(Ncolumn, Line, Piece).
 
 getElePos(1, [Element|_], Element).
 
@@ -9,6 +9,18 @@ getElePos(Pos, [_|Rest], Element) :-
 	Pos > 1,
 	Next is Pos-1,
 	getElePos(Next, Rest, Element).
+/* ------------------------------------------*/
+
+getColor(Piece, Color):-
+	name(Piece,[_|[Head|_]]),
+	name(Color, [Head]).
+
+/* ------------------------------------------*/
+
+getNumber(Piece, Number):-
+	name(Piece,[Head|_]),
+	name(Number,[Head]).
+
 /* ------------------------------------------*/
 
 /* Coloca uma peça no tabuleiro de jogo */
