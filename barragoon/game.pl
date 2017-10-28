@@ -13,8 +13,8 @@ board([	['  ','4W','3W','  ','3W','4W','  '],
 				['no','  ','no','  ','no','  ','no'],
 				['  ','no','  ','  ','  ','no','  '],
 				['  ','  ','  ','  ','  ','  ','  '],
-				['  ','  ','2A','3A','2A','  ','  '],
-				['  ','4A','3A','  ','3A','4A','  ']]).
+				['  ','  ','2B','3B','2B','  ','  '],
+				['  ','4B','3B','  ','3B','4B','  ']]).
 
 aside(24).
 
@@ -69,9 +69,12 @@ askPlay(CurrPlayer, BoardIn, BoardOut):-
 			getPiece(BoardIn, Nline, Ncolumn, Piece),
 			name(Piece,[_|[Color|_]]),
 			name(CurrPlayer, [Ascii|_]),
+			write(Ascii),
+			nl,
+			write(Color),
+			nl,
 			Ascii=Color,															/* Fail condition */
-			getNumber(Piece, Number),
-			write(Number).
+			getNumber(Piece, Number).
 
 play:-
       board(BoardIn),
@@ -79,11 +82,13 @@ play:-
       assert(board(BoardIn)),             /* stores in the internal Prolog DB */
 			assert(player(PlayerIn)),
 			repeat,
+				write('HERE'),
+				nl,
         retract(board(BoardCurr)),     		/* retrieves from the DB */
 				retract(player(PlayerCurr)),
 				once(askPlay(PlayerCurr,BoardCurr, BoardOut)),
-        assert(board(BoardOut)),
+        assert(board(BoardIn)),						/* Change later to boardOut */
 				changePlayer(PlayerCurr, NewPlayer),
-				assert(player(NewPlayer)).
+				assert(player(NewPlayer)),
         gameOver(BoardIn, Loser),
       	showResult(Loser).
