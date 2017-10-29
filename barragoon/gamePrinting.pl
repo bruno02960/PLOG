@@ -38,3 +38,13 @@ showResult(Loser):-
 	),
 	write(' won! Congrats!'),
 	nl.
+
+/* ----------------------- */
+
+menu:-
+	write('*** BARRAGOON ***'), nl,
+	write('1. Player vs Player'), nl,
+	write('2. Player vs CPU'), nl,
+	write('3. CPU vs CPU'), nl,
+	write('Select an option (0 to exit): '),	read(Option).
+	/* execute(Option). */

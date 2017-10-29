@@ -69,12 +69,8 @@ askPlay(CurrPlayer, BoardIn, BoardOut):-
 			getPiece(BoardIn, Nline, Ncolumn, Piece),
 			name(Piece,[_|[Color|_]]),
 			name(CurrPlayer, [Ascii|_]),
-			write(Ascii),
-			nl,
-			write(Color),
-			nl,
-			Ascii=Color,															/* Fail condition */
-			getNumber(Piece, Number).
+			Ascii=Color.															/* Fail condition */
+			/*getNumber(Piece, Number).*/
 
 play:-
       board(BoardIn),
@@ -82,13 +78,11 @@ play:-
       assert(board(BoardIn)),             /* stores in the internal Prolog DB */
 			assert(player(PlayerIn)),
 			repeat,
-				write('HERE'),
-				nl,
         retract(board(BoardCurr)),     		/* retrieves from the DB */
 				retract(player(PlayerCurr)),
 				once(askPlay(PlayerCurr,BoardCurr, BoardOut)),
-        assert(board(BoardIn)),						/* Change later to boardOut */
 				changePlayer(PlayerCurr, NewPlayer),
 				assert(player(NewPlayer)),
+        assert(board(BoardIn)),						/* Change later to boardOut */
         gameOver(BoardIn, Loser),
       	showResult(Loser).
