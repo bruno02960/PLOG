@@ -41,6 +41,14 @@ showResult(Loser):-
 
 /* ----------------------- */
 
+levelSelection:-
+	write('*** SELECT DIFFICULTY ***'), nl,
+	write('1. Easier'), nl,
+	write('2. Hardier'), nl,
+	write('Select an option (0 to exit): '),	read(Level).
+
+/* ---------------------- */
+
 menu:-
 	write('*** BARRAGOON ***'), nl,
 	write('1. Player vs Player'), nl,

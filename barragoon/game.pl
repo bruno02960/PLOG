@@ -67,8 +67,7 @@ evaluateDown(BoardIn, BoardOut, Available, Nline, Ncolumn, Turned):-
 	getPiece(BoardIn, Nline, Ncolumn, Piece),
 	nl,
 	(
-/*	write('2 - Available= '),
-	write(Available), nl,*/
+/*	write('2 - Available= '),	write(Available), nl,*/
 	Available = 1, Piece = '  ', /*write('2'), nl,*/
 	write('Nline= '),
 	write(Nline), nl,
@@ -78,8 +77,7 @@ evaluateDown(BoardIn, BoardOut, Available, Nline, Ncolumn, Turned):-
 	gamePrint(BoardOut), nl,
 	searchMoves(BoardOut, BoardOut, Available, Nline, Ncolumn, Turned, 'down')
 	;
-	/*write('3 - Available= '),
-	write(Available), nl,*/
+	/*write('3 - Available= '),	write(Available), nl,*/
 	Available = 0, player(X), getColor(Piece, ColorPi),
 		(X\=ColorPi, ColorPi\=' ',
 		setPiece(BoardIn, Nline, Ncolumn, 'C', BoardOut)
@@ -89,8 +87,7 @@ evaluateDown(BoardIn, BoardOut, Available, Nline, Ncolumn, Turned):-
 		setPiece(BoardIn, Nline, Ncolumn, 'F', BoardOut)
 		)
 	;
-	/*write('1 - Available= '),
-	write(Available), nl,*/
+	/*write('1 - Available= '),	write(Available), nl,*/
 	Available > 0, Piece = '  ', /*write('1'), nl,*/
 	searchMoves(BoardIn, BoardOut, Available, Nline, Ncolumn, Turned, 'down')
 	).
@@ -103,14 +100,11 @@ searchMoves(BoardIn, BoardOut, Available, Nline, Ncolumn, Turned, From) :-
 	Nline < 8, NewNline is Nline + 1,
 	evaluateDown(BoardIn, BoardOut, NewAvailable, NewNline, Ncolumn, Turned)
 	/*;
-	Nline < 8, NewNline is Nline - 1,
-	evaluateUp(BoardIn, BoardOut, NewAvailable, NewNline, Ncolumn, Turned)
+	Nline < 8, NewNline is Nline - 1,	evaluateUp(BoardIn, BoardOut, NewAvailable, NewNline, Ncolumn, Turned)
 	;
-	Ncolumn > 1, NewNcolumn is Ncolumn - 1,
-	evaluateLeft(BoardIn, BoardOut, NewAvailable, Nline, NewNcolumn, Turned)
+	Ncolumn > 1, NewNcolumn is Ncolumn - 1,	evaluateLeft(BoardIn, BoardOut, NewAvailable, Nline, NewNcolumn, Turned)
 	;
-	Ncolumn < 8, NewNcolumn is Ncolumn + 1,
-	evaluateRight(BoardIn, BoardOut, NewAvailable, Nline, NewNcolumn, Turned)*/
+	Ncolumn < 8, NewNcolumn is Ncolumn + 1,	evaluateRight(BoardIn, BoardOut, NewAvailable, Nline, NewNcolumn, Turned)*/
 	).
 
 askPlay(CurrPlayer, BoardIn, BoardOut):-
