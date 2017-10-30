@@ -6,7 +6,7 @@
 :- dynamic board/1.
 :- dynamic player/1.
 
-board([	['  ','4W','3W','  ','3W','4W','  '],
+board([	['  ','3W','3W','  ','3W','4W','  '],
 				['  ','  ','2W','3W','2W','  ','  '],
 				['  ','  ','  ','  ','  ','  ','  '],
 				['  ','no','  ','  ','  ','no','  '],
@@ -15,6 +15,16 @@ board([	['  ','4W','3W','  ','3W','4W','  '],
 				['  ','  ','  ','  ','  ','  ','  '],
 				['  ','  ','2B','3B','2B','  ','  '],
 				['  ','4B','3B','  ','3B','4B','  ']]).
+
+cleanBoard([	['  ','  ','  ','  ','  ','  ','  '],
+				['  ','  ','  ','  ','  ','  ','  '],
+				['  ','  ','  ','  ','  ','  ','  '],
+				['  ','  ','  ','  ','  ','  ','  '],
+				['  ','  ','  ','  ','  ','  ','  '],
+				['  ','  ','  ','  ','  ','  ','  '],
+				['  ','  ','  ','  ','  ','  ','  '],
+				['  ','  ','  ','  ','  ','  ','  '],
+				['  ','  ','  ','  ','  ','  ','  ']]).
 
 aside(24).
 
@@ -53,6 +63,56 @@ gameOver(Board, Loser):-
 
 /*Checks if all pieces in game have or only W or only B */
 
+evaluateDown(BoardIn, BoardOut, Available, Nline, Ncolumn, Turned):-
+	getPiece(BoardIn, Nline, Ncolumn, Piece),
+	nl,
+	(
+/*	write('2 - Available= '),
+	write(Available), nl,*/
+	Available = 1, Piece = '  ', /*write('2'), nl,*/
+	write('Nline= '),
+	write(Nline), nl,
+	write('Ncolumn= '),
+	write(Ncolumn), nl,
+	setPiece(BoardIn, Nline, Ncolumn, 'F', BoardOut),
+	gamePrint(BoardOut), nl,
+	searchMoves(BoardOut, BoardOut, Available, Nline, Ncolumn, Turned, 'down')
+	;
+	/*write('3 - Available= '),
+	write(Available), nl,*/
+	Available = 0, player(X), getColor(Piece, ColorPi),
+		(X\=ColorPi, ColorPi\=' ',
+		setPiece(BoardIn, Nline, Ncolumn, 'C', BoardOut)
+		;
+		Piece = '  ', /*write('3'), nl,*/
+	/*	gamePrint(BoardIn),*/
+		setPiece(BoardIn, Nline, Ncolumn, 'F', BoardOut)
+		)
+	;
+	/*write('1 - Available= '),
+	write(Available), nl,*/
+	Available > 0, Piece = '  ', /*write('1'), nl,*/
+	searchMoves(BoardIn, BoardOut, Available, Nline, Ncolumn, Turned, 'down')
+	).
+
+searchMoves(BoardIn, BoardOut, Available, Nline, Ncolumn, Turned, From) :-
+	/*write('BoardIn: '), nl,*/
+	NewAvailable is Available - 1,
+	/*write(Nline),*/
+	(
+	Nline < 8, NewNline is Nline + 1,
+	evaluateDown(BoardIn, BoardOut, NewAvailable, NewNline, Ncolumn, Turned)
+	/*;
+	Nline < 8, NewNline is Nline - 1,
+	evaluateUp(BoardIn, BoardOut, NewAvailable, NewNline, Ncolumn, Turned)
+	;
+	Ncolumn > 1, NewNcolumn is Ncolumn - 1,
+	evaluateLeft(BoardIn, BoardOut, NewAvailable, Nline, NewNcolumn, Turned)
+	;
+	Ncolumn < 8, NewNcolumn is Ncolumn + 1,
+	evaluateRight(BoardIn, BoardOut, NewAvailable, Nline, NewNcolumn, Turned)*/
+	).
+
 askPlay(CurrPlayer, BoardIn, BoardOut):-
 	write(CurrPlayer),
 	write(' turn'),
@@ -69,8 +129,10 @@ askPlay(CurrPlayer, BoardIn, BoardOut):-
 			getPiece(BoardIn, Nline, Ncolumn, Piece),
 			name(Piece,[_|[Color|_]]),
 			name(CurrPlayer, [Ascii|_]),
-			Ascii=Color.															/* Fail condition */
-			/*getNumber(Piece, Number).*/
+			Ascii=Color,															/* Fail condition */
+			getNumber(Piece, Number),
+			searchMoves(BoardIn, BoardOut, Number, Nline, Ncolumn, '0', 'null'),
+			gamePrint(BoardOut).
 
 play:-
       board(BoardIn),
@@ -80,9 +142,11 @@ play:-
 			repeat,
         retract(board(BoardCurr)),     		/* retrieves from the DB */
 				retract(player(PlayerCurr)),
+				/*cleanBoard(BoardOut),*/
 				once(askPlay(PlayerCurr,BoardCurr, BoardOut)),
 				changePlayer(PlayerCurr, NewPlayer),
 				assert(player(NewPlayer)),
         assert(board(BoardIn)),						/* Change later to boardOut */
         gameOver(BoardIn, Loser),
-      	showResult(Loser).
+      	showResult(Loser),
+			!.
