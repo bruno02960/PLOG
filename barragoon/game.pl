@@ -3,12 +3,13 @@
 :- include('barragoon.pl').
 :- include('piece2.pl').
 :- include('piece3.pl').
+:- include('piece4.pl').
 :- use_module(library(lists)).
 :- dynamic aside/1.
 :- dynamic board/1.
 :- dynamic player/1.
 
-board([	['  ','3W','3W','  ','3W','4W','  '],
+board([	['  ','4W','3W','  ','3W','4W','  '],
 				['  ','  ','2W','3W','2W','  ','  '],
 				['  ','  ','  ','  ','  ','  ','  '],
 				['  ','no','  ','  ','  ','no','  '],
@@ -84,9 +85,8 @@ validateMove(CurrPlayer, BoardIn, PieceLine, PieceColumn, MoveLine, MoveColumn):
 	;
 		Number=3, validateThree(CurrPlayer, BoardIn, PieceLine, PieceColumn, MoveLine, MoveColumn)
 	;
-		Number=4
-	),
-	write(Number), nl.
+		Number=4, validateFour(CurrPlayer, BoardIn, PieceLine, PieceColumn, MoveLine, MoveColumn)
+	).
 
 askPlay(CurrPlayer, BoardIn, BoardOut):-
 	repeat,

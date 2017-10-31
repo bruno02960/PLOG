@@ -4,19 +4,16 @@ shortMoveTwo(BoardIn, PieceLine, PieceColumn, MoveLine, MoveColumn):-
     MoveLine =:= PieceLine + 1,
     MoveColumn = PieceColumn,
     getPiece(BoardIn, PieceLine + 1, PieceColumn, '  ')
-
   ;
     /* FINISHED CONDITION */
     MoveLine =:= PieceLine - 1,
     MoveColumn = PieceColumn,
     getPiece(BoardIn, PieceLine - 1, PieceColumn, '  ')
-
   ;
     /* FINISHED CONDITION */
     MoveColumn =:= PieceColumn - 1,
     MoveLine = PieceLine,
     getPiece(BoardIn, PieceLine, PieceColumn - 1, '  ')
-
   ;
     /* FINISHED CONDITION */
     MoveColumn =:= PieceColumn + 1,
@@ -35,16 +32,16 @@ moveDownTwo(CurrPlayer, BoardIn, PieceLine, PieceColumn, MoveLine, MoveColumn):-
     ;
     getPiece(BoardIn, PieceLine + 1, PieceColumn, 'tv')
   ),
-  getPiece(BoardIn, PieceLine + 2, PieceColumn, '  '),
-  /* Capture piece or barragoon */
-  getPiece(BoardIn, PieceLine + 2, PieceColumn, Piece),
-  Piece \= 'at',
-  name(Piece,[_|[Color|_]]),
-  name(CurrPlayer, [Ascii|_]),
-  Ascii \= Color
-
+  (
+    getPiece(BoardIn, PieceLine + 2, PieceColumn, '  ')
+    ;
+    getPiece(BoardIn, PieceLine + 2, PieceColumn, Piece),
+    Piece \= 'at',
+    name(Piece,[_|[Color|_]]),
+    name(CurrPlayer, [Ascii|_]),
+    Ascii \= Color
+  )
 ;
-
   MoveLine =:= PieceLine + 1,
   MoveColumn =:= PieceColumn + 1,
   (
@@ -54,16 +51,16 @@ moveDownTwo(CurrPlayer, BoardIn, PieceLine, PieceColumn, MoveLine, MoveColumn):-
     ;
     getPiece(BoardIn, PieceLine + 1, PieceColumn, 'at')
   ),
-  getPiece(BoardIn, PieceLine + 1, PieceColumn + 1, '  '),
-  /* Capture piece or barragoon */
-  getPiece(BoardIn, PieceLine + 1, PieceColumn + 1, Piece),
-  Piece \= 'at',
-  name(Piece,[_|[Color|_]]),
-  name(CurrPlayer, [Ascii|_]),
-  Ascii \= Color
-
+  (
+    getPiece(BoardIn, PieceLine + 1, PieceColumn + 1, '  ')
+    ;
+    getPiece(BoardIn, PieceLine + 1, PieceColumn + 1, Piece),
+    Piece \= 'at',
+    name(Piece,[_|[Color|_]]),
+    name(CurrPlayer, [Ascii|_]),
+    Ascii \= Color
+  )
 ;
-
   MoveLine =:= PieceLine + 1,
   MoveColumn =:= PieceColumn - 1,
   (
@@ -73,13 +70,15 @@ moveDownTwo(CurrPlayer, BoardIn, PieceLine, PieceColumn, MoveLine, MoveColumn):-
     ;
     getPiece(BoardIn, PieceLine + 1, PieceColumn, 'at')
   ),
-  getPiece(BoardIn, PieceLine + 1, PieceColumn - 1, '  '),
-  /* Capture piece or barragoon */
-  getPiece(BoardIn, PieceLine + 1, PieceColumn - 1, Piece),
-  Piece \= 'at',
-  name(Piece,[_|[Color|_]]),
-  name(CurrPlayer, [Ascii|_]),
-  Ascii \= Color
+  (
+    getPiece(BoardIn, PieceLine + 1, PieceColumn - 1, '  ')
+    ;
+    getPiece(BoardIn, PieceLine + 1, PieceColumn - 1, Piece),
+    Piece \= 'at',
+    name(Piece,[_|[Color|_]]),
+    name(CurrPlayer, [Ascii|_]),
+    Ascii \= Color
+  )
 ).
 
 moveUpTwo(CurrPlayer, BoardIn, PieceLine, PieceColumn, MoveLine, MoveColumn):-
@@ -93,16 +92,16 @@ moveUpTwo(CurrPlayer, BoardIn, PieceLine, PieceColumn, MoveLine, MoveColumn):-
     ;
     getPiece(BoardIn, PieceLine - 1, PieceColumn, 'tv')
   ),
-  getPiece(BoardIn, PieceLine - 2, PieceColumn, '  '),
-  /* Capture piece or barragoon */
-  getPiece(BoardIn, PieceLine - 2, PieceColumn, Piece),
-  Piece \= 'at',
-  name(Piece,[_|[Color|_]]),
-  name(CurrPlayer, [Ascii|_]),
-  Ascii \= Color
-
+  (
+    getPiece(BoardIn, PieceLine - 2, PieceColumn, '  ')
+    ;
+    getPiece(BoardIn, PieceLine - 2, PieceColumn, Piece),
+    Piece \= 'at',
+    name(Piece,[_|[Color|_]]),
+    name(CurrPlayer, [Ascii|_]),
+    Ascii \= Color
+  )
 ;
-
   MoveLine =:= PieceLine - 1,
   MoveColumn =:= PieceColumn - 1,
   (
@@ -112,16 +111,16 @@ moveUpTwo(CurrPlayer, BoardIn, PieceLine, PieceColumn, MoveLine, MoveColumn):-
     ;
     getPiece(BoardIn, PieceLine - 1, PieceColumn, 'at')
   ),
-  getPiece(BoardIn, PieceLine - 1, PieceColumn - 1, '  '),
-  /* Capture piece or barragoon */
-  getPiece(BoardIn, PieceLine - 1, PieceColumn - 1, Piece),
-  Piece \= 'at',
-  name(Piece,[_|[Color|_]]),
-  name(CurrPlayer, [Ascii|_]),
-  Ascii \= Color
-
+  (
+    getPiece(BoardIn, PieceLine - 1, PieceColumn - 1, '  ')
+    ;
+    getPiece(BoardIn, PieceLine - 1, PieceColumn - 1, Piece),
+    Piece \= 'at',
+    name(Piece,[_|[Color|_]]),
+    name(CurrPlayer, [Ascii|_]),
+    Ascii \= Color
+  )
 ;
-
   MoveLine =:= PieceLine - 1,
   MoveColumn =:= PieceColumn + 1,
   (
@@ -131,13 +130,15 @@ moveUpTwo(CurrPlayer, BoardIn, PieceLine, PieceColumn, MoveLine, MoveColumn):-
     ;
     getPiece(BoardIn, PieceLine - 1, PieceColumn, 'at')
   ),
-  getPiece(BoardIn, PieceLine - 1, PieceColumn + 1, '  '),
-  /* Capture piece or barragoon */
-  getPiece(BoardIn, PieceLine - 1, PieceColumn + 1, Piece),
-  Piece \= 'at',
-  name(Piece,[_|[Color|_]]),
-  name(CurrPlayer, [Ascii|_]),
-  Ascii \= Color
+  (
+    getPiece(BoardIn, PieceLine - 1, PieceColumn + 1, '  ')
+    ;
+    getPiece(BoardIn, PieceLine - 1, PieceColumn + 1, Piece),
+    Piece \= 'at',
+    name(Piece,[_|[Color|_]]),
+    name(CurrPlayer, [Ascii|_]),
+    Ascii \= Color
+  )
 ).
 
 moveRightTwo(CurrPlayer, BoardIn, PieceLine, PieceColumn, MoveLine, MoveColumn):-
@@ -151,16 +152,16 @@ moveRightTwo(CurrPlayer, BoardIn, PieceLine, PieceColumn, MoveLine, MoveColumn):
     ;
     getPiece(BoardIn, PieceLine, PieceColumn + 1, 'th')
   ),
-  getPiece(BoardIn, PieceLine, PieceColumn + 2, '  '),
-  /* Capture piece or barragoon */
-  getPiece(BoardIn, PieceLine, PieceColumn + 2, Piece),
-  Piece \= 'at',
-  name(Piece,[_|[Color|_]]),
-  name(CurrPlayer, [Ascii|_]),
-  Ascii \= Color
-
+  (
+    getPiece(BoardIn, PieceLine, PieceColumn + 2, '  ')
+    ;
+    getPiece(BoardIn, PieceLine, PieceColumn + 2, Piece),
+    Piece \= 'at',
+    name(Piece,[_|[Color|_]]),
+    name(CurrPlayer, [Ascii|_]),
+    Ascii \= Color
+  )
 ;
-
   MoveLine =:= PieceLine + 1,
   MoveColumn =:= PieceColumn + 1,
   (
@@ -170,16 +171,16 @@ moveRightTwo(CurrPlayer, BoardIn, PieceLine, PieceColumn, MoveLine, MoveColumn):
     ;
     getPiece(BoardIn, PieceLine, PieceColumn + 1, 'at')
   ),
-  getPiece(BoardIn, PieceLine + 1, PieceColumn + 1, '  '),
-  /* Capture piece or barragoon */
-  getPiece(BoardIn, PieceLine + 1, PieceColumn + 1, Piece),
-  Piece \= 'at',
-  name(Piece,[_|[Color|_]]),
-  name(CurrPlayer, [Ascii|_]),
-  Ascii \= Color
-
+  (
+    getPiece(BoardIn, PieceLine + 1, PieceColumn + 1, '  ')
+    ;
+    getPiece(BoardIn, PieceLine + 1, PieceColumn + 1, Piece),
+    Piece \= 'at',
+    name(Piece,[_|[Color|_]]),
+    name(CurrPlayer, [Ascii|_]),
+    Ascii \= Color
+  )
 ;
-
   MoveLine =:= PieceLine - 1,
   MoveColumn =:= PieceColumn + 1,
   (
@@ -189,13 +190,15 @@ moveRightTwo(CurrPlayer, BoardIn, PieceLine, PieceColumn, MoveLine, MoveColumn):
     ;
     getPiece(BoardIn, PieceLine, PieceColumn + 1, 'at')
   ),
-  getPiece(BoardIn, PieceLine - 1, PieceColumn + 1, '  '),
-  /* Capture piece or barragoon */
-  getPiece(BoardIn, PieceLine - 1, PieceColumn + 1, Piece),
-  Piece \= 'at',
-  name(Piece,[_|[Color|_]]),
-  name(CurrPlayer, [Ascii|_]),
-  Ascii \= Color
+  (
+    getPiece(BoardIn, PieceLine - 1, PieceColumn + 1, '  ')
+    ;
+    getPiece(BoardIn, PieceLine - 1, PieceColumn + 1, Piece),
+    Piece \= 'at',
+    name(Piece,[_|[Color|_]]),
+    name(CurrPlayer, [Ascii|_]),
+    Ascii \= Color
+  )
 ).
 
 moveLeftTwo(CurrPlayer, BoardIn, PieceLine, PieceColumn, MoveLine, MoveColumn):-
@@ -209,16 +212,16 @@ moveLeftTwo(CurrPlayer, BoardIn, PieceLine, PieceColumn, MoveLine, MoveColumn):-
     ;
     getPiece(BoardIn, PieceLine, PieceColumn - 1, 'th')
   ),
-  getPiece(BoardIn, PieceLine, PieceColumn - 2, '  '),
-  /* Capture piece or barragoon */
-  getPiece(BoardIn, PieceLine, PieceColumn - 2, Piece),
-  Piece \= 'at',
-  name(Piece,[_|[Color|_]]),
-  name(CurrPlayer, [Ascii|_]),
-  Ascii \= Color
-
+  (
+    getPiece(BoardIn, PieceLine, PieceColumn - 2, '  ')
+    ;
+    getPiece(BoardIn, PieceLine, PieceColumn - 2, Piece),
+    Piece \= 'at',
+    name(Piece,[_|[Color|_]]),
+    name(CurrPlayer, [Ascii|_]),
+    Ascii \= Color
+  )
 ;
-
   MoveLine =:= PieceLine - 1,
   MoveColumn =:= PieceColumn - 1,
   (
@@ -228,16 +231,16 @@ moveLeftTwo(CurrPlayer, BoardIn, PieceLine, PieceColumn, MoveLine, MoveColumn):-
     ;
     getPiece(BoardIn, PieceLine, PieceColumn - 1, 'at')
   ),
-  getPiece(BoardIn, PieceLine - 1, PieceColumn - 1, '  '),
-  /* Capture piece or barragoon */
-  getPiece(BoardIn, PieceLine - 1, PieceColumn - 1, Piece),
-  Piece \= 'at',
-  name(Piece,[_|[Color|_]]),
-  name(CurrPlayer, [Ascii|_]),
-  Ascii \= Color
-
+  (
+    getPiece(BoardIn, PieceLine - 1, PieceColumn - 1, '  ')
+    ;
+    getPiece(BoardIn, PieceLine - 1, PieceColumn - 1, Piece),
+    Piece \= 'at',
+    name(Piece,[_|[Color|_]]),
+    name(CurrPlayer, [Ascii|_]),
+    Ascii \= Color
+  )
 ;
-
   MoveLine =:= PieceLine + 1,
   MoveColumn =:= PieceColumn - 1,
   (
@@ -247,13 +250,15 @@ moveLeftTwo(CurrPlayer, BoardIn, PieceLine, PieceColumn, MoveLine, MoveColumn):-
     ;
     getPiece(BoardIn, PieceLine, PieceColumn - 1, 'at')
   ),
-  getPiece(BoardIn, PieceLine + 1, PieceColumn - 1, '  '),
-  /* Capture piece or barragoon */
-  getPiece(BoardIn, PieceLine + 1, PieceColumn - 1, Piece),
-  Piece \= 'at',
-  name(Piece,[_|[Color|_]]),
-  name(CurrPlayer, [Ascii|_]),
-  Ascii \= Color
+  (
+    getPiece(BoardIn, PieceLine + 1, PieceColumn - 1, '  ')
+    ;
+    getPiece(BoardIn, PieceLine + 1, PieceColumn - 1, Piece),
+    Piece \= 'at',
+    name(Piece,[_|[Color|_]]),
+    name(CurrPlayer, [Ascii|_]),
+    Ascii \= Color
+  )
 ).
 
 validateTwo(CurrPlayer, BoardIn, PieceLine, PieceColumn, MoveLine, MoveColumn):-
