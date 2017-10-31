@@ -1,6 +1,8 @@
 :- include('gamePrinting.pl').
 :- include('pieceHandling.pl').
 :- include('barragoon.pl').
+:- include('piece2.pl').
+:- include('piece3.pl').
 :- use_module(library(lists)).
 :- dynamic aside/1.
 :- dynamic board/1.
@@ -63,72 +65,39 @@ gameOver(Board, Loser):-
 
 /*Checks if all pieces in game have or only W or only B */
 
-evaluateDown(BoardIn, BoardOut, Available, Nline, Ncolumn, Turned):-
-	getPiece(BoardIn, Nline, Ncolumn, Piece),
-	nl,
-	(
-/*	write('2 - Available= '),	write(Available), nl,*/
-	Available = 1, Piece = '  ', /*write('2'), nl,*/
-	write('Nline= '),
-	write(Nline), nl,
-	write('Ncolumn= '),
-	write(Ncolumn), nl,
-	setPiece(BoardIn, Nline, Ncolumn, 'F', BoardOut),
-	gamePrint(BoardOut), nl,
-	searchMoves(BoardOut, BoardOut, Available, Nline, Ncolumn, Turned, 'down')
-	;
-	/*write('3 - Available= '),	write(Available), nl,*/
-	Available = 0, player(X), getColor(Piece, ColorPi),
-		(X\=ColorPi, ColorPi\=' ',
-		setPiece(BoardIn, Nline, Ncolumn, 'C', BoardOut)
-		;
-		Piece = '  ', /*write('3'), nl,*/
-	/*	gamePrint(BoardIn),*/
-		setPiece(BoardIn, Nline, Ncolumn, 'F', BoardOut)
-		)
-	;
-	/*write('1 - Available= '),	write(Available), nl,*/
-	Available > 0, Piece = '  ', /*write('1'), nl,*/
-	searchMoves(BoardIn, BoardOut, Available, Nline, Ncolumn, Turned, 'down')
-	).
+readJogada(PieceLine, PieceColumn, MoveLine, MoveColumn):-
+	write('Select piece:'),	nl,
+	write('Line:'),	read(PieceLine), nl,
+	write('Column:'),	read(PieceColumn), nl,
+	write('--------------'), nl,
+	write('Select where to move:'),	nl,
+	write('Line:'),	read(MoveLine), nl,
+	write('Column:'),	read(MoveColumn), nl.
 
-searchMoves(BoardIn, BoardOut, Available, Nline, Ncolumn, Turned, From) :-
-	/*write('BoardIn: '), nl,*/
-	NewAvailable is Available - 1,
-	/*write(Nline),*/
+validateMove(CurrPlayer, BoardIn, PieceLine, PieceColumn, MoveLine, MoveColumn):-
+	getPiece(BoardIn, PieceLine, PieceColumn, Piece),
+	name(Piece,[_|[Color|_]]),
+	name(CurrPlayer, [Color|_]),							/* Fail condition */
+	getNumber(Piece, Number),
 	(
-	Nline < 8, NewNline is Nline + 1,
-	evaluateDown(BoardIn, BoardOut, NewAvailable, NewNline, Ncolumn, Turned)
-	/*;
-	Nline < 8, NewNline is Nline - 1,	evaluateUp(BoardIn, BoardOut, NewAvailable, NewNline, Ncolumn, Turned)
+		Number=2, validateTwo(CurrPlayer, BoardIn, PieceLine, PieceColumn, MoveLine, MoveColumn)
 	;
-	Ncolumn > 1, NewNcolumn is Ncolumn - 1,	evaluateLeft(BoardIn, BoardOut, NewAvailable, Nline, NewNcolumn, Turned)
+		Number=3, validateThree(CurrPlayer, BoardIn, PieceLine, PieceColumn, MoveLine, MoveColumn)
 	;
-	Ncolumn < 8, NewNcolumn is Ncolumn + 1,	evaluateRight(BoardIn, BoardOut, NewAvailable, Nline, NewNcolumn, Turned)*/
-	).
+		Number=4
+	),
+	write(Number), nl.
 
 askPlay(CurrPlayer, BoardIn, BoardOut):-
-	write(CurrPlayer),
-	write(' turn'),
-	nl,
-		repeat,
-			write('Select piece:'),
-			nl,
-			write('Line:'),
-			read(Nline),
-			nl,
-			write('Column:'),
-			read(Ncolumn),
-			nl,
-			getPiece(BoardIn, Nline, Ncolumn, Piece),
-			name(Piece,[_|[Color|_]]),
-			name(CurrPlayer, [Ascii|_]),
-			Ascii=Color,															/* Fail condition */
-			getNumber(Piece, Number),
+	repeat,
+		write(CurrPlayer), write(' turn'), nl,	/* Says who's next playing */
+			readJogada(PieceLine, PieceColumn, MoveLine, MoveColumn),
+			validateMove(CurrPlayer, BoardIn, PieceLine, PieceColumn, MoveLine, MoveColumn).
+			/*getNumber(Piece, Number),
 			searchMoves(BoardIn, BoardOut, Number, Nline, Ncolumn, '0', 'null'),
-			gamePrint(BoardOut).
+			gamePrint(BoardOut).*/
 
-play:-
+playHvsH:-
       board(BoardIn),
 			player(PlayerIn),
       assert(board(BoardIn)),             /* stores in the internal Prolog DB */
@@ -138,7 +107,7 @@ play:-
 				retract(player(PlayerCurr)),
 				/*cleanBoard(BoardOut),*/
 				once(askPlay(PlayerCurr,BoardCurr, BoardOut)),
-				changePlayer(PlayerCurr, NewPlayer),
+				once(changePlayer(PlayerCurr, NewPlayer)),
 				assert(player(NewPlayer)),
         assert(board(BoardIn)),						/* Change later to boardOut */
         gameOver(BoardIn, Loser),
