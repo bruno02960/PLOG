@@ -42,8 +42,6 @@ subAside:-
 	OutAside is InAside-2,
 	assert(aside(OutAside)).
 
-print:-board(Board),gamePrint(Board),nl,aside(Aside),printAside(Aside).
-
 /* ----------------------- */
 
 noPiece(Board, Color) :-
@@ -66,7 +64,7 @@ gameOver(Board, Loser):-
 
 /*Checks if all pieces in game have or only W or only B */
 
-readJogada(PieceLine, PieceColumn, MoveLine, MoveColumn):-
+readMove(PieceLine, PieceColumn, MoveLine, MoveColumn):-
 	write('Select piece:'),	nl,
 	write('Line:'),	read(PieceLine), nl,
 	write('Column:'),	read(PieceColumn), nl,
@@ -88,11 +86,36 @@ validateMove(CurrPlayer, BoardIn, PieceLine, PieceColumn, MoveLine, MoveColumn):
 		Number=4, validateFour(CurrPlayer, BoardIn, PieceLine, PieceColumn, MoveLine, MoveColumn)
 	).
 
+boardUpdate(InBoard, PieceLine, PieceColumn, MoveLine, MoveColumn, OutBoard):-
+	getPiece(InBoard, PieceLine, PieceColumn, Piece),
+	setPiece(InBoard, PieceLine, PieceColumn, '  ', NewBoard),
+	setPiece(NewBoard, MoveLine, MoveColumn, Piece, OutBoard).
+
 askPlay(CurrPlayer, BoardIn, BoardOut):-
 	repeat,
-		write(CurrPlayer), write(' turn'), nl,	/* Says who's next playing */
-			readJogada(PieceLine, PieceColumn, MoveLine, MoveColumn),
-			validateMove(CurrPlayer, BoardIn, PieceLine, PieceColumn, MoveLine, MoveColumn).
+			print,
+			write(CurrPlayer), write(' turn'), nl,	/* Says who's next playing */
+			readMove(PieceLine, PieceColumn, MoveLine, MoveColumn),
+			validateMove(CurrPlayer, BoardIn, PieceLine, PieceColumn, MoveLine, MoveColumn),
+			boardUpdate(BoardIn, PieceLine, PieceColumn, MoveLine, MoveColumn, BoardOut),
+			getPiece(BoardOut, PieceLine, PieceColumn, Piece),
+			(
+				barragoon(Piece),
+				write(CurrPlayer), write(' puts barragoon:'), nl,
+				copy_term(BoardOut, NewBoard),
+				putBarragoon(NewBoard, BoardOut)
+			;
+				getColor(Piece, Color),
+				Color \= ' ',
+				changePlayer(CurrPlayer, NewPlayer),
+				write(NewPlayer), write(' puts barragoon:'), nl,
+				putBarragoon(BoardOut, NewBoard),
+				write(CurrPlayer), write(' puts barragoon:'), nl,
+				putBarragoon(NewBoard, BoardOut)
+			;
+				!
+			).
+
 			/*getNumber(Piece, Number),
 			searchMoves(BoardIn, BoardOut, Number, Nline, Ncolumn, '0', 'null'),
 			gamePrint(BoardOut).*/
@@ -109,7 +132,9 @@ playHvsH:-
 				once(askPlay(PlayerCurr,BoardCurr, BoardOut)),
 				once(changePlayer(PlayerCurr, NewPlayer)),
 				assert(player(NewPlayer)),
-        assert(board(BoardIn)),						/* Change later to boardOut */
+        assert(board(BoardOut)),						/* Change later to boardOut */
+				/*write(BoardOut),*/
+				/*print,*/
         gameOver(BoardIn, Loser),
       	showResult(Loser),
 			!.

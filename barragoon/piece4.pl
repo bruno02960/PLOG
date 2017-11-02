@@ -47,6 +47,7 @@ shortMoveDownFour(BoardIn, PieceLine, PieceColumn, MoveLine, MoveColumn):-
     ;
     getPiece(BoardIn, PieceLine + 1, PieceColumn, 'tv')
   ),
+    write('HERE1'),
   (
     getPiece(BoardIn, PieceLine + 2, PieceColumn, '  ')
     ;
@@ -74,7 +75,7 @@ shortMoveDownFour(BoardIn, PieceLine, PieceColumn, MoveLine, MoveColumn):-
     getPiece(BoardIn, PieceLine + 1, PieceColumn - 1, 'th')
   ),
   /* Capture piece or barragoon */
-  getPiece(BoardIn, PieceLine + 1, PieceColumn - 2, Piece)
+  getPiece(BoardIn, PieceLine + 1, PieceColumn - 2, '  ')
 ;
 
   MoveLine =:= PieceLine + 1,
@@ -94,7 +95,7 @@ shortMoveDownFour(BoardIn, PieceLine, PieceColumn, MoveLine, MoveColumn):-
     getPiece(BoardIn, PieceLine + 1, PieceColumn + 1, 'th')
   ),
   /* Capture piece or barragoon */
-  getPiece(BoardIn, PieceLine + 1, PieceColumn + 2, Piece)
+  getPiece(BoardIn, PieceLine + 1, PieceColumn + 2, '  ')
 ).
 
 moveDownFour(CurrPlayer, BoardIn, PieceLine, PieceColumn, MoveLine, MoveColumn):-
@@ -743,7 +744,7 @@ shortMoveRightFour(BoardIn, PieceLine, PieceColumn, MoveLine, MoveColumn):-
   getPiece(BoardIn, PieceLine + 2, PieceColumn + 1, '  ')
 ).
 
-moveRightFour(BoardIn, PieceLine, PieceColumn, MoveLine, MoveColumn):-
+moveRightFour(CurrPlayer, BoardIn, PieceLine, PieceColumn, MoveLine, MoveColumn):-
 (
   MoveColumn =:= PieceColumn + 4,
   MoveLine = PieceLine,
@@ -1063,7 +1064,7 @@ shortMoveLeftFour(BoardIn, PieceLine, PieceColumn, MoveLine, MoveColumn):-
   getPiece(BoardIn, PieceLine + 2, PieceColumn - 1, '  ')
 ).
 
-moveLeftFour(BoardIn, PieceLine, PieceColumn, MoveLine, MoveColumn):-
+moveLeftFour(CurrPlayer, BoardIn, PieceLine, PieceColumn, MoveLine, MoveColumn):-
 (
   MoveColumn =:= PieceColumn - 4,
   MoveLine = PieceLine,

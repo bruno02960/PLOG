@@ -1,3 +1,5 @@
+print:-board(Board),gamePrint(Board),nl,aside(Aside),printAside(Aside), nl.
+
 gamePrint(Board) :-
 	printBlackLine,
 	printRowByRow(Board).
