@@ -1,6 +1,6 @@
 shortMoveDownThree(BoardIn, PieceLine, PieceColumn, MoveLine, MoveColumn):-
 (
-    /* FINISHED CONDITION */
+    
     MoveLine =:= PieceLine + 2,
     MoveColumn = PieceColumn,
     (
@@ -13,7 +13,7 @@ shortMoveDownThree(BoardIn, PieceLine, PieceColumn, MoveLine, MoveColumn):-
     getPiece(BoardIn, PieceLine + 2, PieceColumn, '  ')
 ;
 
-    /* FINISHED CONDITION */
+    
     MoveLine =:= PieceLine + 1,
     MoveColumn =:= PieceColumn + 1,
     (
@@ -168,7 +168,7 @@ moveDownThree(CurrPlayer, BoardIn, PieceLine, PieceColumn, MoveLine, MoveColumn)
 
 shortMoveUpThree(BoardIn, PieceLine, PieceColumn, MoveLine, MoveColumn):-
 (
-    /* FINISHED CONDITION */
+    
     MoveLine =:= PieceLine - 2,
     MoveColumn = PieceColumn,
     (
@@ -181,7 +181,7 @@ shortMoveUpThree(BoardIn, PieceLine, PieceColumn, MoveLine, MoveColumn):-
     getPiece(BoardIn, PieceLine - 2, PieceColumn, '  ')
 ;
 
-    /* FINISHED CONDITION */
+    
     MoveLine =:= PieceLine - 1,
     MoveColumn =:= PieceColumn + 1,
     (
@@ -336,7 +336,7 @@ moveUpThree(CurrPlayer, BoardIn, PieceLine, PieceColumn, MoveLine, MoveColumn):-
 
 shortMoveRightThree(BoardIn, PieceLine, PieceColumn, MoveLine, MoveColumn):-
 (
-    /* FINISHED CONDITION */
+    
     MoveColumn =:= PieceColumn + 2,
     MoveLine = PieceLine,
     (
@@ -349,7 +349,7 @@ shortMoveRightThree(BoardIn, PieceLine, PieceColumn, MoveLine, MoveColumn):-
     getPiece(BoardIn, PieceLine, PieceColumn + 2, '  ')
 ;
 
-    /* FINISHED CONDITION */
+    
     MoveLine =:= PieceLine + 1,
     MoveColumn =:= PieceColumn + 1,
     (
@@ -361,7 +361,7 @@ shortMoveRightThree(BoardIn, PieceLine, PieceColumn, MoveLine, MoveColumn):-
     ),
     getPiece(BoardIn, PieceLine + 1, PieceColumn + 1, '  ')
 ;
-    /* FINISHED CONDITION */
+    
     MoveLine =:= PieceLine - 1,
     MoveColumn =:= PieceColumn + 1,
     (
@@ -505,7 +505,7 @@ moveRightThree(BoardIn, PieceLine, PieceColumn, MoveLine, MoveColumn):-
 
 shortMoveLeftThree(BoardIn, PieceLine, PieceColumn, MoveLine, MoveColumn):-
 (
-    /* FINISHED CONDITION */
+    
     MoveColumn =:= PieceColumn - 2,
     MoveLine = PieceLine,
     (
@@ -518,7 +518,7 @@ shortMoveLeftThree(BoardIn, PieceLine, PieceColumn, MoveLine, MoveColumn):-
     getPiece(BoardIn, PieceLine, PieceColumn - 2, '  ')
 ;
 
-    /* FINISHED CONDITION */
+    
     MoveLine =:= PieceLine - 1,
     MoveColumn =:= PieceColumn - 1,
     (
@@ -530,7 +530,7 @@ shortMoveLeftThree(BoardIn, PieceLine, PieceColumn, MoveLine, MoveColumn):-
     ),
     getPiece(BoardIn, PieceLine - 1, PieceColumn - 1, '  ')
 ;
-    /* FINISHED CONDITION */
+    
     MoveLine =:= PieceLine + 1,
     MoveColumn =:= PieceColumn - 1,
     (

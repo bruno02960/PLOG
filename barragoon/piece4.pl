@@ -74,7 +74,7 @@ shortMoveDownFour(BoardIn, PieceLine, PieceColumn, MoveLine, MoveColumn):-
     ;
     getPiece(BoardIn, PieceLine + 1, PieceColumn - 1, 'th')
   ),
-  /* Capture piece or barragoon */
+
   getPiece(BoardIn, PieceLine + 1, PieceColumn - 2, '  ')
 ;
 
@@ -94,7 +94,7 @@ shortMoveDownFour(BoardIn, PieceLine, PieceColumn, MoveLine, MoveColumn):-
     ;
     getPiece(BoardIn, PieceLine + 1, PieceColumn + 1, 'th')
   ),
-  /* Capture piece or barragoon */
+
   getPiece(BoardIn, PieceLine + 1, PieceColumn + 2, '  ')
 ).
 
@@ -400,7 +400,7 @@ shortMoveUpFour(BoardIn, PieceLine, PieceColumn, MoveLine, MoveColumn):-
     ;
     getPiece(BoardIn, PieceLine - 1, PieceColumn - 1, 'th')
   ),
-  /* Capture piece or barragoon */
+
   getPiece(BoardIn, PieceLine - 1, PieceColumn - 2, Piece)
 ;
 
@@ -420,7 +420,7 @@ shortMoveUpFour(BoardIn, PieceLine, PieceColumn, MoveLine, MoveColumn):-
     ;
     getPiece(BoardIn, PieceLine - 1, PieceColumn + 1, 'th')
   ),
-  /* Capture piece or barragoon */
+
   getPiece(BoardIn, PieceLine - 1, PieceColumn + 2, Piece)
 ).
 

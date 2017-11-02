@@ -1,21 +1,21 @@
 shortMoveTwo(BoardIn, PieceLine, PieceColumn, MoveLine, MoveColumn):-
   (
-    /* FINISHED CONDITION */
+    
     MoveLine =:= PieceLine + 1,
     MoveColumn = PieceColumn,
     getPiece(BoardIn, PieceLine + 1, PieceColumn, '  ')
   ;
-    /* FINISHED CONDITION */
+    
     MoveLine =:= PieceLine - 1,
     MoveColumn = PieceColumn,
     getPiece(BoardIn, PieceLine - 1, PieceColumn, '  ')
   ;
-    /* FINISHED CONDITION */
+    
     MoveColumn =:= PieceColumn - 1,
     MoveLine = PieceLine,
     getPiece(BoardIn, PieceLine, PieceColumn - 1, '  ')
   ;
-    /* FINISHED CONDITION */
+    
     MoveColumn =:= PieceColumn + 1,
     MoveLine = PieceLine,
     getPiece(BoardIn, PieceLine, PieceColumn + 1, '  ')

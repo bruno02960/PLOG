@@ -38,23 +38,4 @@ showResult(Loser):-
 	;
 	Loser=87, name(X,[66]), write(X)
 	),
-	write(' won! Congrats!'),
-	nl.
-
-/* ----------------------- */
-
-levelSelection:-
-	write('*** SELECT DIFFICULTY ***'), nl,
-	write('1. Easier'), nl,
-	write('2. Hardier'), nl,
-	write('Select an option (0 to exit): '),	read(Level).
-
-/* ---------------------- */
-
-menu:-
-	write('*** BARRAGOON ***'), nl,
-	write('1. Player vs Player'), nl,
-	write('2. Player vs CPU'), nl,
-	write('3. CPU vs CPU'), nl,
-	write('Select an option (0 to exit): '),	read(Option).
-	/* execute(Option). */
+	write(' won! Congrats!'),	nl.

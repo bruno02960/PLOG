@@ -4,6 +4,7 @@
 :- include('piece2.pl').
 :- include('piece3.pl').
 :- include('piece4.pl').
+:- include('menu.pl').
 :- use_module(library(lists)).
 :- dynamic aside/1.
 :- dynamic board/1.
@@ -52,9 +53,6 @@ noPiece(Board, Color) :-
 
 noPiece(_,_).
 
-/* By using name(?Atomic, ?CodeList) we can retrieve ascii code list and,
-therefore, piece's player and value */
-
 gameOver(Board, Loser):-
 	(
 	noPiece(Board, 66), Loser=66
@@ -62,21 +60,26 @@ gameOver(Board, Loser):-
 	noPiece(Board, 87), Loser=87
 	).
 
-/*Checks if all pieces in game have or only W or only B */
+readInteger(Prompt,Integer):-
+  repeat,
+      prompt(X, Prompt),
+      read(Integer),
+      number(Integer),
+			prompt(Prompt, X).
 
 readMove(PieceLine, PieceColumn, MoveLine, MoveColumn):-
-	write('Select piece:'),	nl,
-	write('Line:'),	read(PieceLine), nl,
-	write('Column:'),	read(PieceColumn), nl,
-	write('--------------'), nl,
-	write('Select where to move:'),	nl,
-	write('Line:'),	read(MoveLine), nl,
-	write('Column:'),	read(MoveColumn), nl.
+	write('*** SELECT PIECE ***'),	nl,
+	readInteger('Line: ', PieceLine), nl,
+	readInteger('Column: ', PieceColumn), nl,
+	nl,
+	write('*** SELECT MOVE ***'),	nl,
+	readInteger('Line: ', MoveLine), nl,
+	readInteger('Column: ', MoveColumn), nl.
 
 validateMove(CurrPlayer, BoardIn, PieceLine, PieceColumn, MoveLine, MoveColumn):-
 	getPiece(BoardIn, PieceLine, PieceColumn, Piece),
 	name(Piece,[_|[Color|_]]),
-	name(CurrPlayer, [Color|_]),							/* Fail condition */
+	name(CurrPlayer, [Color|_]),
 	getNumber(Piece, Number),
 	(
 		Number=2, validateTwo(CurrPlayer, BoardIn, PieceLine, PieceColumn, MoveLine, MoveColumn)
@@ -94,7 +97,7 @@ boardUpdate(InBoard, PieceLine, PieceColumn, MoveLine, MoveColumn, OutBoard):-
 askPlay(CurrPlayer, BoardIn, BoardOut):-
 	repeat,
 			print,
-			write(CurrPlayer), write(' turn'), nl,	/* Says who's next playing */
+			write(CurrPlayer), write(' turn'), nl, nl,
 			readMove(PieceLine, PieceColumn, MoveLine, MoveColumn),
 			validateMove(CurrPlayer, BoardIn, PieceLine, PieceColumn, MoveLine, MoveColumn),
 			boardUpdate(BoardIn, PieceLine, PieceColumn, MoveLine, MoveColumn, BoardOut),
@@ -116,25 +119,18 @@ askPlay(CurrPlayer, BoardIn, BoardOut):-
 				!
 			).
 
-			/*getNumber(Piece, Number),
-			searchMoves(BoardIn, BoardOut, Number, Nline, Ncolumn, '0', 'null'),
-			gamePrint(BoardOut).*/
-
 playHvsH:-
       board(BoardIn),
 			player(PlayerIn),
-      assert(board(BoardIn)),             /* stores in the internal Prolog DB */
+      assert(board(BoardIn)),
 			assert(player(PlayerIn)),
 			repeat,
-        retract(board(BoardCurr)),     		/* retrieves from the DB */
+        retract(board(BoardCurr)),
 				retract(player(PlayerCurr)),
-				/*cleanBoard(BoardOut),*/
 				once(askPlay(PlayerCurr,BoardCurr, BoardOut)),
 				once(changePlayer(PlayerCurr, NewPlayer)),
 				assert(player(NewPlayer)),
-        assert(board(BoardOut)),						/* Change later to boardOut */
-				/*write(BoardOut),*/
-				/*print,*/
+        assert(board(BoardOut)),
         gameOver(BoardIn, Loser),
       	showResult(Loser),
 			!.
