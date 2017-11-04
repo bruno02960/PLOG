@@ -1,674 +1,210 @@
 shortMoveDownThree(BoardIn, PieceLine, PieceColumn, MoveLine, MoveColumn):-
 (
-    
+
     MoveLine =:= PieceLine + 2,
     MoveColumn = PieceColumn,
-    (
-      getPiece(BoardIn, PieceLine + 1, PieceColumn, '  ')
-      ;
-      getPiece(BoardIn, PieceLine + 1, PieceColumn, 'ob')
-      ;
-      getPiece(BoardIn, PieceLine + 1, PieceColumn, 'tv')
-    ),
-    getPiece(BoardIn, PieceLine + 2, PieceColumn, '  ')
+    checkOB(BoardIn, PieceLine + 1, PieceColumn),
+    checkEmpty(BoardIn, PieceLine + 2, PieceColumn)
 ;
 
-    
+
     MoveLine =:= PieceLine + 1,
     MoveColumn =:= PieceColumn + 1,
-    (
-      getPiece(BoardIn, PieceLine + 1, PieceColumn, '  ')
-      ;
-      getPiece(BoardIn, PieceLine + 1, PieceColumn, 'lt')
-      ;
-      getPiece(BoardIn, PieceLine + 1, PieceColumn, 'at')
-    ),
-    getPiece(BoardIn, PieceLine + 1, PieceColumn + 1, '  ')
+    checkLT(BoardIn, PieceLine + 1, PieceColumn),
+    checkEmpty(BoardIn, PieceLine + 1, PieceColumn + 1)
 ;
 
     MoveLine =:= PieceLine + 1,
     MoveColumn =:= PieceColumn - 1,
-    (
-      getPiece(BoardIn, PieceLine + 1, PieceColumn, '  ')
-      ;
-      getPiece(BoardIn, PieceLine + 1, PieceColumn, 'rt')
-      ;
-      getPiece(BoardIn, PieceLine + 1, PieceColumn, 'at')
-    ),
-    getPiece(BoardIn, PieceLine + 1, PieceColumn - 1, '  ')
+    checkRT(BoardIn, PieceLine + 1, PieceColumn),
+    checkEmpty(BoardIn, PieceLine + 1, PieceColumn - 1)
 ).
 
 moveDownThree(CurrPlayer, BoardIn, PieceLine, PieceColumn, MoveLine, MoveColumn):-
 (
   MoveLine =:= PieceLine + 3,
   MoveColumn = PieceColumn,
-  (
-    getPiece(BoardIn, PieceLine + 1, PieceColumn, '  ')
-    ;
-    getPiece(BoardIn, PieceLine + 1, PieceColumn, 'ob')
-    ;
-    getPiece(BoardIn, PieceLine + 1, PieceColumn, 'tv')
-  ),
-  (
-    getPiece(BoardIn, PieceLine + 2, PieceColumn, '  ')
-    ;
-    getPiece(BoardIn, PieceLine + 2, PieceColumn, 'ob')
-    ;
-    getPiece(BoardIn, PieceLine + 2, PieceColumn, 'tv')
-  ),
-  (
-    getPiece(BoardIn, PieceLine + 3, PieceColumn, '  ')
-    ;
-    getPiece(BoardIn, PieceLine + 3, PieceColumn, Piece),
-    name(Piece,[_|[Color|_]]),
-    name(CurrPlayer, [Ascii|_]),
-    Ascii \= Color
-  )
+  checkOB(BoardIn, PieceLine + 1, PieceColumn),
+  checkOB(BoardIn, PieceLine + 2, PieceColumn),
+  checkCapture(CurrPlayer, BoardIn, PieceLine + 3, PieceColumn)
 ;
   MoveLine =:= PieceLine + 2,
   MoveColumn =:= PieceColumn + 1,
-  (
-    getPiece(BoardIn, PieceLine + 1, PieceColumn, '  ')
-    ;
-    getPiece(BoardIn, PieceLine + 1, PieceColumn, 'ob')
-    ;
-    getPiece(BoardIn, PieceLine + 1, PieceColumn, 'tv')
-  ),
-  (
-    getPiece(BoardIn, PieceLine + 2, PieceColumn, '  ')
-    ;
-    getPiece(BoardIn, PieceLine + 2, PieceColumn, 'lt')
-    ;
-    getPiece(BoardIn, PieceLine + 2, PieceColumn, 'at')
-  ),
-  (
-    getPiece(BoardIn, PieceLine + 2, PieceColumn + 1, '  ')
-    ;
-    getPiece(BoardIn, PieceLine + 2, PieceColumn + 1, Piece),
-    name(Piece,[_|[Color|_]]),
-    name(CurrPlayer, [Ascii|_]),
-    Ascii \= Color
-  )
+  checkOB(BoardIn, PieceLine + 1, PieceColumn),
+  checkLT(BoardIn, PieceLine + 2, PieceColumn),
+  checkCapture(CurrPlayer, BoardIn, PieceLine + 2, PieceColumn + 1)
 ;
   MoveLine =:= PieceLine + 2,
   MoveColumn =:= PieceColumn - 1,
-  (
-    getPiece(BoardIn, PieceLine + 1, PieceColumn, '  ')
-    ;
-    getPiece(BoardIn, PieceLine + 1, PieceColumn, 'ob')
-    ;
-    getPiece(BoardIn, PieceLine + 1, PieceColumn, 'tv')
-  ),
-  (
-    getPiece(BoardIn, PieceLine + 2, PieceColumn, '  ')
-    ;
-    getPiece(BoardIn, PieceLine + 2, PieceColumn, 'rt')
-    ;
-    getPiece(BoardIn, PieceLine + 2, PieceColumn, 'at')
-  ),
-  (
-    getPiece(BoardIn, PieceLine + 2, PieceColumn + 1, '  ')
-    ;
-    getPiece(BoardIn, PieceLine + 2, PieceColumn + 1, Piece),
-    name(Piece,[_|[Color|_]]),
-    name(CurrPlayer, [Ascii|_]),
-    Ascii \= Color
-  )
+  checkOB(BoardIn, PieceLine + 1, PieceColumn),
+  checkRT(BoardIn, PieceLine + 2, PieceColumn),
+  checkCapture(CurrPlayer, BoardIn, PieceLine + 2, PieceColumn + 1)
 ;
   MoveLine =:= PieceLine + 1,
   MoveColumn =:= PieceColumn - 2,
-  (
-    getPiece(BoardIn, PieceLine + 1, PieceColumn, '  ')
-    ;
-    getPiece(BoardIn, PieceLine + 1, PieceColumn, 'rt')
-    ;
-    getPiece(BoardIn, PieceLine + 1, PieceColumn, 'at')
-  ),
-  (
-    getPiece(BoardIn, PieceLine + 1, PieceColumn - 1, '  ')
-    ;
-    getPiece(BoardIn, PieceLine + 1, PieceColumn - 1, 'ol')
-    ;
-    getPiece(BoardIn, PieceLine + 1, PieceColumn - 1, 'th')
-  ),
-  (
-    getPiece(BoardIn, PieceLine + 1, PieceColumn - 2, '  ')
-    ;
-    getPiece(BoardIn, PieceLine + 1, PieceColumn - 2, Piece),
-    name(Piece,[_|[Color|_]]),
-    name(CurrPlayer, [Ascii|_]),
-    Ascii \= Color
-  )
+  checkRT(BoardIn, PieceLine + 1, PieceColumn),
+  checkOL(BoardIn, PieceLine + 1, PieceColumn - 1),
+  checkCapture(CurrPlayer, BoardIn, PieceLine + 1, PieceColumn - 2)
 ;
   MoveLine =:= PieceLine + 1,
   MoveColumn =:= PieceColumn + 2,
-  (
-    getPiece(BoardIn, PieceLine + 1, PieceColumn, '  ')
-    ;
-    getPiece(BoardIn, PieceLine + 1, PieceColumn, 'lt')
-    ;
-    getPiece(BoardIn, PieceLine + 1, PieceColumn, 'at')
-  ),
-  (
-    getPiece(BoardIn, PieceLine + 1, PieceColumn + 1, '  ')
-    ;
-    getPiece(BoardIn, PieceLine + 1, PieceColumn + 1, 'or')
-    ;
-    getPiece(BoardIn, PieceLine + 1, PieceColumn + 1, 'th')
-  ),
-  (
-    getPiece(BoardIn, PieceLine + 1, PieceColumn + 2, '  ')
-    ;
-    getPiece(BoardIn, PieceLine + 1, PieceColumn + 2, Piece),
-    name(Piece,[_|[Color|_]]),
-    name(CurrPlayer, [Ascii|_]),
-    Ascii \= Color
-  )
+  checkLT(BoardIn, PieceLine + 1, PieceColumn),
+  checkOR(BoardIn, PieceLine + 1, PieceColumn + 1),
+  checkCapture(CurrPlayer, BoardIn, PieceLine + 1, PieceColumn + 2)
 ).
 
 shortMoveUpThree(BoardIn, PieceLine, PieceColumn, MoveLine, MoveColumn):-
 (
-    
     MoveLine =:= PieceLine - 2,
     MoveColumn = PieceColumn,
-    (
-      getPiece(BoardIn, PieceLine - 1, PieceColumn, '  ')
-      ;
-      getPiece(BoardIn, PieceLine - 1, PieceColumn, 'ot')
-      ;
-      getPiece(BoardIn, PieceLine - 1, PieceColumn, 'tv')
-    ),
-    getPiece(BoardIn, PieceLine - 2, PieceColumn, '  ')
+    checkOT(BoardIn, PieceLine - 1, PieceColumn),
+    checkEmpty(BoardIn, PieceLine - 2, PieceColumn)
 ;
-
-    
     MoveLine =:= PieceLine - 1,
     MoveColumn =:= PieceColumn + 1,
-    (
-      getPiece(BoardIn, PieceLine - 1, PieceColumn, '  ')
-      ;
-      getPiece(BoardIn, PieceLine - 1, PieceColumn, 'rb')
-      ;
-      getPiece(BoardIn, PieceLine - 1, PieceColumn, 'at')
-    ),
-    getPiece(BoardIn, PieceLine - 1, PieceColumn + 1, '  ')
+    checkRB(BoardIn, PieceLine - 1, PieceColumn),
+    checkEmpty(BoardIn, PieceLine - 1, PieceColumn + 1)
 ;
-
     MoveLine =:= PieceLine - 1,
     MoveColumn =:= PieceColumn - 1,
-    (
-      getPiece(BoardIn, PieceLine - 1, PieceColumn, '  ')
-      ;
-      getPiece(BoardIn, PieceLine - 1, PieceColumn, 'lb')
-      ;
-      getPiece(BoardIn, PieceLine - 1, PieceColumn, 'at')
-    ),
-    getPiece(BoardIn, PieceLine - 1, PieceColumn - 1, '  ')
+    checkLB(BoardIn, PieceLine - 1, PieceColumn),
+    checkEmpty(BoardIn, PieceLine - 1, PieceColumn - 1)
 ).
 
 moveUpThree(CurrPlayer, BoardIn, PieceLine, PieceColumn, MoveLine, MoveColumn):-
 (
   MoveLine =:= PieceLine - 3,
   MoveColumn = PieceColumn,
-  (
-    getPiece(BoardIn, PieceLine - 1, PieceColumn, '  ')
-    ;
-    getPiece(BoardIn, PieceLine - 1, PieceColumn, 'ot')
-    ;
-    getPiece(BoardIn, PieceLine - 1, PieceColumn, 'tv')
-  ),
-  (
-    getPiece(BoardIn, PieceLine - 2, PieceColumn, '  ')
-    ;
-    getPiece(BoardIn, PieceLine - 2, PieceColumn, 'ot')
-    ;
-    getPiece(BoardIn, PieceLine - 2, PieceColumn, 'tv')
-  ),
-  (
-    getPiece(BoardIn, PieceLine - 3, PieceColumn, '  ')
-    ;
-    getPiece(BoardIn, PieceLine - 3, PieceColumn, Piece),
-    name(Piece,[_|[Color|_]]),
-    name(CurrPlayer, [Ascii|_]),
-    Ascii \= Color
-  )
+  checkOT(BoardIn, PieceLine - 1, PieceColumn),
+  checkOT(BoardIn, PieceLine - 2, PieceColumn),
+  checkCapture(CurrPlayer, BoardIn, PieceLine - 3, PieceColumn)
 ;
   MoveLine =:= PieceLine - 2,
   MoveColumn =:= PieceColumn + 1,
-  (
-    getPiece(BoardIn, PieceLine - 1, PieceColumn, '  ')
-    ;
-    getPiece(BoardIn, PieceLine - 1, PieceColumn, 'ot')
-    ;
-    getPiece(BoardIn, PieceLine - 1, PieceColumn, 'tv')
-  ),
-  (
-    getPiece(BoardIn, PieceLine - 2, PieceColumn, '  ')
-    ;
-    getPiece(BoardIn, PieceLine - 2, PieceColumn, 'rb')
-    ;
-    getPiece(BoardIn, PieceLine - 2, PieceColumn, 'at')
-  ),
-  (
-    getPiece(BoardIn, PieceLine - 2, PieceColumn + 1, '  ')
-    ;
-    getPiece(BoardIn, PieceLine - 2, PieceColumn + 1, Piece),
-    name(Piece,[_|[Color|_]]),
-    name(CurrPlayer, [Ascii|_]),
-    Ascii \= Color
-  )
+  checkOT(BoardIn, PieceLine - 1, PieceColumn),
+  checkRB(BoardIn, PieceLine - 2, PieceColumn),
+  checkCapture(CurrPlayer, BoardIn, PieceLine - 2, PieceColumn + 1)
 ;
   MoveLine =:= PieceLine - 2,
   MoveColumn =:= PieceColumn - 1,
-  (
-    getPiece(BoardIn, PieceLine - 1, PieceColumn, '  ')
-    ;
-    getPiece(BoardIn, PieceLine - 1, PieceColumn, 'ot')
-    ;
-    getPiece(BoardIn, PieceLine - 1, PieceColumn, 'tv')
-  ),
-  (
-    getPiece(BoardIn, PieceLine - 2, PieceColumn, '  ')
-    ;
-    getPiece(BoardIn, PieceLine - 2, PieceColumn, 'lb')
-    ;
-    getPiece(BoardIn, PieceLine - 2, PieceColumn, 'at')
-  ),
-  (
-    getPiece(BoardIn, PieceLine - 2, PieceColumn - 1, '  ')
-    ;
-    getPiece(BoardIn, PieceLine - 2, PieceColumn - 1, Piece),
-    name(Piece,[_|[Color|_]]),
-    name(CurrPlayer, [Ascii|_]),
-    Ascii \= Color
-  )
+  checkOT(BoardIn, PieceLine - 1, PieceColumn),
+  checkLB(BoardIn, PieceLine - 2, PieceColumn),
+  checkCapture(CurrPlayer, BoardIn, PieceLine - 2, PieceColumn - 1)
 ;
   MoveLine =:= PieceLine - 1,
   MoveColumn =:= PieceColumn - 2,
-  (
-    getPiece(BoardIn, PieceLine - 1, PieceColumn, '  ')
-    ;
-    getPiece(BoardIn, PieceLine - 1, PieceColumn, 'lb')
-    ;
-    getPiece(BoardIn, PieceLine - 1, PieceColumn, 'at')
-  ),
-  (
-    getPiece(BoardIn, PieceLine - 1, PieceColumn - 1, '  ')
-    ;
-    getPiece(BoardIn, PieceLine - 1, PieceColumn - 1, 'ol')
-    ;
-    getPiece(BoardIn, PieceLine - 1, PieceColumn - 1, 'th')
-  ),
-  (
-    getPiece(BoardIn, PieceLine - 1, PieceColumn - 2, '  ')
-    ;
-    getPiece(BoardIn, PieceLine - 1, PieceColumn - 2, Piece),
-    name(Piece,[_|[Color|_]]),
-    name(CurrPlayer, [Ascii|_]),
-    Ascii \= Color
-  )
+  checkLB(BoardIn, PieceLine - 1, PieceColumn),
+  checkOL(BoardIn, PieceLine - 1, PieceColumn - 1),
+  checkCapture(CurrPlayer, BoardIn, PieceLine - 1, PieceColumn - 2)
 ;
   MoveLine =:= PieceLine - 1,
   MoveColumn =:= PieceColumn + 2,
-  (
-    getPiece(BoardIn, PieceLine - 1, PieceColumn, '  ')
-    ;
-    getPiece(BoardIn, PieceLine - 1, PieceColumn, 'rb')
-    ;
-    getPiece(BoardIn, PieceLine - 1, PieceColumn, 'at')
-  ),
-  (
-    getPiece(BoardIn, PieceLine - 1, PieceColumn + 1, '  ')
-    ;
-    getPiece(BoardIn, PieceLine - 1, PieceColumn + 1, 'or')
-    ;
-    getPiece(BoardIn, PieceLine - 1, PieceColumn + 1, 'th')
-  ),
-  (
-    getPiece(BoardIn, PieceLine - 1, PieceColumn + 2, '  ')
-    ;
-    getPiece(BoardIn, PieceLine - 1, PieceColumn + 2, Piece),
-    name(Piece,[_|[Color|_]]),
-    name(CurrPlayer, [Ascii|_]),
-    Ascii \= Color
-  )
+  checkRB(BoardIn, PieceLine - 1, PieceColumn),
+  checkOR(BoardIn, PieceLine - 1, PieceColumn + 1),
+  checkCapture(CurrPlayer, BoardIn, PieceLine - 1, PieceColumn + 2)
 ).
 
 shortMoveRightThree(BoardIn, PieceLine, PieceColumn, MoveLine, MoveColumn):-
 (
-    
     MoveColumn =:= PieceColumn + 2,
     MoveLine = PieceLine,
-    (
-      getPiece(BoardIn, PieceLine, PieceColumn + 1, '  ')
-      ;
-      getPiece(BoardIn, PieceLine, PieceColumn + 1, 'or')
-      ;
-      getPiece(BoardIn, PieceLine, PieceColumn + 1, 'th')
-    ),
-    getPiece(BoardIn, PieceLine, PieceColumn + 2, '  ')
+    checkOR(BoardIn, PieceLine, PieceColumn + 1),
+    checkEmpty(BoardIn, PieceLine, PieceColumn + 2)
 ;
-
-    
     MoveLine =:= PieceLine + 1,
     MoveColumn =:= PieceColumn + 1,
-    (
-      getPiece(BoardIn, PieceLine, PieceColumn + 1, '  ')
-      ;
-      getPiece(BoardIn, PieceLine, PieceColumn + 1, 'rl')
-      ;
-      getPiece(BoardIn, PieceLine, PieceColumn + 1, 'at')
-    ),
-    getPiece(BoardIn, PieceLine + 1, PieceColumn + 1, '  ')
+    checkRL(BoardIn, PieceLine, PieceColumn + 1),
+    checkEmpty(BoardIn, PieceLine + 1, PieceColumn + 1)
 ;
-    
     MoveLine =:= PieceLine - 1,
     MoveColumn =:= PieceColumn + 1,
-    (
-      getPiece(BoardIn, PieceLine, PieceColumn + 1, '  ')
-      ;
-      getPiece(BoardIn, PieceLine, PieceColumn + 1, 'll')
-      ;
-      getPiece(BoardIn, PieceLine, PieceColumn + 1, 'at')
-    ),
-    getPiece(BoardIn, PieceLine - 1, PieceColumn + 1, '  ')
+    checkLL(BoardIn, PieceLine, PieceColumn + 1),
+    checkEmpty(BoardIn, PieceLine - 1, PieceColumn + 1)
 ).
 
 moveRightThree(BoardIn, PieceLine, PieceColumn, MoveLine, MoveColumn):-
 (
   MoveColumn =:= PieceColumn + 3,
   MoveLine = PieceLine,
-  (
-    getPiece(BoardIn, PieceLine, PieceColumn + 1, '  ')
-    ;
-    getPiece(BoardIn, PieceLine, PieceColumn + 1, 'or')
-    ;
-    getPiece(BoardIn, PieceLine, PieceColumn + 1, 'th')
-  ),
-  (
-    getPiece(BoardIn, PieceLine, PieceColumn + 2, '  ')
-    ;
-    getPiece(BoardIn, PieceLine, PieceColumn + 2, 'or')
-    ;
-    getPiece(BoardIn, PieceLine, PieceColumn + 2, 'th')
-  ),
-  (
-    getPiece(BoardIn, PieceLine, PieceColumn + 3, '  ')
-    ;
-    getPiece(BoardIn, PieceLine, PieceColumn + 3, Piece),
-    name(Piece,[_|[Color|_]]),
-    name(CurrPlayer, [Ascii|_]),
-    Ascii \= Color
-  )
+  checkOR(BoardIn, PieceLine, PieceColumn + 1),
+  checkOR(BoardIn, PieceLine, PieceColumn + 2),
+  checkCapture(CurrPlayer, BoardIn, PieceLine, PieceColumn + 3)
 ;
   MoveLine =:= PieceLine - 1,
   MoveColumn =:= PieceColumn + 2,
-  (
-    getPiece(BoardIn, PieceLine, PieceColumn + 1, '  ')
-    ;
-    getPiece(BoardIn, PieceLine, PieceColumn + 1, 'or')
-    ;
-    getPiece(BoardIn, PieceLine, PieceColumn + 1, 'th')
-  ),
-  (
-    getPiece(BoardIn, PieceLine, PieceColumn + 2, '  ')
-    ;
-    getPiece(BoardIn, PieceLine, PieceColumn + 2, 'll')
-    ;
-    getPiece(BoardIn, PieceLine, PieceColumn + 2, 'at')
-  ),
-  (
-    getPiece(BoardIn, PieceLine - 1, PieceColumn + 2, '  ')
-    ;
-    getPiece(BoardIn, PieceLine - 1, PieceColumn + 2, Piece),
-    name(Piece,[_|[Color|_]]),
-    name(CurrPlayer, [Ascii|_]),
-    Ascii \= Color
-  )
+  checkOR(BoardIn, PieceLine, PieceColumn + 1),
+  checkLL(BoardIn, PieceLine, PieceColumn + 2),
+  checkCapture(CurrPlayer, BoardIn, PieceLine - 1, PieceColumn + 2)
 ;
   MoveLine =:= PieceLine + 1,
   MoveColumn =:= PieceColumn + 2,
-  (
-    getPiece(BoardIn, PieceLine, PieceColumn + 1, '  ')
-    ;
-    getPiece(BoardIn, PieceLine, PieceColumn + 1, 'or')
-    ;
-    getPiece(BoardIn, PieceLine, PieceColumn + 1, 'th')
-  ),
-  (
-    getPiece(BoardIn, PieceLine, PieceColumn + 2, '  ')
-    ;
-    getPiece(BoardIn, PieceLine, PieceColumn + 2, 'rl')
-    ;
-    getPiece(BoardIn, PieceLine, PieceColumn + 2, 'at')
-  ),
-  (
-    getPiece(BoardIn, PieceLine + 1, PieceColumn + 2, '  ')
-    ;
-    getPiece(BoardIn, PieceLine + 1, PieceColumn + 2, Piece),
-    name(Piece,[_|[Color|_]]),
-    name(CurrPlayer, [Ascii|_]),
-    Ascii \= Color
-  )
+  checkOR(BoardIn, PieceLine, PieceColumn + 1),
+  checkRL(BoardIn, PieceLine, PieceColumn + 2),
+  checkCapture(CurrPlayer, BoardIn, PieceLine + 1, PieceColumn + 2)
 ;
   MoveLine =:= PieceLine - 2,
   MoveColumn =:= PieceColumn + 1,
-  (
-    getPiece(BoardIn, PieceLine, PieceColumn + 1, '  ')
-    ;
-    getPiece(BoardIn, PieceLine, PieceColumn + 1, 'll')
-    ;
-    getPiece(BoardIn, PieceLine, PieceColumn + 1, 'at')
-  ),
-  (
-    getPiece(BoardIn, PieceLine - 1, PieceColumn + 1, '  ')
-    ;
-    getPiece(BoardIn, PieceLine - 1, PieceColumn + 1, 'ot')
-    ;
-    getPiece(BoardIn, PieceLine - 1, PieceColumn + 1, 'tv')
-  ),
-  (
-    getPiece(BoardIn, PieceLine - 2, PieceColumn + 1, '  ')
-    ;
-    getPiece(BoardIn, PieceLine - 2, PieceColumn + 1, Piece),
-    name(Piece,[_|[Color|_]]),
-    name(CurrPlayer, [Ascii|_]),
-    Ascii \= Color
-  )
+  checkLL(BoardIn, PieceLine, PieceColumn + 1),
+  checkOT(BoardIn, PieceLine - 1, PieceColumn + 1),
+  checkCapture(CurrPlayer, BoardIn, PieceLine - 2, PieceColumn + 1)
 ;
   MoveLine =:= PieceLine + 2,
   MoveColumn =:= PieceColumn + 1,
-  (
-    getPiece(BoardIn, PieceLine, PieceColumn + 1, '  ')
-    ;
-    getPiece(BoardIn, PieceLine, PieceColumn + 1, 'rl')
-    ;
-    getPiece(BoardIn, PieceLine, PieceColumn + 1, 'at')
-  ),
-  (
-    getPiece(BoardIn, PieceLine + 1, PieceColumn + 1, '  ')
-    ;
-    getPiece(BoardIn, PieceLine + 1, PieceColumn + 1, 'ob')
-    ;
-    getPiece(BoardIn, PieceLine + 1, PieceColumn + 1, 'tv')
-  ),
-  (
-    getPiece(BoardIn, PieceLine + 2, PieceColumn + 1, '  ')
-    ;
-    getPiece(BoardIn, PieceLine + 2, PieceColumn + 1, Piece),
-    name(Piece,[_|[Color|_]]),
-    name(CurrPlayer, [Ascii|_]),
-    Ascii \= Color
-  )
+  checkRL(BoardIn, PieceLine, PieceColumn + 1),
+  checkOB(BoardIn, PieceLine + 1, PieceColumn + 1),
+  checkCapture(CurrPlayer, BoardIn, PieceLine + 2, PieceColumn + 1)
 ).
 
 
 shortMoveLeftThree(BoardIn, PieceLine, PieceColumn, MoveLine, MoveColumn):-
 (
-    
     MoveColumn =:= PieceColumn - 2,
     MoveLine = PieceLine,
-    (
-      getPiece(BoardIn, PieceLine, PieceColumn - 1, '  ')
-      ;
-      getPiece(BoardIn, PieceLine, PieceColumn - 1, 'ol')
-      ;
-      getPiece(BoardIn, PieceLine, PieceColumn - 1, 'th')
-    ),
-    getPiece(BoardIn, PieceLine, PieceColumn - 2, '  ')
+    checkOL(BoardIn, PieceLine, PieceColumn - 1),
+    checkEmpty(BoardIn, PieceLine, PieceColumn - 2)
 ;
-
-    
     MoveLine =:= PieceLine - 1,
     MoveColumn =:= PieceColumn - 1,
-    (
-      getPiece(BoardIn, PieceLine, PieceColumn - 1, '  ')
-      ;
-      getPiece(BoardIn, PieceLine, PieceColumn - 1, 'rr')
-      ;
-      getPiece(BoardIn, PieceLine, PieceColumn - 1, 'at')
-    ),
-    getPiece(BoardIn, PieceLine - 1, PieceColumn - 1, '  ')
+    checkRR(BoardIn, PieceLine, PieceColumn - 1),
+    checkEmpty(BoardIn, PieceLine - 1, PieceColumn - 1)
 ;
-    
     MoveLine =:= PieceLine + 1,
     MoveColumn =:= PieceColumn - 1,
-    (
-      getPiece(BoardIn, PieceLine, PieceColumn - 1, '  ')
-      ;
-      getPiece(BoardIn, PieceLine, PieceColumn - 1, 'lr')
-      ;
-      getPiece(BoardIn, PieceLine, PieceColumn - 1, 'at')
-    ),
-    getPiece(BoardIn, PieceLine + 1, PieceColumn - 1, '  ')
+    checkLR(BoardIn, PieceLine, PieceColumn - 1),
+    checkEmpty(BoardIn, PieceLine + 1, PieceColumn - 1)
 ).
 
 moveLeftThree(CurrPlayer, BoardIn, PieceLine, PieceColumn, MoveLine, MoveColumn):-
 (
   MoveColumn =:= PieceColumn - 3,
   MoveLine = PieceLine,
-  (
-    getPiece(BoardIn, PieceLine, PieceColumn - 1, '  ')
-    ;
-    getPiece(BoardIn, PieceLine, PieceColumn - 1, 'ol')
-    ;
-    getPiece(BoardIn, PieceLine, PieceColumn - 1, 'th')
-  ),
-  (
-    getPiece(BoardIn, PieceLine, PieceColumn - 2, '  ')
-    ;
-    getPiece(BoardIn, PieceLine, PieceColumn - 2, 'ol')
-    ;
-    getPiece(BoardIn, PieceLine, PieceColumn - 2, 'th')
-  ),
-  (
-    getPiece(BoardIn, PieceLine, PieceColumn - 3, '  ')
-    ;
-    getPiece(BoardIn, PieceLine, PieceColumn - 3, Piece),
-    name(Piece,[_|[Color|_]]),
-    name(CurrPlayer, [Ascii|_]),
-    Ascii \= Color
-  )
+  checkOL(BoardIn, PieceLine, PieceColumn - 1),
+  checkOL(BoardIn, PieceLine, PieceColumn - 2),
+  checkCapture(CurrPlayer, BoardIn, PieceLine, PieceColumn - 3)
 ;
   MoveLine =:= PieceLine - 1,
   MoveColumn =:= PieceColumn - 2,
-  (
-    getPiece(BoardIn, PieceLine, PieceColumn - 1, '  ')
-    ;
-    getPiece(BoardIn, PieceLine, PieceColumn - 1, 'ol')
-    ;
-    getPiece(BoardIn, PieceLine, PieceColumn - 1, 'th')
-  ),
-  (
-    getPiece(BoardIn, PieceLine, PieceColumn - 2, '  ')
-    ;
-    getPiece(BoardIn, PieceLine, PieceColumn - 2, 'rr')
-    ;
-    getPiece(BoardIn, PieceLine, PieceColumn - 2, 'at')
-  ),
-  (
-    getPiece(BoardIn, PieceLine - 1, PieceColumn - 2, '  ')
-    ;
-    getPiece(BoardIn, PieceLine - 1, PieceColumn - 2, Piece),
-    name(Piece,[_|[Color|_]]),
-    name(CurrPlayer, [Ascii|_]),
-    Ascii \= Color
-  )
+  checkOL(BoardIn, PieceLine, PieceColumn - 1),
+  checkRR(BoardIn, PieceLine, PieceColumn - 2),
+  checkCapture(CurrPlayer, BoardIn, PieceLine - 1, PieceColumn - 2)
 ;
   MoveLine =:= PieceLine + 1,
   MoveColumn =:= PieceColumn - 2,
-  (
-    getPiece(BoardIn, PieceLine, PieceColumn - 1, '  ')
-    ;
-    getPiece(BoardIn, PieceLine, PieceColumn - 1, 'ol')
-    ;
-    getPiece(BoardIn, PieceLine, PieceColumn - 1, 'th')
-  ),
-  (
-    getPiece(BoardIn, PieceLine, PieceColumn - 2, '  ')
-    ;
-    getPiece(BoardIn, PieceLine, PieceColumn - 2, 'lr')
-    ;
-    getPiece(BoardIn, PieceLine, PieceColumn - 2, 'at')
-  ),
-  (
-    getPiece(BoardIn, PieceLine + 1, PieceColumn - 2, '  ')
-    ;
-    getPiece(BoardIn, PieceLine + 1, PieceColumn - 2, Piece),
-    name(Piece,[_|[Color|_]]),
-    name(CurrPlayer, [Ascii|_]),
-    Ascii \= Color
-  )
+  checkOL(BoardIn, PieceLine, PieceColumn - 1),
+  checkLR(BoardIn, PieceLine, PieceColumn - 2),
+  checkCapture(CurrPlayer, BoardIn, PieceLine + 1, PieceColumn - 2)
 ;
   MoveLine =:= PieceLine - 2,
   MoveColumn =:= PieceColumn - 1,
-  (
-    getPiece(BoardIn, PieceLine, PieceColumn - 1, '  ')
-    ;
-    getPiece(BoardIn, PieceLine, PieceColumn - 1, 'rr')
-    ;
-    getPiece(BoardIn, PieceLine, PieceColumn - 1, 'at')
-  ),
-  (
-    getPiece(BoardIn, PieceLine - 1, PieceColumn - 1, '  ')
-    ;
-    getPiece(BoardIn, PieceLine - 1, PieceColumn - 1, 'ot')
-    ;
-    getPiece(BoardIn, PieceLine - 1, PieceColumn - 1, 'tv')
-  ),
-  (
-    getPiece(BoardIn, PieceLine - 2, PieceColumn - 1, '  ')
-    ;
-    getPiece(BoardIn, PieceLine - 2, PieceColumn - 1, Piece),
-    name(Piece,[_|[Color|_]]),
-    name(CurrPlayer, [Ascii|_]),
-    Ascii \= Color
-  )
+  checkRR(BoardIn, PieceLine, PieceColumn - 1),
+  checkOT(BoardIn, PieceLine - 1, PieceColumn - 1),
+  checkCapture(CurrPlayer, BoardIn, PieceLine - 2, PieceColumn - 1)
 ;
   MoveLine =:= PieceLine + 2,
   MoveColumn =:= PieceColumn - 1,
-  (
-    getPiece(BoardIn, PieceLine, PieceColumn - 1, '  ')
-    ;
-    getPiece(BoardIn, PieceLine, PieceColumn - 1, 'lr')
-    ;
-    getPiece(BoardIn, PieceLine, PieceColumn - 1, 'at')
-  ),
-  (
-    getPiece(BoardIn, PieceLine + 1, PieceColumn - 1, '  ')
-    ;
-    getPiece(BoardIn, PieceLine + 1, PieceColumn - 1, 'ob')
-    ;
-    getPiece(BoardIn, PieceLine + 1, PieceColumn - 1, 'tv')
-  ),
-  (
-    getPiece(BoardIn, PieceLine + 2, PieceColumn - 1, '  ')
-    ;
-    getPiece(BoardIn, PieceLine + 2, PieceColumn - 1, Piece),
-    name(Piece,[_|[Color|_]]),
-    name(CurrPlayer, [Ascii|_]),
-    Ascii \= Color
-  )
+  checkLR(BoardIn, PieceLine, PieceColumn - 1),
+  checkOB(BoardIn, PieceLine + 1, PieceColumn - 1),
+  checkCapture(CurrPlayer, BoardIn, PieceLine + 2, PieceColumn - 1)
 ).
 
 validateThree(CurrPlayer, BoardIn, PieceLine, PieceColumn, MoveLine, MoveColumn):-

@@ -4,6 +4,7 @@
 :- include('piece2.pl').
 :- include('piece3.pl').
 :- include('piece4.pl').
+:- include('pieceChecking.pl').
 :- include('menu.pl').
 :- use_module(library(lists)).
 :- dynamic aside/1.
@@ -20,16 +21,6 @@ board([	['  ','4W','3W','  ','3W','4W','  '],
 				['  ','  ','2B','3B','2B','  ','  '],
 				['  ','4B','3B','  ','3B','4B','  ']]).
 
-cleanBoard([	['  ','  ','  ','  ','  ','  ','  '],
-				['  ','  ','  ','  ','  ','  ','  '],
-				['  ','  ','  ','  ','  ','  ','  '],
-				['  ','  ','  ','  ','  ','  ','  '],
-				['  ','  ','  ','  ','  ','  ','  '],
-				['  ','  ','  ','  ','  ','  ','  '],
-				['  ','  ','  ','  ','  ','  ','  '],
-				['  ','  ','  ','  ','  ','  ','  '],
-				['  ','  ','  ','  ','  ','  ','  ']]).
-
 aside(24).
 
 player('W').
@@ -37,13 +28,10 @@ player('W').
 changePlayer('W', 'B').
 changePlayer('B', 'W').
 
-/* Subtrai duas unidades ao Aside*/
 subAside:-
 	retract(aside(InAside)),
 	OutAside is InAside-2,
 	assert(aside(OutAside)).
-
-/* ----------------------- */
 
 noPiece(Board, Color) :-
 		member(Line, Board),
@@ -98,7 +86,7 @@ askPlay(CurrPlayer, BoardIn, BoardOut):-
 	repeat,
 			print,
 			write(CurrPlayer), write(' turn'), nl, nl,
-			readMove(PieceLine, PieceColumn, MoveLine, MoveColumn),
+			once(readMove(PieceLine, PieceColumn, MoveLine, MoveColumn)),
 			validateMove(CurrPlayer, BoardIn, PieceLine, PieceColumn, MoveLine, MoveColumn),
 			boardUpdate(BoardIn, PieceLine, PieceColumn, MoveLine, MoveColumn, BoardOut),
 			getPiece(BoardOut, PieceLine, PieceColumn, Piece),
