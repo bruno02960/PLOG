@@ -31,4 +31,10 @@ putBarragoon(InBoard, OutBoard):-
 		nl,
 		getPiece(InBoard, Nline, Ncolumn, '  '),
 		setPiece(InBoard, Nline, Ncolumn, Barragoon, OutBoard).
+
+putBarragoonPC(Level, InBoard, OutBoard):-
+	repeat,
+	
+	!
+	.
 /* ---------------------------------------------------*/
