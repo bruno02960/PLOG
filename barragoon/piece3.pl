@@ -122,7 +122,7 @@ shortMoveRightThree(BoardIn, PieceLine, PieceColumn, MoveLine, MoveColumn):-
     checkEmpty(BoardIn, PieceLine - 1, PieceColumn + 1)
 ).
 
-moveRightThree(BoardIn, PieceLine, PieceColumn, MoveLine, MoveColumn):-
+moveRightThree(CurrPlayer, BoardIn, PieceLine, PieceColumn, MoveLine, MoveColumn):-
 (
   MoveColumn =:= PieceColumn + 3,
   MoveLine = PieceLine,

@@ -18,8 +18,8 @@ shortMoveDownFour(BoardIn, PieceLine, PieceColumn, MoveLine, MoveColumn):-
   MoveColumn =:= PieceColumn - 1,
   checkOB(BoardIn, PieceLine + 1, PieceColumn),
   checkRT(BoardIn, PieceLine + 2, PieceColumn),
-  getPiece(BoardIn, (PieceLine + 2), (PieceColumn - 1), Piece),
-  checkEmpty(BoardIn, (PieceLine + 2), (PieceColumn - 1))
+  getPiece(BoardIn, PieceLine + 2, PieceColumn - 1, Piece),
+  checkEmpty(BoardIn, PieceLine + 2, PieceColumn - 1)
 ;
 
   MoveLine =:= PieceLine + 1,
