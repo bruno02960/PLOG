@@ -1,7 +1,7 @@
-levelSelection:-
+levelSelection(Level):-
 	write('*** SELECT DIFFICULTY ***'), nl,
 	write('1. Easier'), nl,
-	write('2. Hardier'), nl,
+	write('2. Harder'), nl,
 	write('Select an option (0 to exit): '),	read(Level).
 
 menu:-
@@ -18,7 +18,7 @@ menuExe(Option):-
   ;
   Option=2, levelSelection(Level), playHvsCPU(Level)
   ;
-  Option=3, levelSelection(Level), playCPUvsCPU(Level)
+  Option=3, levelSelection(Level), playCPUvsCPU(2)
   ;
   Option=0, abort
 ).
