@@ -224,5 +224,4 @@ validateThree(CurrPlayer, BoardIn, PieceLine, PieceColumn, MoveLine, MoveColumn)
   shortMoveLeftThree(BoardIn, PieceLine, PieceColumn, MoveLine, MoveColumn)
 ;
   shortMoveRightThree(BoardIn, PieceLine, PieceColumn, MoveLine, MoveColumn)
-),
-write('Validated!'), nl.
+), nl.

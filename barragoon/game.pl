@@ -113,7 +113,7 @@ askPlay(CurrPlayer, BoardIn, BoardOut):-
 			).
 
 playHvsH:-
-      board1(BoardIn),
+      board(BoardIn),
 			player(PlayerIn),
 			gameLoopHvsH(BoardIn, PlayerIn).
 

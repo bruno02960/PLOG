@@ -358,5 +358,4 @@ validateFour(CurrPlayer, BoardIn, PieceLine, PieceColumn, MoveLine, MoveColumn):
   shortMoveLeftFour(BoardIn, PieceLine, PieceColumn, MoveLine, MoveColumn)
 ;
   shortMoveRightFour(BoardIn, PieceLine, PieceColumn, MoveLine, MoveColumn)
-),
-write('Validated!'), nl.
+), nl.

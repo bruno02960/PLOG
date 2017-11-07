@@ -100,5 +100,4 @@ validateTwo(CurrPlayer, BoardIn, PieceLine, PieceColumn, MoveLine, MoveColumn):-
   moveLeftTwo(CurrPlayer, BoardIn, PieceLine, PieceColumn, MoveLine, MoveColumn)
 ;
   shortMoveTwo(BoardIn, PieceLine, PieceColumn, MoveLine, MoveColumn)
-),
-write('Validated!'), nl.
+), nl.
