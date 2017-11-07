@@ -29,6 +29,10 @@ putBarragoon(InBoard, OutBoard):-
 		write('Column: '),
 		read(Ncolumn),
 		nl,
-		getPiece(InBoard, Nline, Ncolumn, '  '),
-		setPiece(InBoard, Nline, Ncolumn, Barragoon, OutBoard).
+		getPiece(InBoard, Nline, Ncolumn, Piece),
+		write('PIECE = '), write(Piece), nl,
+		Piece = '  ',
+		write('UNIFIES'),
+		setPiece(InBoard, Nline, Ncolumn, Barragoon, OutBoard),
+		write('PIECE SET').
 /* ---------------------------------------------------*/

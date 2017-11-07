@@ -1,9 +1,3 @@
-print :-
-	board(Board),
-	gamePrint(Board), nl,
-	aside(Aside),
-	printAside(Aside), nl.
-
 gamePrint(Board) :-
 	write('    1  2  3  4  5  6  7  '),	nl,
 	printBlackLine,
