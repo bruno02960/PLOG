@@ -26,11 +26,6 @@ printSingleRow([Cell|More]):-
 	write('|'),
 	printSingleRow(More).
 
-printAside(Aside) :-
-	write('Aside = '),
-	write(Aside),
-	nl.
-
 showResult(Loser):-
 	(
 		Loser=66, name(X,[87]), write(X)
