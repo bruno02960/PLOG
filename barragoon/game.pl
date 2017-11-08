@@ -11,7 +11,7 @@
 :- dynamic board/1.
 :- dynamic player/1.
 
-board([	['  ','4W','3W','  ','3W','4W','  '],
+board([	['  ','3W','3W','  ','3W','4W','  '],
 				['  ','  ','2W','3W','2W','  ','  '],
 				['  ','  ','  ','  ','  ','  ','  '],
 				['  ','no','  ','  ','  ','no','  '],
@@ -56,7 +56,8 @@ readInteger(Prompt,Integer):-
 			prompt(Prompt, X).
 
 readMove(PieceLine, PieceColumn, MoveLine, MoveColumn):-
-	write('*** SELECT PIECE ***'),	nl,
+	nl,
+  write('*** SELECT PIECE ***'),	nl,
 	readInteger('Line: ', PieceLine), nl,
 	readInteger('Column: ', PieceColumn), nl,
 	nl,
@@ -118,6 +119,7 @@ playHvsH:-
 			gameLoopHvsH(BoardIn, PlayerIn).
 
 gameLoopHvsH(BoardCurr, PlayerCurr):-
+        nl,
 				gamePrint(BoardCurr),
 				once(askPlay(PlayerCurr,BoardCurr, BoardOut)),
 				once(changePlayer(PlayerCurr, NewPlayer)),
