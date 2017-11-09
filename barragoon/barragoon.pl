@@ -1,8 +1,6 @@
 /**
-*
+* Place the Barragoon with the desired symbol in the desired position, if it is free
 */
-
-/* Coloca o barragoon com o símbolo desejado na posição desejada, caso esta esteja livre */
 putBarragoon(InBoard, OutBoard):-
 	repeat,
 		write('Barragoon: '),

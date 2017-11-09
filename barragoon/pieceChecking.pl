@@ -1,6 +1,12 @@
+/**
+* Check if a place is empty
+*/
 checkEmpty(BoardIn, PieceLine, PieceColumn):-
   getPiece(BoardIn, PieceLine, PieceColumn, '  ').
 
+/**
+* Check if it is possible to make a OB move in a given place
+*/
 checkOB(BoardIn, PieceLine, PieceColumn):-
   (
     getPiece(BoardIn, PieceLine, PieceColumn, '  ')
@@ -10,6 +16,9 @@ checkOB(BoardIn, PieceLine, PieceColumn):-
     getPiece(BoardIn, PieceLine, PieceColumn, 'tv')
   ).
 
+/**
+* Check if it is possible to make a LT move in a given place
+*/
 checkLT(BoardIn, PieceLine, PieceColumn):-
   (
     getPiece(BoardIn, PieceLine, PieceColumn, '  ')
@@ -19,6 +28,9 @@ checkLT(BoardIn, PieceLine, PieceColumn):-
     getPiece(BoardIn, PieceLine, PieceColumn, 'at')
   ).
 
+/**
+* Check if it is possible to make a RT move in a given place
+*/
 checkRT(BoardIn, PieceLine, PieceColumn):-
   (
     getPiece(BoardIn, PieceLine, PieceColumn, '  ')
@@ -28,6 +40,9 @@ checkRT(BoardIn, PieceLine, PieceColumn):-
     getPiece(BoardIn, PieceLine, PieceColumn, 'at')
   ).
 
+/**
+* Check if it is possible to make a OT move in a given place
+*/
 checkOT(BoardIn, PieceLine, PieceColumn):-
   (
     getPiece(BoardIn, PieceLine, PieceColumn, '  ')
@@ -37,6 +52,9 @@ checkOT(BoardIn, PieceLine, PieceColumn):-
     getPiece(BoardIn, PieceLine, PieceColumn, 'tv')
   ).
 
+/**
+* Check if it is possible to make a LB move in a given place
+*/
 checkLB(BoardIn, PieceLine, PieceColumn):-
   (
     getPiece(BoardIn, PieceLine, PieceColumn, '  ')
@@ -46,6 +64,9 @@ checkLB(BoardIn, PieceLine, PieceColumn):-
     getPiece(BoardIn, PieceLine, PieceColumn, 'at')
   ).
 
+/**
+* Check if it is possible to make a RB move in a given place
+*/
 checkRB(BoardIn, PieceLine, PieceColumn):-
   (
     getPiece(BoardIn, PieceLine, PieceColumn, '  ')
@@ -55,6 +76,9 @@ checkRB(BoardIn, PieceLine, PieceColumn):-
     getPiece(BoardIn, PieceLine, PieceColumn, 'at')
   ).
 
+/**
+* Check if it is possible to make a OR move in a given place
+*/
 checkOR(BoardIn, PieceLine, PieceColumn):-
   (
     getPiece(BoardIn, PieceLine, PieceColumn, '  ')
@@ -64,6 +88,9 @@ checkOR(BoardIn, PieceLine, PieceColumn):-
     getPiece(BoardIn, PieceLine, PieceColumn, 'th')
   ).
 
+/**
+* Check if it is possible to make a RL move in a given place
+*/
 checkRL(BoardIn, PieceLine, PieceColumn):-
   (
     getPiece(BoardIn, PieceLine, PieceColumn, '  ')
@@ -73,6 +100,9 @@ checkRL(BoardIn, PieceLine, PieceColumn):-
     getPiece(BoardIn, PieceLine, PieceColumn, 'at')
   ).
 
+/**
+* Check if it is possible to make a LL move in a given place
+*/
 checkLL(BoardIn, PieceLine, PieceColumn):-
   (
     getPiece(BoardIn, PieceLine, PieceColumn, '  ')
@@ -82,6 +112,9 @@ checkLL(BoardIn, PieceLine, PieceColumn):-
     getPiece(BoardIn, PieceLine, PieceColumn, 'at')
   ).
 
+/**
+* Check if it is possible to make a OL move in a given place
+*/
 checkOL(BoardIn, PieceLine, PieceColumn):-
   (
     getPiece(BoardIn, PieceLine, PieceColumn, '  ')
@@ -91,6 +124,9 @@ checkOL(BoardIn, PieceLine, PieceColumn):-
     getPiece(BoardIn, PieceLine, PieceColumn, 'th')
   ).
 
+/**
+* Check if it is possible to make a RR move in a given place
+*/
 checkRR(BoardIn, PieceLine, PieceColumn):-
   (
     getPiece(BoardIn, PieceLine, PieceColumn, '  ')
@@ -100,6 +136,9 @@ checkRR(BoardIn, PieceLine, PieceColumn):-
     getPiece(BoardIn, PieceLine, PieceColumn, 'at')
   ).
 
+/**
+* Check if it is possible to make a LR move in a given place
+*/
 checkLR(BoardIn, PieceLine, PieceColumn):-
   (
     getPiece(BoardIn, PieceLine, PieceColumn, '  ')
@@ -109,6 +148,9 @@ checkLR(BoardIn, PieceLine, PieceColumn):-
     getPiece(BoardIn, PieceLine, PieceColumn, 'at')
   ).
 
+/**
+* Check if a piece 2 can capture in a given place
+*/
 checkCaptureAT(CurrPlayer, BoardIn, PieceLine, PieceColumn):-
   (
     checkEmpty(BoardIn, PieceLine, PieceColumn)
@@ -120,6 +162,9 @@ checkCaptureAT(CurrPlayer, BoardIn, PieceLine, PieceColumn):-
     Ascii \= Color
   ).
 
+/**
+* Check if a piece 3 or 4 can capture in a given place
+*/
 checkCapture(CurrPlayer, BoardIn, PieceLine, PieceColumn):-
   (
   checkEmpty(BoardIn, PieceLine, PieceColumn)

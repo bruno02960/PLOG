@@ -11,6 +11,9 @@
 :- dynamic board/1.
 :- dynamic player/1.
 
+/**
+* Initial board
+*/
 initialBoard([	['  ','3W','3W','  ','3W','4W','  '],
 				['  ','  ','2W','3W','2W','  ','  '],
 				['  ','  ','  ','  ','  ','  ','  '],
@@ -19,8 +22,11 @@ initialBoard([	['  ','3W','3W','  ','3W','4W','  '],
 				['  ','no','  ','  ','  ','no','  '],
 				['  ','  ','  ','  ','  ','  ','  '],
 				['  ','  ','2B','3B','2B','  ','  '],
-				['  ','4B','3B','  ','3B','4B','  ']]);
+				['  ','4B','3B','  ','3B','4B','  ']]).
 
+/**
+* Current board
+*/
 board([['  ','  ','  ','  ','  ','  ','  '],
  ['  ','  ','  ','  ','  ','  ','  '],
  ['  ','no','  ','  ','  ','no','no'],
@@ -31,19 +37,30 @@ board([['  ','  ','  ','  ','  ','  ','  '],
  ['3B','4W','at','  ', '3B','rt','  '],
  ['2W','no','  ','no','  ','  ','  ']]).
 
+/**
+* Current player
+*/
 player('W').
 
+/**
+* Changes between players
+*/
 changePlayer('W', 'B').
 changePlayer('B', 'W').
 
+/**
+* Checks if there are pieces of a given color on board
+*/
 noPiece(Board, Color) :-
 		member(Line, Board),
 		member(Piece, Line),
 		name(Piece,[_|[Color|_]]),
 		!, fail.
-
 noPiece(_,_).
 
+/**
+* Game over condition checking
+*/
 gameOver(Board, Loser):-
 	(
 	noPiece(Board, 66), Loser=66
@@ -51,6 +68,9 @@ gameOver(Board, Loser):-
 	noPiece(Board, 87), Loser=87
 	).
 
+/**
+* Reads an integer number, with a given prompt
+*/
 readInteger(Prompt,Integer):-
   repeat,
       prompt(X, Prompt),
@@ -58,6 +78,9 @@ readInteger(Prompt,Integer):-
       number(Integer),
 			prompt(Prompt, X).
 
+/**
+* Read player move
+*/
 readMove(PieceLine, PieceColumn, MoveLine, MoveColumn):-
 	nl,
   write('*** SELECT PIECE ***'),	nl,
@@ -68,6 +91,9 @@ readMove(PieceLine, PieceColumn, MoveLine, MoveColumn):-
 	readInteger('Line: ', MoveLine), nl,
 	readInteger('Column: ', MoveColumn), nl.
 
+/**
+* Move a piece from given coordinates to other given coordinates
+*/
 movePiece(CurrPlayer, BoardIn, PieceLine, PieceColumn, MoveLine, MoveColumn, OutBoard):-
 	line(PieceLine),
 	col(PieceColumn),
@@ -89,6 +115,9 @@ movePiece(CurrPlayer, BoardIn, PieceLine, PieceColumn, MoveLine, MoveColumn, Out
 	setPiece(BoardIn, PieceLine, PieceColumn, '  ', NewBoard),
 	setPiece(NewBoard, MoveLine, MoveColumn, Piece, OutBoard).
 
+/**
+* Ask and validate human player play
+*/
 askPlay(CurrPlayer, BoardIn, BoardOut):-
 	repeat,
 			findall(XBoard, A^B^C^D^movePiece(CurrPlayer, BoardIn, A, B, C, D, XBoard), PossiblePlays),
@@ -100,7 +129,6 @@ askPlay(CurrPlayer, BoardIn, BoardOut):-
       write(NewPlayer), write(' won!'),
 			abort
 			),
-      write('\e[H\e[2J'),
       gamePrint(BoardIn),
 			nl, write(CurrPlayer), write(' turn'), nl,
 			once(readMove(PieceLine, PieceColumn, MoveLine, MoveColumn)),
@@ -129,6 +157,9 @@ askPlay(CurrPlayer, BoardIn, BoardOut):-
 				copy_term(NewBoard, BoardOut)
 			).
 
+/**
+* Human vs human game mode
+*/
 playHvsH:-
       board(BoardIn),
 			player(PlayerIn),

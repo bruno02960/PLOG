@@ -1,22 +1,28 @@
+/**
+* Validates all possible short moves for piece 2
+*/
 shortMoveTwo(BoardIn, PieceLine, PieceColumn, MoveLine, MoveColumn):-
-  (
-    MoveLine =:= PieceLine + 1,
-    MoveColumn = PieceColumn,
-    checkEmpty(BoardIn, MoveLine, MoveColumn)
-  ;
-    MoveLine =:= PieceLine - 1,
-    MoveColumn = PieceColumn,
-    checkEmpty(BoardIn, MoveLine, MoveColumn)
-  ;
-    MoveColumn =:= PieceColumn - 1,
-    MoveLine = PieceLine,
-    checkEmpty(BoardIn, MoveLine, MoveColumn)
-  ;
-    MoveColumn =:= PieceColumn + 1,
-    MoveLine = PieceLine,
-    checkEmpty(BoardIn, MoveLine, MoveColumn)
-  ).
+(
+  MoveLine =:= PieceLine + 1,
+  MoveColumn = PieceColumn,
+  checkEmpty(BoardIn, MoveLine, MoveColumn)
+;
+  MoveLine =:= PieceLine - 1,
+  MoveColumn = PieceColumn,
+  checkEmpty(BoardIn, MoveLine, MoveColumn)
+;
+  MoveColumn =:= PieceColumn - 1,
+  MoveLine = PieceLine,
+  checkEmpty(BoardIn, MoveLine, MoveColumn)
+;
+  MoveColumn =:= PieceColumn + 1,
+  MoveLine = PieceLine,
+  checkEmpty(BoardIn, MoveLine, MoveColumn)
+).
 
+/**
+* Validates all possible long moves for piece 2, starting by down
+*/
 moveDownTwo(CurrPlayer, BoardIn, PieceLine, PieceColumn, MoveLine, MoveColumn):-
 (
   MoveLine =:= PieceLine + 2,
@@ -35,6 +41,9 @@ moveDownTwo(CurrPlayer, BoardIn, PieceLine, PieceColumn, MoveLine, MoveColumn):-
   checkCaptureAT(CurrPlayer, BoardIn, MoveLine, MoveColumn)
 ).
 
+/**
+* Validates all possible long moves for piece 2, starting by up
+*/
 moveUpTwo(CurrPlayer, BoardIn, PieceLine, PieceColumn, MoveLine, MoveColumn):-
 (
   MoveLine =:= PieceLine - 2,
@@ -53,6 +62,9 @@ moveUpTwo(CurrPlayer, BoardIn, PieceLine, PieceColumn, MoveLine, MoveColumn):-
   checkCaptureAT(CurrPlayer, BoardIn, MoveLine, MoveColumn)
 ).
 
+/**
+* Validates all possible long moves for piece 2, starting by right
+*/
 moveRightTwo(CurrPlayer, BoardIn, PieceLine, PieceColumn, MoveLine, MoveColumn):-
 (
   MoveColumn =:= PieceColumn + 2,
@@ -71,6 +83,9 @@ moveRightTwo(CurrPlayer, BoardIn, PieceLine, PieceColumn, MoveLine, MoveColumn):
   checkCaptureAT(CurrPlayer, BoardIn, MoveLine, MoveColumn)
 ).
 
+/**
+* Validates all possible long moves for piece 2, starting by left
+*/
 moveLeftTwo(CurrPlayer, BoardIn, PieceLine, PieceColumn, MoveLine, MoveColumn):-
 (
   MoveColumn =:= PieceColumn - 2,
@@ -89,6 +104,9 @@ moveLeftTwo(CurrPlayer, BoardIn, PieceLine, PieceColumn, MoveLine, MoveColumn):-
   checkCaptureAT(CurrPlayer, BoardIn, MoveLine, MoveColumn)
 ).
 
+/**
+* Validates all possible moves for piece 2
+*/
 validateTwo(CurrPlayer, BoardIn, PieceLine, PieceColumn, MoveLine, MoveColumn):-
 (
   moveDownTwo(CurrPlayer, BoardIn, PieceLine, PieceColumn, MoveLine, MoveColumn)
@@ -100,4 +118,4 @@ validateTwo(CurrPlayer, BoardIn, PieceLine, PieceColumn, MoveLine, MoveColumn):-
   moveLeftTwo(CurrPlayer, BoardIn, PieceLine, PieceColumn, MoveLine, MoveColumn)
 ;
   shortMoveTwo(BoardIn, PieceLine, PieceColumn, MoveLine, MoveColumn)
-), nl.
+).

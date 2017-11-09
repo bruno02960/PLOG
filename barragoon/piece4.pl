@@ -1,3 +1,6 @@
+/**
+* Validates all possible short moves for piece 3, starting by down
+*/
 shortMoveDownFour(BoardIn, PieceLine, PieceColumn, MoveLine, MoveColumn):-
 (
   MoveLine =:= PieceLine + 3,
@@ -6,7 +9,6 @@ shortMoveDownFour(BoardIn, PieceLine, PieceColumn, MoveLine, MoveColumn):-
   checkOB(BoardIn, PieceLine + 2, PieceColumn),
   checkEmpty(BoardIn, MoveLine, MoveColumn)
 ;
-
   MoveLine =:= PieceLine + 2,
   MoveColumn =:= PieceColumn + 1,
   checkOB(BoardIn, PieceLine + 1, PieceColumn),
@@ -19,14 +21,12 @@ shortMoveDownFour(BoardIn, PieceLine, PieceColumn, MoveLine, MoveColumn):-
   checkRT(BoardIn, PieceLine + 2, PieceColumn),
   checkEmpty(BoardIn, MoveLine, MoveColumn)
 ;
-
   MoveLine =:= PieceLine + 1,
   MoveColumn =:= PieceColumn - 2,
   checkRT(BoardIn, PieceLine + 1, PieceColumn),
   checkOL(BoardIn, PieceLine + 1, PieceColumn - 1),
   checkEmpty(BoardIn, MoveLine, MoveColumn)
 ;
-
   MoveLine =:= PieceLine + 1,
   MoveColumn =:= PieceColumn + 2,
   checkLT(BoardIn, PieceLine + 1, PieceColumn),
@@ -34,6 +34,9 @@ shortMoveDownFour(BoardIn, PieceLine, PieceColumn, MoveLine, MoveColumn):-
   checkEmpty(BoardIn, MoveLine, MoveColumn)
 ).
 
+/**
+* Validates all possible long moves for piece 4, starting by down
+*/
 moveDownFour(CurrPlayer, BoardIn, PieceLine, PieceColumn, MoveLine, MoveColumn):-
 (
   MoveLine =:= PieceLine + 4,
@@ -86,6 +89,9 @@ moveDownFour(CurrPlayer, BoardIn, PieceLine, PieceColumn, MoveLine, MoveColumn):
   checkCapture(CurrPlayer, BoardIn, MoveLine, MoveColumn)
 ).
 
+/**
+* Validates all possible short moves for piece 4, starting by up
+*/
 shortMoveUpFour(BoardIn, PieceLine, PieceColumn, MoveLine, MoveColumn):-
 (
   MoveLine =:= PieceLine - 3,
@@ -119,6 +125,9 @@ shortMoveUpFour(BoardIn, PieceLine, PieceColumn, MoveLine, MoveColumn):-
   checkEmpty(BoardIn, MoveLine, MoveColumn)
 ).
 
+/**
+* Validates all possible long moves for piece 4, starting by up
+*/
 moveUpFour(CurrPlayer, BoardIn, PieceLine, PieceColumn, MoveLine, MoveColumn):-
 (
   MoveLine =:= PieceLine - 4,
@@ -163,14 +172,17 @@ moveUpFour(CurrPlayer, BoardIn, PieceLine, PieceColumn, MoveLine, MoveColumn):-
   checkOR(BoardIn, PieceLine - 1, PieceColumn + 2),
   checkCapture(CurrPlayer, BoardIn, MoveLine, MoveColumn)
 ;
-    MoveLine =:= PieceLine - 1,
-    MoveColumn =:= PieceColumn - 3,
-    checkLB(BoardIn, PieceLine - 1, PieceColumn),
-    checkOL(BoardIn, PieceLine - 1, PieceColumn - 1),
-    checkOL(BoardIn, PieceLine - 1, PieceColumn - 2),
-    checkCapture(CurrPlayer, BoardIn, MoveLine, MoveColumn)
+  MoveLine =:= PieceLine - 1,
+  MoveColumn =:= PieceColumn - 3,
+  checkLB(BoardIn, PieceLine - 1, PieceColumn),
+  checkOL(BoardIn, PieceLine - 1, PieceColumn - 1),
+  checkOL(BoardIn, PieceLine - 1, PieceColumn - 2),
+  checkCapture(CurrPlayer, BoardIn, MoveLine, MoveColumn)
 ).
 
+/**
+* Validates all possible short moves for piece 4, starting by right
+*/
 shortMoveRightFour(BoardIn, PieceLine, PieceColumn, MoveLine, MoveColumn):-
 (
   MoveColumn =:= PieceColumn + 3,
@@ -204,6 +216,9 @@ shortMoveRightFour(BoardIn, PieceLine, PieceColumn, MoveLine, MoveColumn):-
   checkEmpty(BoardIn, MoveLine, MoveColumn)
 ).
 
+/**
+* Validates all possible long moves for piece 4, starting by right
+*/
 moveRightFour(CurrPlayer, BoardIn, PieceLine, PieceColumn, MoveLine, MoveColumn):-
 (
   MoveColumn =:= PieceColumn + 4,
@@ -256,6 +271,9 @@ moveRightFour(CurrPlayer, BoardIn, PieceLine, PieceColumn, MoveLine, MoveColumn)
   checkCapture(CurrPlayer, BoardIn, MoveLine, MoveColumn)
 ).
 
+/**
+* Validates all possible short moves for piece 4, starting by left
+*/
 shortMoveLeftFour(BoardIn, PieceLine, PieceColumn, MoveLine, MoveColumn):-
 (
   MoveColumn =:= PieceColumn - 3,
@@ -289,6 +307,9 @@ shortMoveLeftFour(BoardIn, PieceLine, PieceColumn, MoveLine, MoveColumn):-
   checkEmpty(BoardIn, MoveLine, MoveColumn)
 ).
 
+/**
+* Validates all possible long moves for piece 4, starting by left
+*/
 moveLeftFour(CurrPlayer, BoardIn, PieceLine, PieceColumn, MoveLine, MoveColumn):-
 (
   MoveColumn =:= PieceColumn - 4,
@@ -341,6 +362,9 @@ moveLeftFour(CurrPlayer, BoardIn, PieceLine, PieceColumn, MoveLine, MoveColumn):
   checkCapture(CurrPlayer, BoardIn, MoveLine, MoveColumn)
 ).
 
+/**
+* Validates all possible moves for piece 4
+*/
 validateFour(CurrPlayer, BoardIn, PieceLine, PieceColumn, MoveLine, MoveColumn):-
 (
   moveDownFour(CurrPlayer, BoardIn, PieceLine, PieceColumn, MoveLine, MoveColumn)
@@ -358,4 +382,4 @@ validateFour(CurrPlayer, BoardIn, PieceLine, PieceColumn, MoveLine, MoveColumn):
   shortMoveLeftFour(BoardIn, PieceLine, PieceColumn, MoveLine, MoveColumn)
 ;
   shortMoveRightFour(BoardIn, PieceLine, PieceColumn, MoveLine, MoveColumn)
-), nl.
+).

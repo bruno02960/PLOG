@@ -1,25 +1,27 @@
+/**
+* Validates all possible short moves for piece 3, starting by down
+*/
 shortMoveDownThree(BoardIn, PieceLine, PieceColumn, MoveLine, MoveColumn):-
 (
-
     MoveLine =:= PieceLine + 2,
     MoveColumn = PieceColumn,
     checkOB(BoardIn, PieceLine + 1, PieceColumn),
     checkEmpty(BoardIn, MoveLine, MoveColumn)
 ;
-
-
     MoveLine =:= PieceLine + 1,
     MoveColumn =:= PieceColumn + 1,
     checkLT(BoardIn, PieceLine + 1, PieceColumn),
     checkEmpty(BoardIn, MoveLine, MoveColumn)
 ;
-
     MoveLine =:= PieceLine + 1,
     MoveColumn =:= PieceColumn - 1,
     checkRT(BoardIn, PieceLine + 1, PieceColumn),
     checkEmpty(BoardIn, MoveLine, MoveColumn)
 ).
 
+/**
+* Validates all possible long moves for piece 3, starting by down
+*/
 moveDownThree(CurrPlayer, BoardIn, PieceLine, PieceColumn, MoveLine, MoveColumn):-
 (
   MoveLine =:= PieceLine + 3,
@@ -53,6 +55,9 @@ moveDownThree(CurrPlayer, BoardIn, PieceLine, PieceColumn, MoveLine, MoveColumn)
   checkCapture(CurrPlayer, BoardIn, MoveLine, MoveColumn)
 ).
 
+/**
+* Validates all possible short moves for piece 3, starting by up
+*/
 shortMoveUpThree(BoardIn, PieceLine, PieceColumn, MoveLine, MoveColumn):-
 (
     MoveLine =:= PieceLine - 2,
@@ -71,6 +76,9 @@ shortMoveUpThree(BoardIn, PieceLine, PieceColumn, MoveLine, MoveColumn):-
     checkEmpty(BoardIn, MoveLine, MoveColumn)
 ).
 
+/**
+* Validates all possible long moves for piece 3, starting by up
+*/
 moveUpThree(CurrPlayer, BoardIn, PieceLine, PieceColumn, MoveLine, MoveColumn):-
 (
   MoveLine =:= PieceLine - 3,
@@ -104,6 +112,9 @@ moveUpThree(CurrPlayer, BoardIn, PieceLine, PieceColumn, MoveLine, MoveColumn):-
   checkCapture(CurrPlayer, BoardIn, MoveLine, MoveColumn)
 ).
 
+/**
+* Validates all possible short moves for piece 3, starting by right
+*/
 shortMoveRightThree(BoardIn, PieceLine, PieceColumn, MoveLine, MoveColumn):-
 (
     MoveColumn =:= PieceColumn + 2,
@@ -122,6 +133,9 @@ shortMoveRightThree(BoardIn, PieceLine, PieceColumn, MoveLine, MoveColumn):-
     checkEmpty(BoardIn, MoveLine, MoveColumn)
 ).
 
+/**
+* Validates all possible long moves for piece 3, starting by right
+*/
 moveRightThree(CurrPlayer, BoardIn, PieceLine, PieceColumn, MoveLine, MoveColumn):-
 (
   MoveColumn =:= PieceColumn + 3,
@@ -155,7 +169,9 @@ moveRightThree(CurrPlayer, BoardIn, PieceLine, PieceColumn, MoveLine, MoveColumn
   checkCapture(CurrPlayer, BoardIn, MoveLine, MoveColumn)
 ).
 
-
+/**
+* Validates all possible short moves for piece 3, starting by left
+*/
 shortMoveLeftThree(BoardIn, PieceLine, PieceColumn, MoveLine, MoveColumn):-
 (
     MoveColumn =:= PieceColumn - 2,
@@ -174,6 +190,9 @@ shortMoveLeftThree(BoardIn, PieceLine, PieceColumn, MoveLine, MoveColumn):-
     checkEmpty(BoardIn, MoveLine, MoveColumn)
 ).
 
+/**
+* Validates all possible long moves for piece 3, starting by left
+*/
 moveLeftThree(CurrPlayer, BoardIn, PieceLine, PieceColumn, MoveLine, MoveColumn):-
 (
   MoveColumn =:= PieceColumn - 3,
@@ -207,6 +226,9 @@ moveLeftThree(CurrPlayer, BoardIn, PieceLine, PieceColumn, MoveLine, MoveColumn)
   checkCapture(CurrPlayer, BoardIn, MoveLine, MoveColumn)
 ).
 
+/**
+* Validates all possible moves for piece 3
+*/
 validateThree(CurrPlayer, BoardIn, PieceLine, PieceColumn, MoveLine, MoveColumn):-
 (
   moveDownThree(CurrPlayer, BoardIn, PieceLine, PieceColumn, MoveLine, MoveColumn)
@@ -224,4 +246,4 @@ validateThree(CurrPlayer, BoardIn, PieceLine, PieceColumn, MoveLine, MoveColumn)
   shortMoveLeftThree(BoardIn, PieceLine, PieceColumn, MoveLine, MoveColumn)
 ;
   shortMoveRightThree(BoardIn, PieceLine, PieceColumn, MoveLine, MoveColumn)
-), nl.
+).

@@ -1,9 +1,15 @@
+/**
+*	Game level selection menu
+*/
 levelSelection(Level):-
 	write('*** SELECT DIFFICULTY ***'), nl,
 	write('1. Easier'), nl,
 	write('2. Harder'), nl,
 	write('Select an option (0 to exit): '),	read(Level).
 
+/**
+* Game menu
+*/
 menu:-
 	write('*** BARRAGOON ***'), nl,
 	write('1. Human vs Human'), nl,
@@ -12,6 +18,9 @@ menu:-
 	write('Select an option (0 to exit): '),	read(Option),
 	menuExe(Option).
 
+/**
+*	Executes menu option
+*/
 menuExe(Option):-
 (
   Option=1, playHvsH

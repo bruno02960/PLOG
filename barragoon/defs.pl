@@ -1,3 +1,6 @@
+/**
+* Barragoon list
+*/
 barragoon(no).
 barragoon(or).
 barragoon(ol).
@@ -15,6 +18,9 @@ barragoon(lt).
 barragoon(lb).
 barragoon(at).
 
+/**
+* Game lines
+*/
 line(1).
 line(2).
 line(3).
@@ -25,6 +31,9 @@ line(7).
 line(8).
 line(9).
 
+/**
+* Game columns
+*/
 col(1).
 col(2).
 col(3).
@@ -33,6 +42,9 @@ col(5).
 col(6).
 col(7).
 
+/**
+* Game play pieces
+*/
 piece('2W').
 piece('3W').
 piece('4W').
