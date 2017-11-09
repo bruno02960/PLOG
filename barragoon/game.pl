@@ -8,6 +8,7 @@
 :- include('defs.pl').
 :- include('menu.pl').
 :- use_module(library(lists)).
+:- use_module(library(random)).
 :- dynamic board/1.
 :- dynamic player/1.
 
@@ -156,6 +157,43 @@ askPlay(CurrPlayer, BoardIn, BoardOut):-
 			;
 				copy_term(NewBoard, BoardOut)
 			).
+
+playCPUrandom(CurrPlayer, BoardIn, BoardOut):-
+    findall(XBoard, A^B^C^D^movePiece(CurrPlayer, BoardIn, A, B, C, D, XBoard), PossiblePlays),
+    random_permutation(PossiblePlays, [NewBoard|_]),
+    getPiece(BoardIn, MoveLine, MoveColumn, Piece),
+    (
+      gameOver(NewBoard, Loser),
+      showResult(Loser),
+      abort
+    /*;
+
+       CPU PUTS BARRAGOON */
+
+      /*barragoon(Piece),
+      write(CurrPlayer), write(' puts barragoon:'), nl,
+      copy_term(NewBoard, NewBoard),
+      putBarragoon(NewBoard, Board1),
+      copy_term(Board1, BoardOut)
+    ;*/
+
+      /* OTHER PLAYER PUTS BARRAGOON */
+
+      /*getColor(Piece, Color),
+      Color \= ' ',
+      changePlayer(CurrPlayer, NewPlayer),
+      write(NewPlayer), write(' puts barragoon:'), nl,
+      putBarragoon(NewBoard, Board1),*/
+
+      /* CPU PUTS BARRAGOON */
+
+      /*write(CurrPlayer), write(' puts barragoon:'), nl,
+      putBarragoon(Board1, Board2),
+      copy_term(Board2, BoardOut)*/
+    ;
+      copy_term(NewBoard, BoardOut)
+    ).
+
 
 /**
 * Human vs human game mode
