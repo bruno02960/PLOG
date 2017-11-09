@@ -5,21 +5,22 @@
 :- include('piece3.pl').
 :- include('piece4.pl').
 :- include('pieceChecking.pl').
+:- include('defs.pl').
 :- include('menu.pl').
 :- use_module(library(lists)).
 :- dynamic aside/1.
 :- dynamic board/1.
 :- dynamic player/1.
 
-board([	['  ','3W','3W','  ','3W','4W','  '],
-				['  ','  ','2W','3W','2W','  ','  '],
-				['  ','  ','  ','  ','  ','  ','  '],
-				['  ','no','  ','  ','  ','no','  '],
-				['no','  ','no','  ','no','  ','no'],
-				['  ','no','  ','  ','  ','no','  '],
-				['  ','  ','  ','  ','  ','  ','  '],
-				['  ','  ','2B','3B','2B','  ','  '],
-				['  ','4B','3B','  ','3B','4B','  ']]).
+board([['  ','  ','  ','  ','  ','  ','  '],
+ ['  ','  ','  ','  ','  ','  ','  '],
+ ['  ','no','  ','  ','  ','no','no'],
+ ['no','4W','no','  ','th','ot','4W'],
+ ['ob','at','no', 'tv','no','ol', '3B'],
+ ['2B', 'tv','no','ob','  ','no','ot'],
+ ['no','ob','no','lt','at','  ','  '],
+ ['3B','4W','at','  ', '3B','rt','  '],
+ ['2W','no','  ','no','  ','  ','  ']]).
 
 aside(24).
 
@@ -65,8 +66,13 @@ readMove(PieceLine, PieceColumn, MoveLine, MoveColumn):-
 	readInteger('Line: ', MoveLine), nl,
 	readInteger('Column: ', MoveColumn), nl.
 
-validateMove(CurrPlayer, BoardIn, PieceLine, PieceColumn, MoveLine, MoveColumn):-
+movePiece(CurrPlayer, BoardIn, PieceLine, PieceColumn, MoveLine, MoveColumn, OutBoard):-
+	line(PieceLine),
+	col(PieceColumn),
+	line(MoveLine),
+	col(MoveColumn),
 	getPiece(BoardIn, PieceLine, PieceColumn, Piece),
+	piece(Piece),
 	name(Piece,[_|[Color|_]]),
 	name(CurrPlayer, [Color|_]),
 	getNumber(Piece, Number),
@@ -76,19 +82,22 @@ validateMove(CurrPlayer, BoardIn, PieceLine, PieceColumn, MoveLine, MoveColumn):
 		Number=3, validateThree(CurrPlayer, BoardIn, PieceLine, PieceColumn, MoveLine, MoveColumn)
 	;
 		Number=4, validateFour(CurrPlayer, BoardIn, PieceLine, PieceColumn, MoveLine, MoveColumn)
-	).
-
-boardUpdate(InBoard, PieceLine, PieceColumn, MoveLine, MoveColumn, OutBoard):-
-	getPiece(InBoard, PieceLine, PieceColumn, Piece),
-	setPiece(InBoard, PieceLine, PieceColumn, '  ', NewBoard),
+	),
+	getPiece(BoardIn, PieceLine, PieceColumn, Piece),
+	setPiece(BoardIn, PieceLine, PieceColumn, '  ', NewBoard),
 	setPiece(NewBoard, MoveLine, MoveColumn, Piece, OutBoard).
 
 askPlay(CurrPlayer, BoardIn, BoardOut):-
 	repeat,
+			findall(XBoard, A^B^C^D^movePiece(CurrPlayer, BoardIn, A, B, C, D, XBoard), PossiblePlays),
+			(
+			PossiblePlays \= []
+			;
+			abort
+			),
 			nl, write(CurrPlayer), write(' turn'), nl,
 			once(readMove(PieceLine, PieceColumn, MoveLine, MoveColumn)),
-			validateMove(CurrPlayer, BoardIn, PieceLine, PieceColumn, MoveLine, MoveColumn),
-			boardUpdate(BoardIn, PieceLine, PieceColumn, MoveLine, MoveColumn, NewBoard),
+			movePiece(CurrPlayer, BoardIn, PieceLine, PieceColumn, MoveLine, MoveColumn, NewBoard),
 			getPiece(BoardIn, MoveLine, MoveColumn, Piece),
 			(
 				gameOver(NewBoard, Loser),
@@ -110,7 +119,9 @@ askPlay(CurrPlayer, BoardIn, BoardOut):-
 				putBarragoon(Board1, Board2),
 				copy_term(Board2, BoardOut)
 			;
-				copy_term(NewBoard, BoardOut)
+				copy_term(NewBoard, BoardOut),
+				setof(XBoard, A^B^C^D^movePiece(CurrPlayer, BoardIn, A, B, C, D, XBoard), PossiblePlays),
+				write(PossiblePlays)
 			).
 
 playHvsH:-

@@ -114,8 +114,8 @@ shortMoveUpFour(BoardIn, PieceLine, PieceColumn, MoveLine, MoveColumn):-
 ;
   MoveLine =:= PieceLine - 1,
   MoveColumn =:= PieceColumn + 2,
-  checkLT(BoardIn, PieceLine - 1, PieceColumn),
-  checkRB(BoardIn, PieceLine - 1, PieceColumn + 1),
+  checkRB(BoardIn, PieceLine - 1, PieceColumn),
+  checkOR(BoardIn, PieceLine - 1, PieceColumn + 1),
   checkEmpty(BoardIn, MoveLine, MoveColumn)
 ).
 

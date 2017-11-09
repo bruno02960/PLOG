@@ -1,20 +1,6 @@
-/* ------------------------------------------------*/
-barragoon(no).
-barragoon(or).
-barragoon(ol).
-barragoon(ot).
-barragoon(ob).
-barragoon(th).
-barragoon(tv).
-barragoon(rr).
-barragoon(rl).
-barragoon(rt).
-barragoon(rb).
-barragoon(lr).
-barragoon(ll).
-barragoon(lt).
-barragoon(lb).
-barragoon(at).
+/**
+*
+*/
 
 /* Coloca o barragoon com o símbolo desejado na posição desejada, caso esta esteja livre */
 putBarragoon(InBoard, OutBoard):-
