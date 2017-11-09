@@ -12,15 +12,15 @@
 :- dynamic board/1.
 :- dynamic player/1.
 
-board([['  ','  ','  ','  ','  ','  ','  '],
- ['  ','  ','  ','  ','  ','  ','  '],
- ['  ','no','  ','  ','  ','no','no'],
- ['no','4W','no','  ','th','ot','4W'],
- ['ob','at','no', 'tv','no','ol', '3B'],
- ['2B', 'tv','no','ob','  ','no','ot'],
- ['no','ob','no','lt','at','  ','  '],
- ['3B','4W','at','  ', '3B','rt','  '],
- ['2W','no','  ','no','  ','  ','  ']]).
+board([	['  ','3W','3W','  ','3W','4W','  '],
+				['  ','  ','2W','3W','2W','  ','  '],
+				['  ','  ','  ','  ','  ','  ','  '],
+				['  ','no','  ','  ','  ','no','  '],
+				['no','  ','no','  ','no','  ','no'],
+				['  ','no','  ','  ','  ','no','  '],
+				['  ','  ','  ','  ','  ','  ','  '],
+				['  ','  ','2B','3B','2B','  ','  '],
+				['  ','4B','3B','  ','3B','4B','  ']]).
 
 aside(24).
 
@@ -88,13 +88,13 @@ movePiece(CurrPlayer, BoardIn, PieceLine, PieceColumn, MoveLine, MoveColumn, Out
 	setPiece(NewBoard, MoveLine, MoveColumn, Piece, OutBoard).
 
 askPlay(CurrPlayer, BoardIn, BoardOut):-
-	repeat,
+	repeat,/*
 			findall(XBoard, A^B^C^D^movePiece(CurrPlayer, BoardIn, A, B, C, D, XBoard), PossiblePlays),
 			(
 			PossiblePlays \= []
 			;
 			abort
-			),
+			),*/
 			nl, write(CurrPlayer), write(' turn'), nl,
 			once(readMove(PieceLine, PieceColumn, MoveLine, MoveColumn)),
 			movePiece(CurrPlayer, BoardIn, PieceLine, PieceColumn, MoveLine, MoveColumn, NewBoard),
@@ -119,9 +119,7 @@ askPlay(CurrPlayer, BoardIn, BoardOut):-
 				putBarragoon(Board1, Board2),
 				copy_term(Board2, BoardOut)
 			;
-				copy_term(NewBoard, BoardOut),
-				setof(XBoard, A^B^C^D^movePiece(CurrPlayer, BoardIn, A, B, C, D, XBoard), PossiblePlays),
-				write(PossiblePlays)
+				copy_term(NewBoard, BoardOut)
 			).
 
 playHvsH:-
