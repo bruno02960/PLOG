@@ -8,9 +8,18 @@
 :- include('defs.pl').
 :- include('menu.pl').
 :- use_module(library(lists)).
-:- dynamic aside/1.
 :- dynamic board/1.
 :- dynamic player/1.
+
+initialBoard([	['  ','3W','3W','  ','3W','4W','  '],
+				['  ','  ','2W','3W','2W','  ','  '],
+				['  ','  ','  ','  ','  ','  ','  '],
+				['  ','no','  ','  ','  ','no','  '],
+				['no','  ','no','  ','no','  ','no'],
+				['  ','no','  ','  ','  ','no','  '],
+				['  ','  ','  ','  ','  ','  ','  '],
+				['  ','  ','2B','3B','2B','  ','  '],
+				['  ','4B','3B','  ','3B','4B','  ']]);
 
 board([['  ','  ','  ','  ','  ','  ','  '],
  ['  ','  ','  ','  ','  ','  ','  '],
@@ -22,17 +31,10 @@ board([['  ','  ','  ','  ','  ','  ','  '],
  ['3B','4W','at','  ', '3B','rt','  '],
  ['2W','no','  ','no','  ','  ','  ']]).
 
-aside(24).
-
 player('W').
 
 changePlayer('W', 'B').
 changePlayer('B', 'W').
-
-subAside:-
-	retract(aside(InAside)),
-	OutAside is InAside-2,
-	assert(aside(OutAside)).
 
 noPiece(Board, Color) :-
 		member(Line, Board),
