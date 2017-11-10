@@ -148,7 +148,6 @@ askPlay(CurrPlayer, BoardIn, BoardOut):-
 
 
 playCPUvsHrandom(CurrPlayer, BoardIn, BoardOut):-
-<<<<<<< HEAD
     findall(XBoard-C-D, A^B^C^D^movePiece(CurrPlayer, BoardIn, A, B, C, D, XBoard), PossiblePlays),
     random_permutation(PossiblePlays, [NewBoard-MoveLine-MoveColumn|_]),
     getPiece(BoardIn, MoveLine, MoveColumn, Piece),
@@ -205,61 +204,6 @@ playCPUvsCPUrandom(CurrPlayer, BoardIn, BoardOut):-
       copy_term(NewBoard, BoardOut)
     ),
 		read(X).
-=======
-    		findall(XBoard, A^B^C^D^movePiece(CurrPlayer, BoardIn, A, B, C, D, XBoard), PossiblePlays),
-    		random_permutation(PossiblePlays, [NewBoard|_]),
-    		getPiece(BoardIn, MoveLine, MoveColumn, Piece),     /* KNOW WHERE HE MOVED TO */
-    		(
-      		   gameOver(NewBoard, Loser),
-      		   showResult(Loser),
-      		   abort
-    		;
-      		   barragoon(Piece),
-      		   putBarragoonRandom(NewBoard, Board1),
-      		   copy_term(Board1, BoardOut)
-    		;
-      		   getColor(Piece, Color),
-      		   Color \= ' ',
-      		   changePlayer(CurrPlayer, NewPlayer),
-      		   (
-      		      CurrPlayer = 'W',
-      		      putBarragoonRandom(NewBoard, Board1),
-      		      write(CurrPlayer), write(' puts barragoon:'), nl,
-      		      putBarragoon(Board1, Board2),
-      		      copy_term(Board2, BoardOut)
-      		   ;
-      		      CurrPlayer = 'B',
-      		      write(NewPlayer), write(' puts barragoon:'), nl,
-      		      putBarragoon(NewBoard, Board1),
-      		      putBarragoonRandom(Board1, Board2),
-      		      copy_term(Board2, BoardOut)
-      		   )
-    		;
-      		   copy_term(NewBoard, BoardOut)
-    		).
-
-playCPUvsCPUrandom(CurrPlayer, BoardIn, BoardOut):-
-    		findall(XBoard, A^B^C^D^movePiece(CurrPlayer, BoardIn, A, B, C, D, XBoard), PossiblePlays),
-    		random_permutation(PossiblePlays, [NewBoard|_]),
-    		getPiece(BoardIn, MoveLine, MoveColumn, Piece),     /* KNOW WHERE HE MOVED TO */
-    		(
-      		   gameOver(NewBoard, Loser),
-      		   showResult(Loser),
-      		   abort
-    		;
-      		   barragoon(Piece),
-      		   putBarragoonRandom(NewBoard, Board1),
-      		   copy_term(Board1, BoardOut)
-    		;
-      		   getColor(Piece, Color),
-      		   Color \= ' ',
-      		   putBarragoonRandom(NewBoard, Board1),
-      		   putBarragoonRandom(Board1, Board2),
-      		   copy_term(Board2, BoardOut)
-    		;
-      		   copy_term(NewBoard, BoardOut)
-    		).
->>>>>>> 53509d3bfbe3378b17e4531a452b511609419b67
 
 
 /**
