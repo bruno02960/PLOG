@@ -120,17 +120,17 @@ movePiece(CurrPlayer, BoardIn, PieceLine, PieceColumn, MoveLine, MoveColumn, Out
 * Ask and validate human player play
 */
 askPlay(CurrPlayer, BoardIn, BoardOut):-
+    findall(XBoard, A^B^C^D^movePiece(CurrPlayer, BoardIn, A, B, C, D, XBoard), PossiblePlays),
+    (
+    PossiblePlays \= []
+    ;
+    changePlayer(CurrPlayer, NewPlayer),
+    gamePrint(BoardIn), nl,
+    write(NewPlayer), write(' won!'),
+    abort
+    ),
+    gamePrint(BoardIn),
 	repeat,
-			findall(XBoard, A^B^C^D^movePiece(CurrPlayer, BoardIn, A, B, C, D, XBoard), PossiblePlays),
-			(
-			PossiblePlays \= []
-			;
-      changePlayer(CurrPlayer, NewPlayer),
-      gamePrint(BoardIn), nl,
-      write(NewPlayer), write(' won!'),
-			abort
-			),
-      gamePrint(BoardIn),
 			nl, write(CurrPlayer), write(' turn'), nl,
 			once(readMove(PieceLine, PieceColumn, MoveLine, MoveColumn)),
 			movePiece(CurrPlayer, BoardIn, PieceLine, PieceColumn, MoveLine, MoveColumn, NewBoard),
@@ -229,7 +229,7 @@ playCPUvsCPUrandom(CurrPlayer, BoardIn, BoardOut):-
 * Human vs human game mode
 */
 playHvsH:-
-      board(BoardIn),
+      initialBoard(BoardIn),
 			player(PlayerIn),
 			gameLoopHvsH(BoardIn, PlayerIn).
 

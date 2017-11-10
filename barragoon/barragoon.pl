@@ -3,16 +3,15 @@
 */
 putBarragoon(InBoard, OutBoard):-
 	repeat,
-		write('Barragoon: '),
+		nl, write('*** SELECT BARRAOON ***'), nl,
+	  prompt(X, 'Barragoon: '),
 		read(Barragoon),
+	  prompt('Barragoon: ', X),
 		barragoon(Barragoon),
 		nl,
-		write('Line: '),
-		read(Nline),
-		nl,
-		write('Column: '),
-		read(Ncolumn),
-		nl,
+		write('*** SELECT MOVE ***'),	nl,
+		readInteger('Line: ', Nline), nl,
+		readInteger('Column: ', Ncolumn), nl,
 		getPiece(InBoard, Nline, Ncolumn, '  '),
 		setPiece(InBoard, Nline, Ncolumn, Barragoon, OutBoard).
 
