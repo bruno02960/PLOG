@@ -16,7 +16,7 @@
 /**
 * Initial board
 */
-initialBoard([	['  ','3W','3W','  ','3W','4W','  '],
+initialBoard([	['  ','4W','3W','  ','3W','4W','  '],
 				['  ','  ','2W','3W','2W','  ','  '],
 				['  ','  ','  ','  ','  ','  ','  '],
 				['  ','no','  ','  ','  ','no','  '],
@@ -27,22 +27,9 @@ initialBoard([	['  ','3W','3W','  ','3W','4W','  '],
 				['  ','4B','3B','  ','3B','4B','  ']]).
 
 /**
-* Current board
+* Initial player
 */
-board([['  ','  ','  ','  ','  ','  ','  '],
- ['  ','  ','  ','  ','  ','  ','  '],
- ['  ','no','  ','  ','  ','no','no'],
- ['no','4W','no','  ','th','ot','4W'],
- ['ob','at','no', 'tv','no','ol', '3B'],
- ['2B', 'tv','no','ob','  ','no','ot'],
- ['no','ob','no','lt','at','  ','  '],
- ['3B','4W','at','  ', '3B','rt','  '],
- ['2W','no','  ','no','  ','  ','  ']]).
-
-/**
-* Current player
-*/
-player('W').
+initialPlayer('W').
 
 /**
 * Changes between players
@@ -232,7 +219,7 @@ playCPUvsCPUrandom(CurrPlayer, BoardIn, BoardOut):-
 /**
 * Human vs human game mode
 */
-playHvsH:-
+/*playHvsH:-
       initialBoard(BoardIn),
 			player(PlayerIn),
 			gameLoopHvsH(BoardIn, PlayerIn).
@@ -241,7 +228,26 @@ gameLoopHvsH(BoardCurr, PlayerCurr):-
       nl,
   		once(askPlay(PlayerCurr,BoardCurr, BoardOut)),
   		once(changePlayer(PlayerCurr, NewPlayer)),
-  		gameLoopHvsH(BoardOut, NewPlayer).
+  		gameLoopHvsH(BoardOut, NewPlayer).*/
+
+playHvsH:-
+	initialBoard(BoardIn),
+	initialPlayer(PlayerIn),
+	assert(board(BoardIn)),
+	assert(player(PlayerIn)),
+	repeat,
+		retract(board(BoardCurr)),
+		retract(player(PlayerCurr)),
+		once(askPlay(PlayerCurr,BoardCurr, BoardOut)),
+		once(changePlayer(PlayerCurr, NewPlayer)),
+		assert(player(NewPlayer)),
+		assert(board(BoardOut)),
+		gameOver(BoardOut, Loser),
+		showResult(Loser),
+	!.
+
+
+
 
 playerCPU(PlayerCurr, Level, BoardCurr, BoardOut):-
 			(
