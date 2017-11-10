@@ -33,19 +33,46 @@ playCPUvsHrandom(CurrPlayer, BoardIn, BoardOut):-
     ).
 
 playRandomCPUvsH:-
-initialBoard(BoardIn),
-initialPlayer(PlayerIn),
-assert(board(BoardIn)),
-assert(player(PlayerIn)),
-repeat,
-  retract(board(BoardCurr)),
-  retract(player(PlayerCurr)),
-  once(askPlay(PlayerCurr,BoardCurr, NewBoard)),
-  once(changePlayer(PlayerCurr, NewPlayer)),
-  once(playCPUvsHrandom(NewPlayer, NewBoard, BoardOut)),
-  once(changePlayer(NewPlayer, PlayerCurr)),
-  assert(player(PlayerCurr)),
-  assert(board(BoardOut)),
-  gameOver(BoardIn, Loser),
-  showResult(Loser),
-!.
+  initialBoard(BoardIn),
+  initialPlayer(PlayerIn),
+  assert(board(BoardIn)),
+  assert(player(PlayerIn)),
+        
+  repeat,
+        retract(board(BoardCurr)),
+        retract(player(PlayerCurr)),
+        once(askPlay(PlayerCurr,BoardCurr, NewBoard)),
+        once(changePlayer(PlayerCurr, NewPlayer)),
+        once(playCPUvsHrandom(NewPlayer, NewBoard, BoardOut)),
+        once(changePlayer(NewPlayer, PlayerCurr)),
+        assert(player(PlayerCurr)),
+        assert(board(BoardOut)),
+        gameOver(BoardIn, Loser),
+        showResult(Loser),
+   !.
+
+playCPUvsH(NewPlayer, NewBoard, BoardOut):-
+        /*
+		escolher melhor jogada
+                verificar se esta correto
+        */
+.
+
+playAICPUvsH:-
+  initialBoard(BoardIn),
+  initialPlayer(PlayerIn),
+  assert(board(BoardIn)),
+  assert(player(PlayerIn)),
+        
+  repeat,
+        retract(board(BoardCurr)),
+        retract(player(PlayerCurr)),
+        once(askPlay(PlayerCurr,BoardCurr, NewBoard)),
+        once(changePlayer(PlayerCurr, NewPlayer)),
+        once(playCPUvsH(NewPlayer, NewBoard, BoardOut)),
+        once(changePlayer(NewPlayer, PlayerCurr)),
+        assert(player(PlayerCurr)),
+        assert(board(BoardOut)),
+        gameOver(BoardIn, Loser),
+        showResult(Loser),
+   !.

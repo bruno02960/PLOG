@@ -38,3 +38,27 @@ playRandomCPUvsCPU:-
     gameOver(BoardOut, Loser),
     showResult(Loser),
     !.
+
+playCPUvsCPU:-
+  .
+
+playAICPUvsCPU:-
+          /*
+                escolher melhor jogada
+                verificar se esta correto
+        */
+  initialBoard(BoardIn),
+  initialPlayer(PlayerIn),
+  assert(board(BoardIn)),
+  assert(player(PlayerIn)),
+  repeat,
+    retract(board(BoardCurr)),
+    retract(player(PlayerCurr)),
+    once(playCPUvsCPU(PlayerCurr,BoardCurr, BoardOut)),
+    once(changePlayer(PlayerCurr, NewPlayer)),
+    assert(player(NewPlayer)),
+    assert(board(BoardOut)),
+    gameOver(BoardOut, Loser),
+    showResult(Loser),
+    !.
+  .

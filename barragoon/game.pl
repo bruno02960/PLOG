@@ -10,6 +10,7 @@
 :- include('HvsH.pl').
 :- include('HvsCPU.pl').
 :- include('CPUvsCPU.pl').
+:-include('pcAI.pl').
 :- use_module(library(lists)).
 :- use_module(library(random)).
 :- use_module(library(system)).

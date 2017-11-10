@@ -37,8 +37,10 @@ menuExe(Option):-
 levelSelectionExe(Option, Level):-
 	(
 	  Option=2, Level=1, playRandomCPUvsH
-		;
+        ;
 	  Option=3, Level=1, playRandomCPUvsCPU
-	  ;
-	  Level=2 /*levelSelection(Level), playHvsCPU(Level)*/
+	;
+	  Option=2, Level=2, playAICPUvsH
+	;
+	  Option=3, Level=2, playAICPUvsCPU
 	).

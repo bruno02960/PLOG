@@ -1,2 +1,2 @@
-pcMove(CurrPlayer, Level, BoardIn, PieceLine, PieceColumn, MoveLine, MoveColumn):-
+pcMove(CurrPlayer, BoardIn, PieceLine, PieceColumn, MoveLine, MoveColumn):-
         .

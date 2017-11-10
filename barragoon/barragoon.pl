@@ -28,9 +28,4 @@ putBarragoonRandom(BoardIn, BoardOut):-
                 findall(XBoard, A^B^setBarragoon(BoardIn, A, B, XBoard), Boards),
                 random_permutation(Boards, [BoardOut|_]).
 
-putBarragoonPC(Level, InBoard, OutBoard):-
-	repeat,
-
-	!
-	.
 /* ---------------------------------------------------*/
