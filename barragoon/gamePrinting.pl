@@ -16,7 +16,7 @@ printBlackLine :-
 /**
 *	Prints row by row
 */
-printRowByRow(NoLine, []).
+printRowByRow(_, []).
 printRowByRow(NoLine, [Line|Rest]) :-
 	write(NoLine),
 	write(' |'),

@@ -158,38 +158,68 @@ askPlay(CurrPlayer, BoardIn, BoardOut):-
 				copy_term(NewBoard, BoardOut)
 			).
 
-playCPUrandom(CurrPlayer, BoardIn, BoardOut):-
+setBarragoon(BoardIn, Line, Column, BoardOut):-
+    line(Line),
+    col(Column),
+    random_permutation([no,or,ol,ot,ob,th,tv,rr,rl,rt,rb,lr,ll,lt,lb,at], [Barragoon|_]),
+		getPiece(BoardIn, Line, Column, '  '),
+		setPiece(BoardIn, Line, Column, Barragoon, BoardOut).
+
+putBarragoonRandom(BoardIn, BoardOut):-
+    findall(XBoard, A^B^setBarragoon(BoardIn, A, B, XBoard), [BoardOut|_]).
+
+
+playCPUvsHrandom(CurrPlayer, BoardIn, BoardOut):-
     findall(XBoard, A^B^C^D^movePiece(CurrPlayer, BoardIn, A, B, C, D, XBoard), PossiblePlays),
     random_permutation(PossiblePlays, [NewBoard|_]),
-    getPiece(BoardIn, MoveLine, MoveColumn, Piece),
+    getPiece(BoardIn, MoveLine, MoveColumn, Piece),     /* KNOW WHERE HE MOVED TO */
     (
       gameOver(NewBoard, Loser),
       showResult(Loser),
       abort
-    /*;
-
-       CPU PUTS BARRAGOON */
-
-      /*barragoon(Piece),
-      write(CurrPlayer), write(' puts barragoon:'), nl,
-      copy_term(NewBoard, NewBoard),
-      putBarragoon(NewBoard, Board1),
+    ;
+      barragoon(Piece),
+      putBarragoonRandom(NewBoard, Board1),
       copy_term(Board1, BoardOut)
-    ;*/
-
-      /* OTHER PLAYER PUTS BARRAGOON */
-
-      /*getColor(Piece, Color),
+    ;
+      getColor(Piece, Color),
       Color \= ' ',
       changePlayer(CurrPlayer, NewPlayer),
-      write(NewPlayer), write(' puts barragoon:'), nl,
-      putBarragoon(NewBoard, Board1),*/
-
-      /* CPU PUTS BARRAGOON */
-
-      /*write(CurrPlayer), write(' puts barragoon:'), nl,
+      (
+      CurrPlayer = 'W',
+      putBarragoonRandom(NewBoard, Board1),
+      write(CurrPlayer), write(' puts barragoon:'), nl,
       putBarragoon(Board1, Board2),
-      copy_term(Board2, BoardOut)*/
+      copy_term(Board2, BoardOut)
+      ;
+      CurrPlayer = 'B',
+      write(NewPlayer), write(' puts barragoon:'), nl,
+      putBarragoon(NewBoard, Board1),
+      putBarragoonRandom(Board1, Board2),
+      copy_term(Board2, BoardOut)
+      )
+    ;
+      copy_term(NewBoard, BoardOut)
+    ).
+
+playCPUvsCPUrandom(CurrPlayer, BoardIn, BoardOut):-
+    findall(XBoard, A^B^C^D^movePiece(CurrPlayer, BoardIn, A, B, C, D, XBoard), PossiblePlays),
+    random_permutation(PossiblePlays, [NewBoard|_]),
+    getPiece(BoardIn, MoveLine, MoveColumn, Piece),     /* KNOW WHERE HE MOVED TO */
+    (
+      gameOver(NewBoard, Loser),
+      showResult(Loser),
+      abort
+    ;
+      barragoon(Piece),
+      putBarragoonRandom(NewBoard, Board1),
+      copy_term(Board1, BoardOut)
+    ;
+      getColor(Piece, Color),
+      Color \= ' ',
+      putBarragoonRandom(NewBoard, Board1),
+      putBarragoonRandom(Board1, Board2),
+      copy_term(Board2, BoardOut)
     ;
       copy_term(NewBoard, BoardOut)
     ).
@@ -204,10 +234,10 @@ playHvsH:-
 			gameLoopHvsH(BoardIn, PlayerIn).
 
 gameLoopHvsH(BoardCurr, PlayerCurr):-
-        nl,
-				once(askPlay(PlayerCurr,BoardCurr, BoardOut)),
-				once(changePlayer(PlayerCurr, NewPlayer)),
-				gameLoopHvsH(BoardOut, NewPlayer).
+      nl,
+  		once(askPlay(PlayerCurr,BoardCurr, BoardOut)),
+  		once(changePlayer(PlayerCurr, NewPlayer)),
+  		gameLoopHvsH(BoardOut, NewPlayer).
 
 playerCPU(PlayerCurr, Level, BoardCurr, BoardOut):-
 			(
