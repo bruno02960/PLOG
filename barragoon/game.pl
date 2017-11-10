@@ -9,6 +9,7 @@
 :- include('menu.pl').
 :- use_module(library(lists)).
 :- use_module(library(random)).
+:- use_module(library(system)).
 :- dynamic board/1.
 :- dynamic player/1.
 
@@ -166,7 +167,10 @@ setBarragoon(BoardIn, Line, Column, BoardOut):-
 		setPiece(BoardIn, Line, Column, Barragoon, BoardOut).
 
 putBarragoonRandom(BoardIn, BoardOut):-
-    findall(XBoard, A^B^setBarragoon(BoardIn, A, B, XBoard), [BoardOut|_]).
+    now(X),
+    setrand(X),
+    findall(XBoard, A^B^setBarragoon(BoardIn, A, B, XBoard), Boards),
+    random_permutation(Boards, [BoardOut|_]).
 
 
 playCPUvsHrandom(CurrPlayer, BoardIn, BoardOut):-
