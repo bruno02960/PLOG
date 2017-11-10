@@ -5,7 +5,9 @@ levelSelection(Level):-
 	write('*** SELECT DIFFICULTY ***'), nl,
 	write('1. Easier'), nl,
 	write('2. Harder'), nl,
-	write('Select an option (0 to exit): '),	read(Level).
+	prompt(X,'Select an option (0 to exit): '),
+	read(Level), nl,
+	prompt('Select an option (0 to exit): ', X).
 
 /**
 * Game menu
@@ -15,7 +17,7 @@ menu:-
 	write('1. Human vs Human'), nl,
 	write('2. Human vs CPU'), nl,
 	write('3. CPU vs CPU'), nl,
-	write('Select an option (0 to exit): '),	read(Option),
+	write('Select an option (0 to exit): '),	read(Option), nl,
 	menuExe(Option).
 
 /**
@@ -25,7 +27,7 @@ menuExe(Option):-
 	(
 	  Option=1, playHvsH
 	  ;
-	  Option=2, levelSelection(Level), levelSelectionExe(Level)
+	  Option=2, levelSelection(Level), levelSelectionExe(Option, Level)
 	  ;
 	  Option=3, levelSelection(Level), levelSelectionExe(Option, Level)
 	  ;
@@ -34,6 +36,8 @@ menuExe(Option):-
 
 levelSelectionExe(Option, Level):-
 	(
+	  Option=2, Level=1, playRandomCPUvsH
+		;
 	  Option=3, Level=1, playRandomCPUvsCPU
 	  ;
 	  Level=2 /*levelSelection(Level), playHvsCPU(Level)*/
