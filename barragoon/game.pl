@@ -161,9 +161,9 @@ putBarragoonRandom(BoardIn, BoardOut):-
 
 
 playCPUvsHrandom(CurrPlayer, BoardIn, BoardOut):-
-    findall(XBoard, A^B^C^D^movePiece(CurrPlayer, BoardIn, A, B, C, D, XBoard), PossiblePlays),
-    random_permutation(PossiblePlays, [NewBoard|_]),
-    getPiece(BoardIn, MoveLine, MoveColumn, Piece),     /* KNOW WHERE HE MOVED TO */
+    findall(XBoard-C-D, A^B^C^D^movePiece(CurrPlayer, BoardIn, A, B, C, D, XBoard), PossiblePlays),
+    random_permutation(PossiblePlays, [NewBoard-MoveLine-MoveColumn|_]),
+    getPiece(BoardIn, MoveLine, MoveColumn, Piece),
     (
       gameOver(NewBoard, Loser),
       showResult(Loser),
@@ -194,9 +194,11 @@ playCPUvsHrandom(CurrPlayer, BoardIn, BoardOut):-
     ).
 
 playCPUvsCPUrandom(CurrPlayer, BoardIn, BoardOut):-
-    findall(XBoard, A^B^C^D^movePiece(CurrPlayer, BoardIn, A, B, C, D, XBoard), PossiblePlays),
-    random_permutation(PossiblePlays, [NewBoard|_]),
-    getPiece(BoardIn, MoveLine, MoveColumn, Piece),     /* KNOW WHERE HE MOVED TO */
+		gamePrint(BoardIn),
+		nl, write(CurrPlayer), write(' turn'), nl,
+    findall(XBoard-C-D, A^B^C^D^movePiece(CurrPlayer, BoardIn, A, B, C, D, XBoard), PossiblePlays),
+		random_permutation(PossiblePlays, [NewBoard-MoveLine-MoveColumn|_]),
+    getPiece(BoardIn, MoveLine, MoveColumn, Piece),
     (
       gameOver(NewBoard, Loser),
       showResult(Loser),
@@ -213,7 +215,8 @@ playCPUvsCPUrandom(CurrPlayer, BoardIn, BoardOut):-
       copy_term(Board2, BoardOut)
     ;
       copy_term(NewBoard, BoardOut)
-    ).
+    ),
+		read(X).
 
 
 /**
@@ -246,8 +249,21 @@ playHvsH:-
 		showResult(Loser),
 	!.
 
-
-
+playRandomCPUvsCPU:-
+	initialBoard(BoardIn),
+	initialPlayer(PlayerIn),
+	assert(board(BoardIn)),
+	assert(player(PlayerIn)),
+	repeat,
+		retract(board(BoardCurr)),
+		retract(player(PlayerCurr)),
+		once(playCPUvsCPUrandom(PlayerCurr,BoardCurr, BoardOut)),
+		once(changePlayer(PlayerCurr, NewPlayer)),
+		assert(player(NewPlayer)),
+		assert(board(BoardOut)),
+		gameOver(BoardOut, Loser),
+		showResult(Loser),
+	!.
 
 playerCPU(PlayerCurr, Level, BoardCurr, BoardOut):-
 			(
