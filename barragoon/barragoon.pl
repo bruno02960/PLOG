@@ -3,17 +3,30 @@
 */
 putBarragoon(InBoard, OutBoard):-
 	repeat,
-		nl, write('*** SELECT BARRAOON ***'), nl,
-	  prompt(X, 'Barragoon: '),
-		read(Barragoon),
-	  prompt('Barragoon: ', X),
-		barragoon(Barragoon),
-		nl,
-		write('*** SELECT MOVE ***'),	nl,
-		readInteger('Line: ', Nline), nl,
-		readInteger('Column: ', Ncolumn), nl,
-		getPiece(InBoard, Nline, Ncolumn, '  '),
-		setPiece(InBoard, Nline, Ncolumn, Barragoon, OutBoard).
+	nl, write('*** SELECT BARRAOON ***'), nl,
+	prompt(X, 'Barragoon: '),
+	read(Barragoon),
+	prompt('Barragoon: ', X),
+	barragoon(Barragoon),
+	nl,
+	write('*** SELECT MOVE ***'),	nl,
+	readInteger('Line: ', Nline), nl,
+	readInteger('Column: ', Ncolumn), nl,
+	getPiece(InBoard, Nline, Ncolumn, '  '),
+	setPiece(InBoard, Nline, Ncolumn, Barragoon, OutBoard).
+
+setBarragoon(BoardIn, Line, Column, BoardOut):-
+                line(Line),
+                col(Column),
+                random_permutation([no,or,ol,ot,ob,th,tv,rr,rl,rt,rb,lr,ll,lt,lb,at], [Barragoon|_]),
+                getPiece(BoardIn, Line, Column, '  '),
+                setPiece(BoardIn, Line, Column, Barragoon, BoardOut).
+
+putBarragoonRandom(BoardIn, BoardOut):-
+                now(X),
+                setrand(X),
+                findall(XBoard, A^B^setBarragoon(BoardIn, A, B, XBoard), Boards),
+                random_permutation(Boards, [BoardOut|_]).
 
 putBarragoonPC(Level, InBoard, OutBoard):-
 	repeat,
