@@ -22,12 +22,12 @@ menu:-
 *	Executes menu option
 */
 menuExe(Option):-
-(
-  Option=1, playHvsH
-  ;
-  Option=2, levelSelection(Level), playHvsCPU(Level)
-  ;
-  Option=3, levelSelection(Level), playCPUvsCPU(2)
-  ;
-  Option=0, abort
-).
+	(
+  	   Option=1, playHvsH
+  	;
+  	   Option=2, levelSelection(Level), playHvsCPU(Level)
+  	;
+  	   Option=3, levelSelection(Level), playCPUvsCPU(2)
+  	;
+  	   Option=0, abort
+	).
