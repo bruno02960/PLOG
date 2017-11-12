@@ -15,6 +15,10 @@ putBarragoon(InBoard, OutBoard):-
 	getPiece(InBoard, Nline, Ncolumn, '  '),
 	setPiece(InBoard, Nline, Ncolumn, Barragoon, OutBoard).
 
+/*
+*	Auxiliar for findall of putBarragoonRandom
+*	Finds free random places for barragoon
+*/
 setBarragoon(BoardIn, Line, Column, BoardOut):-
                 line(Line),
                 col(Column),
@@ -22,10 +26,11 @@ setBarragoon(BoardIn, Line, Column, BoardOut):-
                 getPiece(BoardIn, Line, Column, '  '),
                 setPiece(BoardIn, Line, Column, Barragoon, BoardOut).
 
+/*
+*	Puts barragoon in a random place
+*/
 putBarragoonRandom(BoardIn, BoardOut):-
                 now(X),
                 setrand(X),
                 findall(XBoard, A^B^setBarragoon(BoardIn, A, B, XBoard), Boards),
                 random_permutation(Boards, [BoardOut|_]).
-
-/* ---------------------------------------------------*/

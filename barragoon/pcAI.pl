@@ -1,48 +1,107 @@
+/*
+* Makes PC AI move
+*/
 pcMove(CurrPlayer, BoardIn, BoardOut):-
-  countBarragoons(BoardIn, BarragooIn),
-  countOpponent(BoardIn, OpponentIn),
+  findall(XBoard-C-D, A^B^C^D^movePiece(CurrPlayer, BoardIn, A, B, C, D, XBoard), Boards),
   findall(XBoard-C-D, A^B^C^D^movePiece(CurrPlayer, BoardIn, A, B, C, D, XBoard), PossiblePlays),
+	(
+		 PossiblePlays \= []
+	;
+		 changePlayer(CurrPlayer, NewPlayer),
+		 gamePrint(BoardIn), nl,
+		 write(NewPlayer), write(' won!'),
+		 abort
+	),
+  gamePrint(BoardIn),
+  nl, write(CurrPlayer), write(' turn'), nl,
+  countBarragoons(BoardIn, BarragoonsIn),
+  countPieces(BoardIn, PiecesIn),
+  choosePlay(PossiblePlays, _Line, _Column, CurrPlayer, PiecesIn, BarragoonsIn, _Board, NewBoard, MoveLine, MoveColumn),
   (
-     PossiblePlays \= []
+  var(NewBoard),
+	random_permutation(Boards, [NewBoard-MoveLine-MoveColumn|_])
   ;
-     changePlayer(CurrPlayer, NewPlayer),
-     gamePrint(BoardIn), nl,
-     write(NewPlayer), write(' won!'),
-     abort
+  true
   ),
+  getPiece(BoardIn, MoveLine, MoveColumn, Piece),
+  (
+    gameOver(NewBoard, Loser),
+    gamePrint(NewBoard), nl,
+    showResult(Loser),
+    abort
+  ;
+    barragoon(Piece),
+    putBarragoonRandom(NewBoard, Board1),
+    copy_term(Board1, BoardOut)
+  ;
+    getColor(Piece, Color),
+    Color \= ' ',
+    putBarragoonRandom(NewBoard, Board1),
+    putBarragoonRandom(Board1, Board2),
+    copy_term(Board2, BoardOut)
+  ;
+    copy_term(NewBoard, BoardOut)
+  ),
+  get_code(_X).
 
-  choosePlay(PossiblePlays, BarragoonIn, OpponentIn, BoardOut)
-.
+  choosePlay([],MoveLine, MoveColumn, _CurrPlayer, _PiecesOut, _BarragoonsOut, BoardOut, BoardOut, MoveLine, MoveColumn).
 
-choosePlay([PossiblePlays|_], BarragoonIn, OpponentIn, BoardOut).
-choosePlay([_|PossiblePlays], BarragoonIn, OpponentIn, BoardOut):-
+  choosePlay([BoardIn-PlayLine-PlayColumn|Rest], MoveLine, MoveColumn, CurrPlayer, PiecesOut, BarragoonsOut, BoardOut, FinalBoard, LineOut, ColumnOut):-
+    countPieces(BoardIn, Pieces),
+    (
+    Pieces @< PiecesOut,
+    NewPiecesOut is Pieces,
+    NewMoveLine is PlayLine,
+    NewMoveColumn is PlayColumn,
+    choosePlay(Rest, NewMoveLine, NewMoveColumn, CurrPlayer, NewPiecesOut, BarragoonsOut, BoardIn, FinalBoard, LineOut, ColumnOut)
+    ;
+    Pieces = PiecesOut,
+    countBarragoons(BoardIn, Barragoons),
+    Barragoons @< BarragoonsOut,
+    NewBarragoonsOut is Barragoons,
+    NewMoveLine is PlayLine,
+    NewMoveColumn is PlayColumn,
+    choosePlay(Rest, NewMoveLine, NewMoveColumn, CurrPlayer, PiecesOut, NewBarragoonsOut, BoardIn, FinalBoard, LineOut, ColumnOut)
+    ;
+    choosePlay(Rest, MoveLine, MoveColumn, CurrPlayer, PiecesOut, BarragoonsOut, BoardOut, FinalBoard, LineOut, ColumnOut)
+    ).
+
 /*
-  compara o nr de pecas e o nr de PossiblePlay atual com o inicial, para saber se come ou nao
-  precedencia:
-  1 - comer pecas
-  2 - comer barragoons
-  3 - random (?)
+*  Counts barragoons in a single line
 */
-.
+countBarragoonLine([], 0).
+countBarragoonLine([Head | Tail], N) :-
+	(
+		barragoon(Head) -> countBarragoonLine(Tail, NextN), N is NextN + 1
+		;
+		countBarragoonLine(Tail, N)
+	).
 
-checkAte(CurrPlayer, BoardIn, NewBoard, Piece):-
 /*
-  comparar dois tabuleiros; identificar peca que foi comida (ou nao)
+* Counts barragoons in board
 */
-.
+countBarragoons([] , 0).
+countBarragoons([Head | Tail], NTotal):-
+	countBarragoons(Tail, NextNTotal),
+	countBarragoonLine(Head, N),
+	NTotal is NextNTotal + N.
 
-countBarragoons(BoardIn, Barragoon):-
-  countBarraggons(Board, [_| ], Barragoon)
-.
-countBarragoons([], Barragoon).
+/*
+* Counts number of pieces in a single line
+*/
+countPiecesLine([], 0).
+countPiecesLine([Head | Tail], N) :-
+(
+	Head \= '  ' -> countPiecesLine(Tail, NextN), N is NextN + 1
+	;
+	countPiecesLine(Tail, N)
+).
 
-countBarragoons([[Head|_]|Lists], [Head|L], Barragoon):-
-  countBarragoons(Lists, L, Barragoon).
-
-countBarragoons([[_,Head|Tail]|Lists], L, Barragoon):-
-  countBarragoons([[Head|Tail]|Lists], L, Barragoon)
-
-
-
-countPieces(BoardIn, Pieces):-
-.
+/*
+* Counts number of pieces in board
+*/
+countPieces([] , 0).
+countPieces([Head | Tail], NTotal):-
+  countPieces(Tail, NextNTotal),
+  countPiecesLine(Head, N),
+  NTotal is NextNTotal + N.

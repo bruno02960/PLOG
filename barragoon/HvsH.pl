@@ -1,3 +1,6 @@
+/*
+* H vs H game mode
+*/
 playHvsH:-
   initialBoard(BoardIn),
   initialPlayer(PlayerIn),

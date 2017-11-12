@@ -34,6 +34,9 @@ menuExe(Option):-
 	  Option=0, abort
 	).
 
+/*
+*	Executes level selection menu option
+*/
 levelSelectionExe(Option, Level):-
 	(
 	  Option=2, Level=1, playRandomCPUvsH
