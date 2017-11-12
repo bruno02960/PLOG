@@ -40,13 +40,31 @@ playRandomCPUvsCPU:-
     !.
 
 playCPUvsCPU:-
-  .
+  gamePrint(BoardIn),
+  nl, write(CurrPlayer), write(' turn'), nl,
+  findall(XBoard-C-D, A^B^C^D^movePiece(CurrPlayer, BoardIn, A, B, C, D, XBoard), PossiblePlays),
+  pcAI(CurrPlayer, BoardIn, NewBoard),
+  checkAte(CurrPlayer, BoardIn, NewBoard, Piece),
+  (
+    gameOver(NewBoard, Loser),
+    showResult(Loser),
+    abort
+  ;
+    barragoon(Piece),
+    putBarragoonRandom(NewBoard, Board1),
+    copy_term(Board1, BoardOut)
+  ;
+    getColor(Piece, Color),
+    Color \= ' ',
+    putBarragoonRandom(NewBoard, Board1),
+    putBarragoonRandom(Board1, Board2),
+    copy_term(Board2, BoardOut)
+  ;
+    copy_term(NewBoard, BoardOut)
+  ),
+  get_code(X).
 
 playAICPUvsCPU:-
-          /*
-                escolher melhor jogada
-                verificar se esta correto
-        */
   initialBoard(BoardIn),
   initialPlayer(PlayerIn),
   assert(board(BoardIn)),

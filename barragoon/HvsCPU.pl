@@ -37,7 +37,7 @@ playRandomCPUvsH:-
   initialPlayer(PlayerIn),
   assert(board(BoardIn)),
   assert(player(PlayerIn)),
-        
+
   repeat,
         retract(board(BoardCurr)),
         retract(player(PlayerCurr)),
@@ -53,8 +53,8 @@ playRandomCPUvsH:-
 
 playCPUvsH(NewPlayer, NewBoard, BoardOut):-
         /*
-		escolher melhor jogada
-                verificar se esta correto
+					escolher melhor jogada
+          verificar se esta correto
         */
 .
 
@@ -63,7 +63,7 @@ playAICPUvsH:-
   initialPlayer(PlayerIn),
   assert(board(BoardIn)),
   assert(player(PlayerIn)),
-        
+
   repeat,
         retract(board(BoardCurr)),
         retract(player(PlayerCurr)),
