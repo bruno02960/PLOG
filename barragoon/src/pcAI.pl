@@ -36,9 +36,20 @@ pcMove(CurrPlayer, BoardIn, BoardOut):-
   ;
     getColor(Piece, Color),
     Color \= ' ',
+    changePlayer(CurrPlayer, NewPlayer),
+    (
+    CurrPlayer = 'W',
     putBarragoonRandom(NewBoard, Board1),
+    write(CurrPlayer), write(' puts barragoon:'), nl,
+    putBarragoon(Board1, Board2),
+    copy_term(Board2, BoardOut)
+    ;
+    CurrPlayer = 'B',
+    write(NewPlayer), write(' puts barragoon:'), nl,
+    putBarragoon(NewBoard, Board1),
     putBarragoonRandom(Board1, Board2),
     copy_term(Board2, BoardOut)
+    )
   ;
     copy_term(NewBoard, BoardOut)
   ),

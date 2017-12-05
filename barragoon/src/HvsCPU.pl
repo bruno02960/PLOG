@@ -12,8 +12,11 @@ playCPUvsHrandom(CurrPlayer, BoardIn, BoardOut):-
 		 abort
 	),
 	nl, write(CurrPlayer), write(' turn'), nl, nl,
-  findall(XBoard-C-D, A^B^C^D^movePiece(CurrPlayer, BoardIn, A, B, C, D, XBoard), PossiblePlays),
-	random_permutation(PossiblePlays, [NewBoard-MoveLine-MoveColumn|_]),
+	nl, write('HERE1'), nl,
+  findall(XBoard-C-D, A^B^C^D^movePiece(CurrPlayer, BoardIn, A, B, C, D, XBoard), Boards),
+	nl, write('HERE2'), nl,
+	random_permutation(Boards, [NewBoard-MoveLine-MoveColumn|_]),
+	nl, write('HERE3'), nl,
   getPiece(BoardIn, MoveLine, MoveColumn, Piece),
   (
     gameOver(NewBoard, Loser),
@@ -61,7 +64,7 @@ playRandomCPUvsH:-
         once(changePlayer(NewPlayer, PlayerCurr)),
         assert(player(PlayerCurr)),
         assert(board(BoardOut)),
-        gameOver(BoardIn, Loser),
+        gameOver(BoardOut, Loser),
         showResult(Loser),
    !.
 
@@ -82,6 +85,6 @@ playAICPUvsH:-
         once(changePlayer(NewPlayer, PlayerCurr)),
         assert(player(PlayerCurr)),
         assert(board(BoardOut)),
-        gameOver(BoardIn, Loser),
+        gameOver(BoardOut, Loser),
         showResult(Loser),
    !.
