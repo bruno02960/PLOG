@@ -17,9 +17,37 @@ columns([ [C1L1, C2L1, C3L1, C4L1, C5L1, C6L1, C7L1],
           [C1L5, C2L5, C3L5, C4L5, C5L5, C6L5, C7L5],
           [C1L6, C2L6, C3L6, C4L6, C5L6, C6L6, C7L6] ]).
 
-/* cell(Digit, Line, Column), Top-left line and column */
 
-cell(0,1,1).
+
+/* cell(Digit, Line, Column), Top-left line and column */
+cell(3,1,1).
+cell(2,2,1).
+cell(2,3,1).
+cell(0,4,1).
+cell(1,5,1).
+cell(0,6,1).
+cell(2,1,2).
+cell(2,3,2).
+cell(2,4,2).
+cell(3,5,2).
+cell(2,1,3).
+cell(3,4,3).
+cell(2,6,3).
+cell(3,1,4).
+cell(1,3,4).
+cell(2,6,4).
+cell(2,2,5).
+cell(3,3,5).
+cell(2,4,5).
+cell(1,6,5).
+cell(3,1,6).
+cell(1,2,6).
+cell(3,3,6).
+cell(2,4,6).
+cell(2,5,6).
+cell(2,6,6).
+
+/*cell(0,1,1).
 cell(0,1,2).
 cell(1,1,4).
 cell(1,1,6).
@@ -32,7 +60,7 @@ cell(3,5,1).
 cell(3,6,1).
 cell(3,6,3).
 cell(1,6,5).
-cell(2,6,6).
+cell(2,6,6).*/
 
 puzzle  :-
   lines(Lines),
@@ -41,6 +69,11 @@ puzzle  :-
   defineDomain(Columns),
   findall([Digit, Line, Column], cell(Digit, Line, Column), Database),
   restringir(Database, Lines, Columns),
+  /*restringir1Linha(1, Lines, Columns),
+  restringirUltLinha(1, Lines, Columns),
+  restringir1Coluna(1, Lines, Columns),
+  restringirUltColuna(1, Lines, Columns),*/
+/*  restringirMeio(2, 2, Lines, Columns),*/ /* PARA FAZER */
   labelingVars(Lines),
   labelingVars(Columns),
   write('Columns = '), write(Columns), nl,
@@ -49,14 +82,63 @@ puzzle  :-
 defineDomain([]).
 defineDomain([Head|Tail]) :-
   domain(Head, 0, 1),
-  linesDomain(Tail).
+  defineDomain(Tail).
 
 labelingVars([]).
 labelingVars([Head|Tail]) :-
   labeling([], Head),
   labelingVars(Tail).
 
-restringir([], Lines, Columns).
+restringirUltColuna(6, _, _).
+restringirUltColuna(Linha, Lines, Columns) :-
+    nth1(Linha, Lines, TopLine),
+    element(6, TopLine, Line),
+    nth1(Linha, Columns, Col1),
+    element(7, Col1, TopCol),
+    NovaLinha is Linha + 1,
+    nth1(NovaLinha, Columns, Col2),
+    element(7, Col2, BottomCol),
+    sum([Line, TopCol, BottomCol], #<, 2),
+    restringirUltColuna(NovaLinha, Lines, Columns).
+
+restringir1Coluna(6, _, _).
+restringir1Coluna(Linha, Lines, Columns) :-
+    nth1(Linha, Lines, TopLine),
+    element(1, TopLine, Line),
+    nth1(Linha, Columns, Col1),
+    element(1, Col1, TopCol),
+    NovaLinha is Linha + 1,
+    nth1(NovaLinha, Columns, Col2),
+    element(1, Col2, BottomCol),
+    sum([Line, TopCol, BottomCol], #<, 2),
+    restringir1Coluna(NovaLinha, Lines, Columns).
+
+restringir1Linha(6, _, _).
+restringir1Linha(Coluna, Lines, Columns) :-
+    nth1(Coluna, Columns, Col),
+    element(1, Col, Line),
+    nth1(Coluna, Lines, Lin1),
+    element(1, Lin1, LeftLin),
+    NovaColuna is Coluna + 1,
+    nth1(NovaColuna, Lines, Lin2),
+    element(1, Lin2, RightLin),
+    sum([Line, LeftLin, RightLin], #<, 3),
+    restringir1Linha(NovaColuna, Lines, Columns).
+
+
+restringirUltLinha(6, _, _).
+restringirUltLinha(Coluna, Lines, Columns) :-
+    nth1(Coluna, Columns, Col),
+    element(5, Col, Line),
+    nth1(Coluna, Lines, Lin1),
+    element(6, Lin1, LeftLin),
+    NovaColuna is Coluna + 1,
+    nth1(NovaColuna, Lines, Lin2),
+    element(6, Lin2, RightLin),
+    sum([Line, LeftLin, RightLin], #<, 3),
+    restringirUltLinha(NovaColuna, Lines, Columns).
+
+restringir([], _, _).
 restringir([[Digit, Line, Column] | Tail], Lines, Columns) :-
 /* Vai buscar linhas e colunas necessárias para fazer a restrição */
     nth1(Line, Lines, TopLine),
