@@ -3,18 +3,18 @@ printing(Lines, Columns, 7):-
 	nth1(7, Lines, Line),
 	replace(1, '-', Line, NewLine),
 	replace(0, ' ', NewLine, ParsedLine),
-	write(ParsedLine), nl.
+	printSingleRow(ParsedLine).
 
 printing(Lines, Columns, I):-
 	write(' '),
 	nth1(I, Lines, Line),
 	replace(1, '-', Line, NewLine),
 	replace(0, ' ', NewLine, ParsedLine),
-	write(ParsedLine), nl,
+	printSingleRow(ParsedLine),
 	nth1(I, Columns, Column),
 	replace(1, '|', Column, NewColumn),
 	replace(0, ' ', NewColumn, ParsedColumn),
-	write(ParsedColumn), nl,
+	printSingleRow(ParsedColumn),
 	NewI is I+1,
 	printing(Lines, Columns, NewI).
 

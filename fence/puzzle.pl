@@ -39,7 +39,7 @@ puzzle  :-
   defineDomain(Lines),
   columns(Columns),
   defineDomain(Columns),
-  board(Board),
+  /*board(Board),*/
   findall([Digit, Line, Column], cell(Digit, Line, Column), Database),
   adjacent(Lines, Columns, 1, 1),
   restringir(Database, Lines, Columns),
@@ -50,9 +50,9 @@ puzzle  :-
 /*  restringirMeio(2, 2, Lines, Columns),*/ /* PARA FAZER */
   labelingVars(Lines),
   labelingVars(Columns),
-  printing(Lines, Columns, 1).
-  /*write('Columns = '), write(Columns), nl,
-  write('Lines = '), write(Lines).*/
+  printing(Lines, Columns, 1),
+  write('Columns = '), write(Columns), nl,
+  write('Lines = '), write(Lines).
 
 defineDomain([]).
 defineDomain([Head|Tail]) :-
