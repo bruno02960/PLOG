@@ -1,20 +1,20 @@
-printing(Lines, Columns, 7):-
-	write(' '),
-	nth1(7, Lines, Line),
-	replace(1, '-', Line, NewLine),
-	replace(0, ' ', NewLine, ParsedLine),
-	printSingleRow(ParsedLine).
+printing(Lines, _, LineNo):-
+	dimensions(NoLines, _),
+	LineNo = NoLines,
+	nth1(LineNo, Lines, Line),
+	replace(1, '---', Line, NewLine),
+	replace(0, '   ', NewLine, ParsedLine),
+	printSingleLine(ParsedLine).
 
 printing(Lines, Columns, I):-
-	write(' '),
 	nth1(I, Lines, Line),
-	replace(1, '-', Line, NewLine),
-	replace(0, ' ', NewLine, ParsedLine),
-	printSingleRow(ParsedLine),
+	replace(1, '---', Line, NewLine),
+	replace(0, '   ', NewLine, ParsedLine),
+	printSingleLine(ParsedLine),
 	nth1(I, Columns, Column),
 	replace(1, '|', Column, NewColumn),
 	replace(0, ' ', NewColumn, ParsedColumn),
-	printSingleRow(ParsedColumn),
+	printSingleColumn(ParsedColumn, I, 1),
 	NewI is I+1,
 	printing(Lines, Columns, NewI).
 
@@ -33,15 +33,38 @@ gamePrint(Board) :-
 */
 printRowByRow([]).
 printRowByRow([Line|Rest]) :-
-	printSingleRow(Line),
+	printSingleLine(Line),
 	printRowByRow(Rest).
 
 /**
-*	Prints single row
+*	Prints single line
 */
-printSingleRow([Cell]):-
+printSingleLine([Cell]):-
+	write('+'),
+	write(Cell),
+	write('+'),
+	nl.
+printSingleLine([Cell|More]):-
+	write('+'),
+	write(Cell),
+	printSingleLine(More).
+
+
+/**
+*	Prints single column
+*/
+printSingleColumn([Cell], _, _):-
 	write(Cell),
 	nl.
-printSingleRow([Cell|More]):-
+printSingleColumn([Cell|More], I, J):-
 	write(Cell),
-	printSingleRow(More).
+	(
+		cell(Digit, I, J),
+		write(' '),
+		write(Digit),
+		write(' ')
+		;
+		write('   ')
+	),
+	NewJ is J + 1,
+	printSingleColumn(More, I, NewJ).

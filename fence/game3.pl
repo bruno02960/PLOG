@@ -12,3 +12,6 @@ cell(3,3,5).
 cell(3,1,6).
 cell(3,3,6).
 cell(3,6,6).
+
+/* dimensions(noLines, noColumns) */
+dimensions(7,7).
