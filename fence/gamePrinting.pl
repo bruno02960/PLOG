@@ -1,3 +1,6 @@
+printing(Lines, Columns) :-
+	printing(Lines, Columns, 1).
+
 printing(Lines, _, LineNo):-
 	dimensions(NoLines, _),
 	LineNo = NoLines,
@@ -14,27 +17,19 @@ printing(Lines, Columns, I):-
 	nth1(I, Columns, Column),
 	replace(1, '|', Column, NewColumn),
 	replace(0, ' ', NewColumn, ParsedColumn),
-	printSingleColumn(ParsedColumn, I, 1),
-	NewI is I+1,
+	printSingleColumn(ParsedColumn, I),
+	NewI is I + 1,
 	printing(Lines, Columns, NewI).
 
+/**
+*	Replaces 
+*/
 replace(_, _, [], []).
-replace(O, R, [O|T], [R|T2]) :- replace(O, R, T, T2).
-replace(O, R, [H|T], [H|T2]) :- H \= O, replace(O, R, T, T2).
-
-/**
-*	Board printing function
-*/
-gamePrint(Board) :-
-	printRowByRow(Board).
-
-/**
-*	Prints row by row
-*/
-printRowByRow([]).
-printRowByRow([Line|Rest]) :-
-	printSingleLine(Line),
-	printRowByRow(Rest).
+replace(Replaced, Replacement, [Replaced|Tail], [Replacement|Tail2]) :-
+	replace(Replaced, Replacement, Tail, Tail2).
+replace(Replaced, Replacement, [Head|Tail], [Head|Tail2]) :-
+	Head \= Replaced,
+	replace(Replaced, Replacement, Tail, Tail2).
 
 /**
 *	Prints single line
@@ -53,6 +48,9 @@ printSingleLine([Cell|More]):-
 /**
 *	Prints single column
 */
+printSingleColumn(ParsedColumn, I) :-
+	printSingleColumn(ParsedColumn, I, 1). 
+
 printSingleColumn([Cell], _, _):-
 	write(Cell),
 	nl.

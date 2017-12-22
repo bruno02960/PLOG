@@ -1,5 +1,5 @@
 :-include('gamePrinting.pl').
-:-include('game3.pl').
+:-include('game1.pl').
 :-use_module(library(clpfd)).
 :-use_module(library(lists)).
 
@@ -14,11 +14,11 @@ puzzle  :-
   resizeSubs(Columns, NoColumns),
   defineDomain(Columns),
   findall([Digit, Line, Column], cell(Digit, Line, Column), Database),
-  pointRestriction(Lines, Columns, 1, 1),
+  pointRestriction(Lines, Columns),
   cellRestriction(Database, Lines, Columns),
   labelingVars(Lines),
   labelingVars(Columns),
-  printing(Lines, Columns, 1).
+  printing(Lines, Columns).
 
 resizeSubs([Elem], Length) :-
   length(Elem, Length).
@@ -51,6 +51,9 @@ cellRestriction([[Digit, Line, Column] | Tail], Lines, Columns) :-
     element(NewColumn, Col, RightCol),
     sum([Top, Bottom, LeftCol, RightCol], #=, Digit),
     cellRestriction(Tail, Lines, Columns).
+
+pointRestriction(Lines, Columns) :-
+ pointRestriction(Lines, Columns, 1, 1).
 
 pointRestriction(_,_,CurrLine,CurrColumn) :-
   dimensions(NoLines, NoColumns),
